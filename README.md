@@ -2,6 +2,7 @@
 
 Cryptonique is an advanced, multi-faceted cryptography framework designed for robust digital security solutions. Merging classical cryptographic techniques with cutting-edge quantum algorithms, Cryptonique offers a versatile toolkit for securing digital transactions, communications, and data storage.
 
+## Features
 ## Key Features
 
 - **Quantum-Ready**: Integrating quantum-resistant algorithms and simulations, including a BB84 protocol implementation, to future-proof security against the advent of quantum computing.
@@ -16,6 +17,59 @@ Cryptonique is an advanced, multi-faceted cryptography framework designed for ro
 - **Rust-Based Core**: Built with Rust for safety, concurrency, and performance, making it suitable for high-stakes, real-time applications.
 
 Cryptonique is well-suited for organizations looking to implement a secure, scalable, and quantum-aware cryptographic layer in their digital infrastructure. It is designed to adapt to the evolving landscape of cybersecurity threats, providing a solid foundation for both current and future cryptographic needs.
+
+### Prerequisites
+
+Ensure Rust is installed on your machine. If not, install it using:
+
+bash
+
+`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+
+### Installation
+
+1.  **Clone the Repository:**
+
+    bash
+
+-   `git clone https://github.com/your-username/cryptonique_crypto_project.git`
+-   **Navigate to Project Directory:**
+
+    bash
+
+-   `cd cryptonique_crypto_project`
+-   **Build the Project:**
+
+    bash
+
+    1.  `cargo build`
+
+## Usage
+
+1.  **Run the Project:**
+
+    bash
+
+-   `cargo run`
+-   **Execute Tests:**
+
+    bash
+
+    1.  `cargo test`
+
+## Documentation
+
+For comprehensive information and usage instructions, refer to the project's documentation in the `docs` directory.
+
+## Feedback and Contribution
+
+Feedback, issues, and pull requests are welcome. Contribute to the development and enhancement of cryptonique Crypto Project.
+
+## License
+
+This project is open-source, available under the [MIT License]
+
+
 
 ## Getting Started
 
