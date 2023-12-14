@@ -26,6 +26,7 @@ pub struct TemporalKey {
     pub generation_time: SystemTime,
     evolution_interval: Duration,
     htm_model: HTMModel,
+    evolution_steps: usize,
 }
 
 impl TemporalKey {
@@ -35,10 +36,15 @@ impl TemporalKey {
             generation_time: SystemTime::now(),
             evolution_interval,
             htm_model,
+            evolution_steps: 0,
         }
     }
 
-    pub fn evolve_key(&mut self, num_iterations: usize) {
+    pub fn get_evolution_steps(&self) -> usize {
+        self.evolution_steps
+    }
+
+    pub fn evolve_key(&mut self, num_iterations: usize, steps: usize) {
         // Create a cryptographically secure random number generator
         let mut csprng = rand::thread_rng();
 
@@ -70,6 +76,7 @@ impl TemporalKey {
         } else {
             println!("Key evolution failed validation.");
         }
+        self.evolution_steps += steps;
     }
 
     fn validate_key(&self) -> bool {
@@ -126,7 +133,7 @@ impl TemporalKey {
         if now.signed_duration_since(DateTime::<Utc>::from(self.generation_time))
             >= chrono::Duration::from_std(self.evolution_interval).unwrap()
         {
-            self.evolve_key(1); // Evolve the key once
+            self.evolve_key(1, 1); // Evolve the key once
             self.generation_time = SystemTime::now();
         }
     }
@@ -182,6 +189,7 @@ let to_encrypt = if deutsch_output { vec![1, 0, 0, 0] } else { vec![0, 0, 0, 0] 
             "[DEBUG] Generation time updated to: {:?}",
             self.generation_time
         );
+        self.evolution_steps += 1;
     }
 }
 
@@ -221,7 +229,12 @@ fn calculate_entropy(key: &[u8]) -> f64 {
 mod tests {
     use super::*;
     use crate::htm::htm_model::HTMModel;
+    use std::sync::Arc;
+    use std::time::Duration;
 
+
+
+    
     #[test]
     fn test_key_evolution() {
         let htm_model = HTMModel::new();
@@ -233,25 +246,36 @@ mod tests {
 
         let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
 
-        temporal_key.evolve_key(10);
+        temporal_key.evolve_key(10, 1);
         let evolved_key = temporal_key.get_key();
-
+        
         assert_ne!(evolved_key, &initial_key);
     }
 
-    #[test]
-    fn test_quantum_key_evolution() {
-        let htm_model = HTMModel::new();
-        let initial_key = vec![0; 256];
-        let evolution_interval = Duration::from_secs(10);
+ 
 
-        let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
+#[test]
+fn test_quantum_key_evolution() {
+    let htm_model = HTMModel::new();
+    let initial_key = vec![0; 256];
+    let evolution_interval = Duration::from_secs(10);
 
+    let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
+
+    // Get a clone of the evolved key for comparison
+    let evolved_key = {
         temporal_key.quantum_evolve_key();
-        let evolved_key = temporal_key.get_key();
+        temporal_key.get_key().clone() // Clone the key to break the borrow
+    };
 
-        assert_ne!(evolved_key, &initial_key);
-    }
+    // Now you can perform the assertions
+    assert_eq!(temporal_key.get_evolution_steps(), 1, "Evolution steps mismatch");
+    assert_ne!(evolved_key, initial_key); // Compare with initial_key instead of a reference
+}
+
+
+
+
 
     #[test]
     fn test_temporal_key_evolution() {
@@ -309,4 +333,25 @@ mod tests {
             "Key must not be all zeros to resist known-plaintext attacks"
         );
     }
+}
+
+fn check_key_entropy(key: &[u8]) -> bool {
+    let mut unique_bytes = std::collections::HashSet::new();
+    for &byte in key {
+        unique_bytes.insert(byte);
+    }
+    unique_bytes.len() as f64 / key.len() as f64 > 0.6 // Threshold for entropy; adjust as needed
+}
+fn is_quantum_resistant(key: &[u8]) -> bool {
+    key.len() >= 256 // Placeholder logic: assuming longer keys are more quantum-resistant
+}
+
+fn resists_differential_cryptanalysis(key: &[u8]) -> bool {
+    // Check for repeated patterns or sequences
+    for i in 0..key.len() - 1 {
+        if key[i] == key[i + 1] {
+            return false; // Simple check for immediate repetition
+        }
+    }
+    true
 }

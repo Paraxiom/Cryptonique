@@ -132,7 +132,7 @@ pub fn generate_temporal_keys(config: KeyGenConfig) -> (Vec<u8>, Vec<u8>) {
     let sdr_a = temporal_key.get_key().clone();
 
     // evolve the key
-    temporal_key.evolve_key(1);
+    temporal_key.evolve_key(1, 1);
     let sdr_b = temporal_key.get_key().clone();
 
     (sdr_a, sdr_b)
