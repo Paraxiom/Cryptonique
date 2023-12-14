@@ -18,43 +18,41 @@ impl FeistelNetwork {
     pub fn encrypt(&self, data: &Vec<u8>) -> Vec<u8> {
         let mut encrypted_data = vec![];
         assert!(data.len() % 4 == 0, "Input length must be divisible by 4");
-    
+
         for block in data.chunks(4) {
             let block_value = u32::from_be_bytes([block[0], block[1], block[2], block[3]]);
             println!("Debug - Encrypt - Original 4-byte block: {:?}", block_value);
-    
+
             let encrypted_block = self.encrypt_block(block_value);
             println!("Debug - Encrypt - Encrypted block: {:?}", encrypted_block);
-    
+
             encrypted_data.extend_from_slice(&encrypted_block.to_be_bytes());
         }
-    
+
         encrypted_data
     }
-    
 
     pub fn decrypt(&self, data: &[u8]) -> Vec<u8> {
         let mut decrypted_data = Vec::new();
-    
-        for block in data.chunks(4) {  // Changed to 4-byte chunks
+
+        for block in data.chunks(4) {
+            // Changed to 4-byte chunks
             if block.len() == 4 {
                 let block_value = u32::from_be_bytes([block[0], block[1], block[2], block[3]]);
                 println!("Debug - Decrypt - Original 4-byte block: {:?}", block_value);
-    
-                let decrypted_block = self.decrypt_block(block_value);  // Assuming decrypt_block expects u32
+
+                let decrypted_block = self.decrypt_block(block_value); // Assuming decrypt_block expects u32
                 println!("Debug - Decrypt - Decrypted block: {:?}", decrypted_block);
-    
+
                 decrypted_data.extend_from_slice(&decrypted_block.to_be_bytes());
             } else {
                 // Handle the case where the last chunk is not 4 bytes
                 // This can be implemented depending on your specific use case
             }
         }
-    
+
         decrypted_data
     }
-    
-    
 
     // Encryption function
     fn encrypt_block(&self, block: u32) -> u32 {
@@ -74,7 +72,6 @@ impl FeistelNetwork {
 
         let new_right = left;
         let new_left = left ^ (self.key ^ right);
-
 
         (new_left << 16) | new_right
     }

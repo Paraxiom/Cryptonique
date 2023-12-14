@@ -5,7 +5,6 @@ use rand::Rng;
 use std::time::{Duration, SystemTime};
 
 #[test]
-#[test]
 fn test_temporal_key_generation_and_validation() {
     // Step 1: Initialize the test environment and instantiate the `SharedState` object.
     let htm_model = HTMModel::new();

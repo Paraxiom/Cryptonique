@@ -20,7 +20,6 @@ fn test_encryption() {
 }
 
 #[test]
-#[test]
 fn test_encryption_decryption() {
     // Initialize test data and keys
     let data = vec![1, 2, 3, 4, 5];
