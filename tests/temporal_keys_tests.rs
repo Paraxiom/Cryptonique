@@ -6,26 +6,29 @@ use std::time::{Duration, SystemTime};
 
 #[test]
 fn test_temporal_key_generation_and_validation() {
-    // Step 1: Initialize the test environment and instantiate the `SharedState` object.
+    // Initialize HTM Model and Shared State
     let htm_model = HTMModel::new();
     let shared_state = SharedState::new(htm_model.clone());
 
-    // Step 2: Generate a temporal key seeded with the current time using a pseudo-random number generator.
+    // Generate a temporal key
     let mut rng = rand::thread_rng();
-    let initial_key: Vec<u8> = (0..256).map(|_| rng.gen::<u8>()).collect();
+    let initial_key: Vec<u8> = (0..256).map(|_| rng.gen()).collect();
     let evolution_interval = Duration::from_secs(10);
-    let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
+    let temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
 
-    // Step 3: Store this key along with its timestamp in the `SharedState` object.
+    // Store the key in Shared State
     let mut htm_model = shared_state.get_htm_model().lock().unwrap();
     htm_model.store_key(temporal_key.get_key().clone(), temporal_key.generation_time);
 
-    // Step 4: Retrieve the key from `SharedState` and validate its timestamp to ensure it's within the expected validity period.
-    let timestamp = htm_model.get_key(&initial_key).unwrap();
+    // Retrieve and validate the key's timestamp
+    let retrieved_timestamp = htm_model.get_key(&initial_key).unwrap();
     let now = SystemTime::now();
-    let key_age = now.duration_since(*timestamp).unwrap();
-    assert!(key_age < evolution_interval);
+    let key_age = now.duration_since(*retrieved_timestamp).unwrap();
 
-    // Step 5: Assert that the retrieved timestamp matches the original key's generation time.
-    assert_eq!(timestamp, &temporal_key.generation_time);
+    assert!(key_age < evolution_interval, "Key age is greater than evolution interval");
+
+    // Assert that the retrieved timestamp matches the generation time
+    assert_eq!(*retrieved_timestamp, temporal_key.generation_time, "Retrieved timestamp does not match the key's generation time");
+
+
 }

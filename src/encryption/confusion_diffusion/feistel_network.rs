@@ -15,16 +15,20 @@ impl FeistelNetwork {
         FeistelNetwork { key }
     }
 
-    pub fn encrypt(&self, data: &Vec<u8>) -> Vec<u8> {
+    pub fn encrypt(&self, input: &[u8]) -> Vec<u8> {
+        // Pad the input if its length is not divisible by 4
+        let mut padded_input = Vec::from(input);
+        while padded_input.len() % 4 != 0 {
+            padded_input.push(0); // Adding padding (e.g., null bytes)
+        }
         let mut encrypted_data = vec![];
-        assert!(data.len() % 4 == 0, "Input length must be divisible by 4");
 
-        for block in data.chunks(4) {
+        // Use padded_input for processing
+        assert!(padded_input.len() % 4 == 0, "Input length must be divisible by 4");
+
+        for block in padded_input.chunks(4) {
             let block_value = u32::from_be_bytes([block[0], block[1], block[2], block[3]]);
-            println!("Debug - Encrypt - Original 4-byte block: {:?}", block_value);
-
             let encrypted_block = self.encrypt_block(block_value);
-            println!("Debug - Encrypt - Encrypted block: {:?}", encrypted_block);
 
             encrypted_data.extend_from_slice(&encrypted_block.to_be_bytes());
         }
