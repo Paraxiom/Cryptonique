@@ -1,4 +1,4 @@
-# Cryptonique Crypto Project
+# Cryptonique Project
 
 ## Overview
 
