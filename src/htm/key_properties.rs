@@ -76,10 +76,10 @@ fn calculate_bit_distribution(key: &[u8]) -> BitDistribution {
 }
 
 fn determine_function_type_based_on_key(key: &[u8]) -> u8 {
-    let sum: u8 = key.iter().sum();
+    let sum: u64 = key.iter().map(|&x| x as u64).sum(); // Use u64 to prevent overflow
     if sum % 2 == 0 {
-        0
+        0 // Constant
     } else {
-        1
+        1 // Balanced
     }
 }

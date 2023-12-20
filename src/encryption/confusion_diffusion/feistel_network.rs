@@ -315,37 +315,34 @@ mod tests {
         let feistel = FeistelNetwork::new_with_key(12345); // Using a fixed key for testing
         let original_block = 0x01020304;
         let encrypted_block = feistel.encrypt_block(original_block);
-    
+
         // Calculate the expected encrypted value based on the actual logic of encrypt_block
         let expected_encrypted_block = calculate_expected_encrypted_block(original_block, 12345);
-    
+
         assert_eq!(
             encrypted_block, expected_encrypted_block,
             "Encrypted block did not match expected value"
         );
     }
-    
-    
 
     fn calculate_expected_encrypted_block(block: u32, key: u32) -> u32 {
         let mut left = (block >> 16) as u16;
         let mut right = (block & 0xFFFF) as u16;
-    
+
         for round in 0..8 {
             let shifted_key = key.rotate_left((round as u32) * 5);
             let round_key = 0x55555555 ^ (round as u32);
             let subkey = (shifted_key ^ round_key) as u16;
-    
+
             let temp = right;
             let mixed = right.wrapping_add(subkey).rotate_left(3);
             let round_result = mixed ^ mixed.wrapping_mul(0x5A5A).rotate_right(5);
             right = left ^ round_result;
             left = temp;
         }
-    
+
         ((left as u32) << 16) | (right as u32)
     }
-    
 
     fn generate_subkey_for_test(key: u32, round: u8) -> u16 {
         let shifted_key = key.rotate_left(round as u32 * 1);

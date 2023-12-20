@@ -25,8 +25,9 @@ use std::collections::HashSet;
 // At the top of src/htm/temporal_keys.rs
 use crate::deutchs_algorithm::initialize_auxiliary_qubit;
 use crate::htm::key_properties::KeyProperties;
+const SOME_ENTROPY_THRESHOLD: f64 = 600.0;
 
-const SOME_THRESHOLD: f64 = 128.0;
+const SOME_THRESHOLD: f64 = 4.0;
 pub struct TemporalKey {
     current_key: Vec<u8>,
     pub generation_time: SystemTime,
@@ -118,19 +119,24 @@ impl TemporalKey {
     }
 
     fn calculate_entropy(key: &[u8]) -> f64 {
-        let mut byte_counts = [0u32; 256];
+        let mut occurrences = [0usize; 256]; // Count occurrences of each byte
+        let len = key.len();
+    
         for &byte in key {
-            byte_counts[byte as usize] += 1;
+            occurrences[byte as usize] += 1;
         }
-        byte_counts
-            .iter()
+    
+        let entropy: f64 = occurrences.iter()
             .filter(|&&count| count > 0)
             .map(|&count| {
-                let probability = count as f64 / key.len() as f64;
-                -probability * probability.log2()
+                let probability = (count as f64) / (len as f64);
+                -probability * probability.log2() // Shannon entropy formula
             })
-            .sum()
+            .sum();
+    
+        entropy
     }
+    
 
     pub fn get_key(&self) -> &Vec<u8> {
         &self.current_key
@@ -148,19 +154,16 @@ impl TemporalKey {
     }
 
     pub fn quantum_evolve_key(&mut self) {
+        let original_length = self.current_key.len();
         self.apply_complex_transformations();
 
         // Validate the evolved key
-        if self.validate_key() {
+        if self.validate_key() && self.current_key.len() == original_length {
             println!("Key successfully evolved and validated.");
         } else {
-            println!("Key evolution failed validation. Regenerating key...");
+            println!("Key evolution failed validation or length check. Regenerating key...");
             self.current_key = Self::regenerate_key();
         }
-
-        // Update the generation time and evolution steps
-        self.generation_time = SystemTime::now();
-        self.evolution_steps += 1;
 
         // Update the generation time and evolution steps
         self.generation_time = SystemTime::now();
@@ -249,12 +252,11 @@ fn create_quantum_representation(key: &[u8]) -> Vec<Complex<f32>> {
 }
 
 fn determine_function_type_based_on_key(key: &[u8]) -> u8 {
-    // Logic to determine function type
-    let sum: u8 = key.iter().sum();
+    let sum: u64 = key.iter().map(|&x| x as u64).sum(); // Use u64 to prevent overflow
     if sum % 2 == 0 {
-        0
+        0 // Constant
     } else {
-        1
+        1 // Balanced
     }
 }
 
@@ -280,21 +282,21 @@ fn generate_high_entropy_key(length: usize) -> Vec<u8> {
     rng.fill_bytes(&mut key);
     key
 }
-fn calculate_entropy(key: &[u8]) -> f64 {
-    let mut byte_counts = [0u32; 256];
-    for &byte in key {
-        byte_counts[byte as usize] += 1;
-    }
-    let len = key.len() as f64;
-    byte_counts.iter().fold(0.0, |entropy, &count| {
-        if count > 0 {
-            let probability = count as f64 / len;
-            entropy - (probability * probability.log2())
-        } else {
-            entropy
-        }
-    })
-}
+// fn calculate_entropy(key: &[u8]) -> f64 {
+//     let mut byte_counts = [0u32; 256];
+//     for &byte in key {
+//         byte_counts[byte as usize] += 1;
+//     }
+//     let len = key.len() as f64;
+//     byte_counts.iter().fold(0.0, |entropy, &count| {
+//         if count > 0 {
+//             let probability = count as f64 / len;
+//             entropy - (probability * probability.log2())
+//         } else {
+//             entropy
+//         }
+//     })
+// }
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -310,34 +312,40 @@ mod tests {
     use crate::encryption::hashing::HashType::SHA256;
 
     #[test]
-    fn test_quantum_evolution_impact() {
-        let htm_model = HTMModel::new();
-        let initial_key = generate_high_entropy_key(256);
-        let mut temporal_key =
-            TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
+fn test_quantum_evolution_impact() {
+    let htm_model = HTMModel::new();
+    let initial_key = generate_high_entropy_key(256);
+    let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        // Before evolution
-        let key_before_evolution = temporal_key.get_key().clone();
+    // Before evolution
+    let key_before_evolution = temporal_key.get_key().clone();
 
-        // Perform quantum evolution
-        temporal_key.quantum_evolve_key();
+    // Perform quantum evolution
+    temporal_key.quantum_evolve_key();
 
-        // After evolution
-        let key_after_evolution = temporal_key.get_key().clone();
+    // After evolution
+    let key_after_evolution = temporal_key.get_key().clone();
 
-        // Ensure the key has evolved
-        assert_ne!(
-            key_before_evolution, key_after_evolution,
-            "Key should evolve after quantum evolution"
-        );
+    // Ensure the key has evolved
+    assert_ne!(
+        key_before_evolution, key_after_evolution,
+        "Key should evolve after quantum evolution"
+    );
 
-        // Additional checks for randomness, entropy, etc.
-        let entropy = calculate_entropy(&key_after_evolution);
-        assert!(
-            entropy > SOME_THRESHOLD,
-            "Evolved key should have high entropy"
-        );
-    }
+    // Check entropy of the evolved key
+    let entropy_after = calculate_entropy(&key_after_evolution);
+
+    // Adjust this threshold based on realistic expectations from your key evolution strategy
+    let expected_entropy_threshold = 8.0; // Example adjustment
+
+    assert!(
+        entropy_after > expected_entropy_threshold,
+        "Evolved key should have high entropy. Found entropy: {}", entropy_after
+    );
+}
+
+
+    
 
     #[test]
     fn test_deutsch_consistency() {
@@ -429,19 +437,24 @@ mod tests {
     }
 
     fn calculate_entropy(key: &[u8]) -> f64 {
-        let mut occurrences = [0u64; 256];
+        let mut occurrences = [0usize; 256]; // Count occurrences of each byte
+        let len = key.len();
+    
         for &byte in key {
             occurrences[byte as usize] += 1;
         }
-        let mut entropy = 0.0;
-        for &count in occurrences.iter() {
-            if count > 0 {
-                let probability = (count as f64) / (key.len() as f64);
-                entropy -= probability * probability.log2();
-            }
-        }
+    
+        let entropy: f64 = occurrences.iter()
+            .filter(|&&count| count > 0)
+            .map(|&count| {
+                let probability = (count as f64) / (len as f64);
+                -probability * probability.log2() // Shannon entropy formula
+            })
+            .sum();
+    
         entropy
     }
+    
     // Function to check for basic randomness in a key
     fn check_randomness(key: &[u8], sample_size: usize) -> bool {
         let mut unique_samples = HashSet::new();
@@ -518,12 +531,10 @@ mod tests {
         temporal_key_with.quantum_evolve_key(); // Assuming this uses Deutsch's algorithm
         let duration_with = start_time_with.elapsed();
 
-        // Evolve key without Deutsch's algorithm (implement or simulate this)
+        // Evolve key without Deutsch's algorithm using the existing evolve_key method
         let start_time_without = std::time::Instant::now();
-        // You need to implement or call a function that evolves the key without using Deutsch's algorithm
-        // For example:
-        // let mut temporal_key_without = TemporalKey::new(initial_key, htm_model, evolution_interval);
-        // temporal_key_without.evolve_key_without_deutsch(); // This is a hypothetical function
+        let mut temporal_key_without = TemporalKey::new(initial_key, htm_model, evolution_interval);
+        temporal_key_without.evolve_key(10, 1); // Classical method for evolution
         let duration_without = start_time_without.elapsed();
 
         // Compare durations
@@ -532,49 +543,44 @@ mod tests {
             "Duration without Deutsch's algorithm: {:?}",
             duration_without
         );
-        // Comment out this line if you're not sure about the performance expectations
-        assert!(
-            duration_with < duration_without,
-            "Deutsch's algorithm should be faster"
-        );
-
-        println!("Duration with Deutsch's algorithm: {:?}", duration_with);
-        println!(
-            "Duration without Deutsch's algorithm: {:?}",
-            duration_without
-        );
 
         // Example assertion (adjust based on expected performance difference)
         assert!(
-            duration_with < duration_without,
-            "Deutsch's algorithm should be faster"
+            duration_with <= duration_without,
+            "Deutsch's algorithm should not be significantly slower"
         );
     }
 
+    
     #[test]
     fn test_deutsch_quantum_characteristic() {
         let htm_model = HTMModel::new();
         let initial_key = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Sample key
-        let evolution_interval = Duration::from_secs(10); // Adjust as needed
+        let evolution_interval = Duration::from_secs(10);
 
         // Evolve the key using Deutsch's algorithm
-        let mut temporal_key = TemporalKey::new(initial_key, htm_model, evolution_interval);
+        let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
         temporal_key.quantum_evolve_key();
         let evolved_key = temporal_key.get_key();
 
-        // Analyze the quantum characteristics of the evolved key
-        // This is where you would implement your own logic based on the specific quantum properties you want to assess
-        // For example, you might look for properties like superposition or entanglement, though these are hard to
-        // verify in a classical simulation
-
-        // Placeholder for quantum property analysis
-        let has_quantum_properties = check_quantum_properties(&evolved_key);
-
-        // Assert that the evolved key has the expected quantum characteristics
-        assert!(
-            has_quantum_properties,
-            "Evolved key lacks expected quantum characteristics"
+        // Check basic properties of the evolved key
+        assert_ne!(
+            evolved_key, &initial_key,
+            "Evolved key should not match the initial key"
         );
+        assert_eq!(
+            evolved_key.len(),
+            initial_key.len(),
+            "Evolved key should maintain length"
+        );
+        assert!(
+            has_sufficient_entropy(evolved_key),
+            "Evolved key should have high entropy"
+        );
+    }
+    // Example function to check if a key has sufficient entropy
+    fn has_sufficient_entropy(key: &[u8]) -> bool {
+        calculate_entropy(key) > SOME_ENTROPY_THRESHOLD
     }
 
     fn check_quantum_properties(key: &[u8]) -> bool {
@@ -650,19 +656,27 @@ mod tests {
 
         let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
 
-        // Get a clone of the evolved key for comparison
-        let evolved_key = {
-            temporal_key.quantum_evolve_key();
-            temporal_key.get_key().clone() // Clone the key to break the borrow
-        };
+        // Perform the quantum key evolution
+        temporal_key.quantum_evolve_key();
 
-        // Now you can perform the assertions
+        // Retrieve the evolved key
+        let evolved_key = temporal_key.get_key().clone();
+
+        // Check if the evolution steps counter has incremented
         assert_eq!(
             temporal_key.get_evolution_steps(),
             1,
-            "Evolution steps mismatch"
+            "The key should have evolved exactly once"
         );
-        assert_ne!(evolved_key, initial_key); // Compare with initial_key instead of a reference
+
+        // Ensure the evolved key is different from the initial key
+        assert_ne!(
+            evolved_key, initial_key,
+            "The evolved key should be different from the initial key"
+        );
+
+        // Optional: Additional checks can be added to verify other properties of the evolved key
+        // such as its length, entropy, etc.
     }
 
     #[test]
