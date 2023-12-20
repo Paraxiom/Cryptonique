@@ -12,6 +12,7 @@ pub struct HTMModel {
     columns: Vec<Column>,
     encoders: Vec<ScalarEncoder>,
     keys: HashMap<Vec<u8>, SystemTime>,
+    learning_rate: f64,
 }
 
 impl HTMModel {
@@ -22,6 +23,7 @@ impl HTMModel {
             columns: vec![],
             encoders: vec![],
             keys: HashMap::new(),
+            learning_rate: 0.1,
         }
     }
 
@@ -53,8 +55,36 @@ impl HTMModel {
     }
 
     pub fn learn(&mut self, data: &[u8]) {
-        // Implement learning logic here
+        // 1. Encode the data
+        for encoder in &self.encoders {
+            for &byte in data {
+                let encoded_data = encoder.encode(byte as f64); // Encode each byte
+
+                // 2. Update columns based on the encoded data
+                for (column, &data_bit) in self.columns.iter_mut().zip(&encoded_data) {
+                    if data_bit > 0 {
+                        column.activate();
+                    } else {
+                        column.deactivate();
+                    }
+                    column.update_cells();
+                }
+            }
+        }
+
+        // 3. Update dendrites and their synapses
+        for dendrite in &mut self.dendrites {
+            for segment in dendrite.get_segments_mut().iter_mut() {
+                let active = segment.is_active();
+                let strength_delta = self.learning_rate as f32; // Convert to f32
+                segment.update_synapses(active, strength_delta);
+            }
+        }
+
+        // 4. Optionally, use LearningAlgorithm for more complex learning logic
+        // This could involve adjusting weights based on the HTM's state and the input data
     }
+
     pub fn store_key(&mut self, key: Vec<u8>, timestamp: SystemTime) {
         self.keys.insert(key, timestamp);
     }

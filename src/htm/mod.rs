@@ -6,6 +6,7 @@ pub mod dendrites;
 pub mod encoders;
 pub mod htm_model;
 pub mod key_evolution;
+pub mod key_properties;
 pub mod synapses;
 pub mod temporal_keys;
 

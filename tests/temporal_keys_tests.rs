@@ -25,10 +25,14 @@ fn test_temporal_key_generation_and_validation() {
     let now = SystemTime::now();
     let key_age = now.duration_since(*retrieved_timestamp).unwrap();
 
-    assert!(key_age < evolution_interval, "Key age is greater than evolution interval");
+    assert!(
+        key_age < evolution_interval,
+        "Key age is greater than evolution interval"
+    );
 
     // Assert that the retrieved timestamp matches the generation time
-    assert_eq!(*retrieved_timestamp, temporal_key.generation_time, "Retrieved timestamp does not match the key's generation time");
-
-
+    assert_eq!(
+        *retrieved_timestamp, temporal_key.generation_time,
+        "Retrieved timestamp does not match the key's generation time"
+    );
 }

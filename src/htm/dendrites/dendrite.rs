@@ -50,7 +50,7 @@ impl DendriteSegment {
 }
 #[derive(Clone)]
 pub struct Dendrite {
-    segments: Vec<DendriteSegment>,
+    pub segments: Vec<DendriteSegment>,
 }
 
 impl Dendrite {
@@ -88,5 +88,8 @@ impl Dendrite {
 
     pub fn get_segment(&mut self, idx: usize) -> Option<&mut DendriteSegment> {
         self.segments.get_mut(idx)
+    }
+    pub fn get_segments_mut(&mut self) -> &mut Vec<DendriteSegment> {
+        &mut self.segments
     }
 }
