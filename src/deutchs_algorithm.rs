@@ -49,35 +49,38 @@ fn hadamard_gate(qubit: &Complex<f32>) -> Complex<f32> {
 
 fn generate_random_qubits(n: usize) -> Vec<Complex<f32>> {
     let mut rng = rand::thread_rng();
-    (0..n)
-        .map(|_| Complex::new(rng.gen::<f32>(), rng.gen::<f32>()))
-        .collect()
+    (0..n.min(256)).map(|_| Complex::new(rng.gen(), rng.gen())).collect()
 }
 
 pub fn evolve_key_using_deutsch(shared_state: &MutexGuard<'_, SharedState>) -> Vec<u8> {
-    let mut new_key = Vec::new();
-    let htm_model = shared_state.htm_model.lock().unwrap();
-
-    let initial_qubits = generate_random_qubits(10);
+    // Quantum-inspired transformations
+    let initial_qubits = generate_random_qubits(10); 
     let auxiliary_qubit = initialize_auxiliary_qubit();
-    let function_type = determine_function_type(); // Or a specific value like 0 or 1
-
+    
+    // Determine if the function is constant or balanced
+    let function_type = determine_function_type();
+    
+    // Assuming there's existing logic to define KeyProperties based on some relevant data
     let key_properties = KeyProperties::new(&[/* Key or relevant data here */]);
-    let is_constant = deutschs_algorithm(
-        &initial_qubits,
-        &auxiliary_qubit,
-        function_type,
-        &key_properties,
-    );
 
-    if is_constant {
-        new_key = htm_model.generate_noise_pattern();
+    // Apply Deutsch's algorithm
+    let is_constant = deutschs_algorithm(&initial_qubits, &auxiliary_qubit, function_type, &key_properties);
+
+    // Transform the key based on the outcome of Deutsch's algorithm
+    let mut new_key = if is_constant {
+        // Generate a noise pattern if the function is constant
+        shared_state.htm_model.lock().unwrap().generate_noise_pattern()
     } else {
-        new_key = htm_model.apply_transformation(&[1, 2, 3]); // Replace with your key
-    }
+        // Apply a transformation if the function is balanced
+        shared_state.htm_model.lock().unwrap().apply_transformation(&[1, 2, 3])
+    };
 
+    // Ensure the key is exactly 256 bytes
+    new_key.resize(256, 0);
     new_key
 }
+
+
 pub fn deutschs_algorithm(
     initial_qubits: &[Complex<f32>],
     auxiliary_qubit: &Complex<f32>,
