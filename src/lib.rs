@@ -1,7 +1,6 @@
 pub mod decryption;
 pub mod demo;
-pub mod deutchs_algorithm;
-pub mod encoding;
+
 pub mod encryption;
 pub mod htm;
 pub mod quantum;
@@ -9,5 +8,5 @@ pub mod sdr;
 pub mod shared_state;
 pub mod spatial_pooling;
 pub mod transaction;
-pub mod unit_circle_state_machine;
+
 pub mod utils;

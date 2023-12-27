@@ -12,16 +12,24 @@ chrono = "0.4"
 prettytable-rs = "0.10.0"
 ring = "0.17.0"
 colored = "2.0.0"
-
 ndarray = "0.15"
 ndarray-rand = "0.14.0"
 ndarray-npy = "0.8.1"
-# reqwest = { version = "0.11.18", features = ["blocking", "json"] }
 sha2 = "0.10.8"
 sha3 = "0.10.8"
 num-complex = "0.4"
+# reqwest = { version = "0.11.18", features = ["blocking", "json"] }
+
+# gRPC dependencies
+tonic = "0.10.2"
+prost = "0.12.3"
+tokio = { version = "1.0", features = ["full"] }
 
 [dev-dependencies]
+
+
+[build-dependencies]
+tonic-build = "0.10.2"
 
 [[example]]
 name = "htm_crypto_demo"
