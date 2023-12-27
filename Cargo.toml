@@ -2,7 +2,7 @@
 name = "cryptonique"
 version = "0.1.0"
 authors = ["Sylvain Cormier <sylvaincormier@protonmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 rand = "0.8"
@@ -18,13 +18,14 @@ ndarray-npy = "0.8.1"
 sha2 = "0.10.8"
 sha3 = "0.10.8"
 num-complex = "0.4"
+log = "0.4"
+env_logger = "0.10.1"
 # reqwest = { version = "0.11.18", features = ["blocking", "json"] }
-
 # gRPC dependencies
 tonic = "0.10.2"
 prost = "0.12.3"
 tokio = { version = "1.0", features = ["full"] }
-
+uuid = { version = "1.6.1", features = ["v4"] }
 [dev-dependencies]
 
 
