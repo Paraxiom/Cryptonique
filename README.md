@@ -24,6 +24,6 @@ git clone https://github.com/paraxiom/cryptonique_crypto_project.git
 
 cd cryptonique_crypto_project
 cargo build
-cargo run
+cargo run --bin cryptonique [alice|bob]
 cargo test
 ```
