@@ -1,3 +1,8 @@
+//anomaly_check.rs
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::htm::htm_model::HTMModel;
 use crate::htm::temporal_keys::TemporalKey;
 use std::collections::VecDeque;

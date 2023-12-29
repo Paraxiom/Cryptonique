@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use cryptonique::encryption::asymmetric_encryption::decrypt_asym::decrypt_asymmetric;
 use cryptonique::encryption::asymmetric_encryption::encrypt_asym::encrypt_asymmetric;
 use cryptonique::encryption::asymmetric_encryption::generate_key_pair;

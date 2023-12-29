@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 pub const RULE_30: [u8; 8] = [0, 1, 1, 1, 1, 0, 0, 0];
 
 pub fn evolve(sdr: &Vec<u8>, steps: usize) -> Vec<u8> {

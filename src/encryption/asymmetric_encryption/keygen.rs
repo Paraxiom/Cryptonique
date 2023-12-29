@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 extern crate rand;
 use rand::distributions::Uniform;
 use rand::Rng;

@@ -1,0 +1,1706 @@
+warning: unused import: `crate::encryption::key_generation::rand::prelude::SliceRandom`
+ --> src/htm/encoders/scalar_encoder.rs:2:5
+  |
+2 | use crate::encryption::key_generation::rand::prelude::SliceRandom;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `normalized_input`
+  --> src/htm/encoders/scalar_encoder.rs:27:13
+   |
+27 |         let normalized_input =
+   |             ^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_normalized_input`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: `cryptonique` (lib) generated 2 warnings (run `cargo fix --lib -p cryptonique` to apply 2 suggestions)
+warning: `cryptonique` (lib test) generated 2 warnings (2 duplicates)
+    Finished test [unoptimized + debuginfo] target(s) in 0.08s
+     Running unittests src/lib.rs (target/debug/deps/cryptonique-572cf02ccbda2eea)
+
+running 1 test
+test htm::temporal_keys::tests::test_quantum_key_evolution ... FAILED
+
+failures:
+
+---- htm::temporal_keys::tests::test_quantum_key_evolution stdout ----
+Debug - Starting encryption block: Left: 6DC1, Right: 5E08
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 5E08, Subkey: 818F, Mixed: FCBE, Result: 9988
+Debug - Round 0: After round function - Left: 5E08, Right: F449
+Debug - Round 1: Subkey: CE14
+Round Function - Input: F449, Subkey: CE14, Mixed: 12EE, Result: 7073
+Debug - Round 1: After round function - Left: F449, Right: 2E7B
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 2E7B, Subkey: 3D51, Mixed: 5E63, Result: 2985
+Debug - Round 2: After round function - Left: 2E7B, Right: DDCC
+Debug - Round 3: Subkey: 5581
+Round Function - Input: DDCC, Subkey: 5581, Mixed: 9A69, Result: CBFE
+Debug - Round 3: After round function - Left: DDCC, Right: E585
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: E585, Subkey: 4FBC, Mixed: AA09, Result: FD80
+Debug - Round 4: After round function - Left: E585, Right: 204C
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 204C, Subkey: 8F9, Mixed: 4A29, Result: 19CA
+Debug - Round 5: After round function - Left: 204C, Right: FC4F
+Debug - Round 6: Subkey: E065
+Round Function - Input: FC4F, Subkey: E065, Mixed: E5A6, Result: 564
+Debug - Round 6: After round function - Left: FC4F, Right: 2528
+Debug - Round 7: Subkey: F382
+Round Function - Input: 2528, Subkey: F382, Mixed: C550, Result: C6A1
+Debug - Round 7: After round function - Left: 2528, Right: 3AEE
+Debug - Encrypted block: 25283AEE
+Debug - Starting encryption block: Left: 6FD, Right: EF8C
+Debug - Round 0: Subkey: 818F
+Round Function - Input: EF8C, Subkey: 818F, Mixed: 88DB, Result: 780C
+Debug - Round 0: After round function - Left: EF8C, Right: 7EF1
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 7EF1, Subkey: CE14, Mixed: 682A, Result: 4B3C
+Debug - Round 1: After round function - Left: 7EF1, Right: A4B0
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: A4B0, Subkey: 3D51, Mixed: 100F, Result: 2755
+Debug - Round 2: After round function - Left: A4B0, Right: 59A4
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 59A4, Subkey: 5581, Mixed: 792D, Result: EA73
+Debug - Round 3: After round function - Left: 59A4, Right: 4EC3
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 4EC3, Subkey: 4FBC, Mixed: F3FC, Result: 3108
+Debug - Round 4: After round function - Left: 4EC3, Right: 68AC
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 68AC, Subkey: 8F9, Mixed: 8D2B, Result: 78D3
+Debug - Round 5: After round function - Left: 68AC, Right: 3610
+Debug - Round 6: Subkey: E065
+Round Function - Input: 3610, Subkey: E065, Mixed: B3A8, Result: 3260
+Debug - Round 6: After round function - Left: 3610, Right: 5ACC
+Debug - Round 7: Subkey: F382
+Round Function - Input: 5ACC, Subkey: F382, Mixed: 7272, Result: D0F2
+Debug - Round 7: After round function - Left: 5ACC, Right: E6E2
+Debug - Encrypted block: 5ACCE6E2
+Debug - Starting encryption block: Left: 8DA9, Right: DE2B
+Debug - Round 0: Subkey: 818F
+Round Function - Input: DE2B, Subkey: 818F, Mixed: FDD2, Result: 5DAC
+Debug - Round 0: After round function - Left: DE2B, Right: D005
+Debug - Round 1: Subkey: CE14
+Round Function - Input: D005, Subkey: CE14, Mixed: F0CC, Result: 3231
+Debug - Round 1: After round function - Left: D005, Right: EC1A
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: EC1A, Subkey: 3D51, Mixed: 4B59, Result: 1D63
+Debug - Round 2: After round function - Left: EC1A, Right: CD66
+Debug - Round 3: Subkey: 5581
+Round Function - Input: CD66, Subkey: 5581, Mixed: 1739, Result: 4699
+Debug - Round 3: After round function - Left: CD66, Right: AA83
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: AA83, Subkey: 4FBC, Mixed: D1FF, Result: E232
+Debug - Round 4: After round function - Left: AA83, Right: 2F54
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 2F54, Subkey: 8F9, Mixed: C269, Result: 907E
+Debug - Round 5: After round function - Left: 2F54, Right: 3AFD
+Debug - Round 6: Subkey: E065
+Round Function - Input: 3AFD, Subkey: E065, Mixed: DB10, Result: DE0D
+Debug - Round 6: After round function - Left: 3AFD, Right: F159
+Debug - Round 7: Subkey: F382
+Round Function - Input: F159, Subkey: F382, Mixed: 26DF, Result: 165C
+Debug - Round 7: After round function - Left: F159, Right: 2CA1
+Debug - Encrypted block: F1592CA1
+Debug - Starting encryption block: Left: E57E, Right: 25
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 25, Subkey: 818F, Mixed: DA4, Result: 4E39
+Debug - Round 0: After round function - Left: 25, Right: AB47
+Debug - Round 1: Subkey: CE14
+Round Function - Input: AB47, Subkey: CE14, Mixed: CADB, Result: 38AC
+Debug - Round 1: After round function - Left: AB47, Right: 3889
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3889, Subkey: 3D51, Mixed: AED3, Result: DBF2
+Debug - Round 2: After round function - Left: 3889, Right: 70B5
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 70B5, Subkey: 5581, Mixed: 31B6, Result: D219
+Debug - Round 3: After round function - Left: 70B5, Right: EA90
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: EA90, Subkey: 4FBC, Mixed: D261, Result: 2E1
+Debug - Round 4: After round function - Left: EA90, Right: 7254
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 7254, Subkey: 8F9, Mixed: DA6B, Result: 2957
+Debug - Round 5: After round function - Left: 7254, Right: C3C7
+Debug - Round 6: Subkey: E065
+Round Function - Input: C3C7, Subkey: E065, Mixed: 2165, Result: 3099
+Debug - Round 6: After round function - Left: C3C7, Right: 42CD
+Debug - Round 7: Subkey: F382
+Round Function - Input: 42CD, Subkey: F382, Mixed: B279, Result: E03D
+Debug - Round 7: After round function - Left: 42CD, Right: 23FA
+Debug - Encrypted block: 42CD23FA
+Debug - Starting encryption block: Left: 173E, Right: 92B0
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 92B0, Subkey: 818F, Mixed: A1F8, Result: 20F1
+Debug - Round 0: After round function - Left: 92B0, Right: 37CF
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 37CF, Subkey: CE14, Mixed: 2F18, Result: A8EB
+Debug - Round 1: After round function - Left: 37CF, Right: 3A5B
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3A5B, Subkey: 3D51, Mixed: BD63, Result: CE75
+Debug - Round 2: After round function - Left: 3A5B, Right: F9BA
+Debug - Round 3: Subkey: 5581
+Round Function - Input: F9BA, Subkey: 5581, Mixed: 79DA, Result: 5A0F
+Debug - Round 3: After round function - Left: F9BA, Right: 6054
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 6054, Subkey: 4FBC, Mixed: 8085, Result: 9703
+Debug - Round 4: After round function - Left: 6054, Right: 6EB9
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 6EB9, Subkey: 8F9, Mixed: BD93, Result: CF0E
+Debug - Round 5: After round function - Left: 6EB9, Right: AF5A
+Debug - Round 6: Subkey: E065
+Round Function - Input: AF5A, Subkey: E065, Mixed: 7DFC, Result: BAE8
+Debug - Round 6: After round function - Left: AF5A, Right: D451
+Debug - Round 7: Subkey: F382
+Round Function - Input: D451, Subkey: F382, Mixed: 3E9E, Result: 5AE2
+Debug - Round 7: After round function - Left: D451, Right: F5B8
+Debug - Encrypted block: D451F5B8
+Debug - Starting encryption block: Left: 8005, Right: 933B
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 933B, Subkey: 818F, Mixed: A650, Result: A291
+Debug - Round 0: After round function - Left: 933B, Right: 2294
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 2294, Subkey: CE14, Mixed: 8547, Result: 33C0
+Debug - Round 1: After round function - Left: 2294, Right: A0FB
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: A0FB, Subkey: 3D51, Mixed: F266, Result: 12F8
+Debug - Round 2: After round function - Left: A0FB, Right: 306C
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 306C, Subkey: 5581, Mixed: 2F6C, Result: EA73
+Debug - Round 3: After round function - Left: 306C, Right: 4A88
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 4A88, Subkey: 4FBC, Mixed: D224, Result: 9661
+Debug - Round 4: After round function - Left: 4A88, Right: A60D
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: A60D, Subkey: 8F9, Mixed: 7835, Result: 6F10
+Debug - Round 5: After round function - Left: A60D, Right: 2598
+Debug - Round 6: Subkey: E065
+Round Function - Input: 2598, Subkey: E065, Mixed: 2FE8, Result: ACD4
+Debug - Round 6: After round function - Left: 2598, Right: AD9
+Debug - Round 7: Subkey: F382
+Round Function - Input: AD9, Subkey: F382, Mixed: F2DF, Result: C49C
+Debug - Round 7: After round function - Left: AD9, Right: E104
+Debug - Encrypted block: AD9E104
+Debug - Starting encryption block: Left: 30E8, Right: DC0
+Debug - Round 0: Subkey: 818F
+Round Function - Input: DC0, Subkey: 818F, Mixed: 7A7C, Result: BF40
+Debug - Round 0: After round function - Left: DC0, Right: 8FA8
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 8FA8, Subkey: CE14, Mixed: EDE2, Result: 4D49
+Debug - Round 1: After round function - Left: 8FA8, Right: 4089
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 4089, Subkey: 3D51, Mixed: EED3, Result: 9FF2
+Debug - Round 2: After round function - Left: 4089, Right: 105A
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 105A, Subkey: 5581, Mixed: 2EDB, Result: DD6C
+Debug - Round 3: After round function - Left: 105A, Right: 9DE5
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 9DE5, Subkey: 4FBC, Mixed: 6D0F, Result: 59E5
+Debug - Round 4: After round function - Left: 9DE5, Right: 49BF
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 49BF, Subkey: 8F9, Mixed: 95C2, Result: 3313
+Debug - Round 5: After round function - Left: 49BF, Right: AEF6
+Debug - Round 6: Subkey: E065
+Round Function - Input: AEF6, Subkey: E065, Mixed: 7ADC, Result: BE96
+Debug - Round 6: After round function - Left: AEF6, Right: F729
+Debug - Round 7: Subkey: F382
+Round Function - Input: F729, Subkey: F382, Mixed: 555F, Result: 6614
+Debug - Round 7: After round function - Left: F729, Right: C8E2
+Debug - Encrypted block: F729C8E2
+Debug - Starting encryption block: Left: 9967, Right: A88A
+Debug - Round 0: Subkey: 818F
+Round Function - Input: A88A, Subkey: 818F, Mixed: 50C9, Result: 4C
+Debug - Round 0: After round function - Left: A88A, Right: 992B
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 992B, Subkey: CE14, Mixed: 39FB, Result: CCFA
+Debug - Round 1: After round function - Left: 992B, Right: 6470
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 6470, Subkey: 3D51, Mixed: E0D, Result: 9A19
+Debug - Round 2: After round function - Left: 6470, Right: 332
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 332, Subkey: 5581, Mixed: C59A, Result: E17B
+Debug - Round 3: After round function - Left: 332, Right: 850B
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 850B, Subkey: 4FBC, Mixed: A63E, Result: C7D0
+Debug - Round 4: After round function - Left: 850B, Right: C4E2
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: C4E2, Subkey: 8F9, Mixed: 6EDE, Result: EEE
+Debug - Round 5: After round function - Left: C4E2, Right: 8BE5
+Debug - Round 6: Subkey: E065
+Round Function - Input: 8BE5, Subkey: E065, Mixed: 6253, Result: 17AA
+Debug - Round 6: After round function - Left: 8BE5, Right: D348
+Debug - Round 7: Subkey: F382
+Round Function - Input: D348, Subkey: F382, Mixed: 3656, Result: D4E7
+Debug - Round 7: After round function - Left: D348, Right: 5F02
+Debug - Encrypted block: D3485F02
+Debug - Starting encryption block: Left: 953B, Right: 587
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 587, Subkey: 818F, Mixed: 38B4, Result: 790E
+Debug - Round 0: After round function - Left: 587, Right: EC35
+Debug - Round 1: Subkey: CE14
+Round Function - Input: EC35, Subkey: CE14, Mixed: D24D, Result: 4245
+Debug - Round 1: After round function - Left: EC35, Right: 47C2
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 47C2, Subkey: 3D51, Mixed: 289C, Result: E86A
+Debug - Round 2: After round function - Left: 47C2, Right: 45F
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 45F, Subkey: 5581, Mixed: CF02, Result: 6CD7
+Debug - Round 3: After round function - Left: 45F, Right: 2B15
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 2B15, Subkey: 4FBC, Mixed: D68B, Result: 24DD
+Debug - Round 4: After round function - Left: 2B15, Right: 2082
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 2082, Subkey: 8F9, Mixed: 4BD9, Result: 1C7B
+Debug - Round 5: After round function - Left: 2082, Right: 376E
+Debug - Round 6: Subkey: E065
+Round Function - Input: 376E, Subkey: E065, Mixed: BE98, Result: 3D13
+Debug - Round 6: After round function - Left: 376E, Right: 1D91
+Debug - Round 7: Subkey: F382
+Round Function - Input: 1D91, Subkey: F382, Mixed: 8898, Result: B33
+Debug - Round 7: After round function - Left: 1D91, Right: 3C5D
+Debug - Encrypted block: 1D913C5D
+Debug - Starting encryption block: Left: 2B96, Right: 2AAE
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 2AAE, Subkey: 818F, Mixed: 61ED, Result: F417
+Debug - Round 0: After round function - Left: 2AAE, Right: DF81
+Debug - Round 1: Subkey: CE14
+Round Function - Input: DF81, Subkey: CE14, Mixed: 6CAD, Result: FC9B
+Debug - Round 1: After round function - Left: DF81, Right: D635
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: D635, Subkey: 3D51, Mixed: 9C30, Result: 9A77
+Debug - Round 2: After round function - Left: D635, Right: 45F6
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 45F6, Subkey: 5581, Mixed: DBBC, Result: 197C
+Debug - Round 3: After round function - Left: 45F6, Right: CF49
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: CF49, Subkey: 4FBC, Mixed: F828, Result: 7A58
+Debug - Round 4: After round function - Left: CF49, Right: 3FAE
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 3FAE, Subkey: 8F9, Mixed: 453A, Result: 60E9
+Debug - Round 5: After round function - Left: 3FAE, Right: AFA0
+Debug - Round 6: Subkey: E065
+Round Function - Input: AFA0, Subkey: E065, Mixed: 802C, Result: 4417
+Debug - Round 6: After round function - Left: AFA0, Right: 7BB9
+Debug - Round 7: Subkey: F382
+Round Function - Input: 7BB9, Subkey: F382, Mixed: 79DB, Result: 8F7C
+Debug - Round 7: After round function - Left: 7BB9, Right: 20DC
+Debug - Encrypted block: 7BB920DC
+Debug - Starting encryption block: Left: 2FFD, Right: 76BB
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 76BB, Subkey: 818F, Mixed: C257, Result: 7513
+Debug - Round 0: After round function - Left: 76BB, Right: 5AEE
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 5AEE, Subkey: CE14, Mixed: 4811, Result: 9A6E
+Debug - Round 1: After round function - Left: 5AEE, Right: ECD5
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: ECD5, Subkey: 3D51, Mixed: 5131, Result: 8718
+Debug - Round 2: After round function - Left: ECD5, Right: DDF6
+Debug - Round 3: Subkey: 5581
+Round Function - Input: DDF6, Subkey: 5581, Mixed: 9BB9, Result: CDF1
+Debug - Round 3: After round function - Left: DDF6, Right: 2124
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 2124, Subkey: 4FBC, Mixed: 8703, Result: F32B
+Debug - Round 4: After round function - Left: 2124, Right: 2EDD
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 2EDD, Subkey: 8F9, Mixed: BEB1, Result: 6C90
+Debug - Round 5: After round function - Left: 2EDD, Right: 4DB4
+Debug - Round 6: Subkey: E065
+Round Function - Input: 4DB4, Subkey: E065, Mixed: 70C9, Result: 224C
+Debug - Round 6: After round function - Left: 4DB4, Right: C91
+Debug - Round 7: Subkey: F382
+Round Function - Input: C91, Subkey: F382, Mixed: 98, Result: 85B3
+Debug - Round 7: After round function - Left: C91, Right: C807
+Debug - Encrypted block: C91C807
+Debug - Starting encryption block: Left: 2E24, Right: 4EDB
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 4EDB, Subkey: 818F, Mixed: 8356, Result: 6017
+Debug - Round 0: After round function - Left: 4EDB, Right: 4E33
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 4E33, Subkey: CE14, Mixed: E238, Result: 6385
+Debug - Round 1: After round function - Left: 4E33, Right: 2D5E
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 2D5E, Subkey: 3D51, Mixed: 557B, Result: A722
+Debug - Round 2: After round function - Left: 2D5E, Right: E911
+Debug - Round 3: Subkey: 5581
+Round Function - Input: E911, Subkey: 5581, Mixed: F491, Result: 2336
+Debug - Round 3: After round function - Left: E911, Right: E68
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: E68, Subkey: 4FBC, Mixed: F122, Result: 54ED
+Debug - Round 4: After round function - Left: E68, Right: BDFC
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: BDFC, Subkey: 8F9, Mixed: 37AE, Result: 5257
+Debug - Round 5: After round function - Left: BDFC, Right: 5C3F
+Debug - Round 6: Subkey: E065
+Round Function - Input: 5C3F, Subkey: E065, Mixed: E521, Result: 341D
+Debug - Round 6: After round function - Left: 5C3F, Right: 89E1
+Debug - Round 7: Subkey: F382
+Round Function - Input: 89E1, Subkey: F382, Mixed: EB1B, Result: 1A30
+Debug - Round 7: After round function - Left: 89E1, Right: 460F
+Debug - Encrypted block: 89E1460F
+Debug - Starting encryption block: Left: 51E8, Right: 9992
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 9992, Subkey: 818F, Mixed: D908, Result: 59EE
+Debug - Round 0: After round function - Left: 9992, Right: 806
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 806, Subkey: CE14, Mixed: B0D6, Result: 53EF
+Debug - Round 1: After round function - Left: 806, Right: CA7D
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: CA7D, Subkey: 3D51, Mixed: 3E70, Result: 3CEB
+Debug - Round 2: After round function - Left: CA7D, Right: 34ED
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 34ED, Subkey: 5581, Mixed: 5374, Result: 1382
+Debug - Round 3: After round function - Left: 34ED, Right: D9FF
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: D9FF, Subkey: 4FBC, Mixed: 4DD9, Result: 189B
+Debug - Round 4: After round function - Left: D9FF, Right: 2C76
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 2C76, Subkey: 8F9, Mixed: AB79, Result: FDED
+Debug - Round 5: After round function - Left: 2C76, Right: 2412
+Debug - Round 6: Subkey: E065
+Round Function - Input: 2412, Subkey: E065, Mixed: 23B8, Result: A24D
+Debug - Round 6: After round function - Left: 2412, Right: 8E3B
+Debug - Round 7: Subkey: F382
+Round Function - Input: 8E3B, Subkey: F382, Mixed: DEC, Result: CB0B
+Debug - Round 7: After round function - Left: 8E3B, Right: EF19
+Debug - Encrypted block: 8E3BEF19
+Debug - Starting encryption block: Left: 65BA, Right: A697
+Debug - Round 0: Subkey: 818F
+Round Function - Input: A697, Subkey: 818F, Mixed: 4131, Result: 9018
+Debug - Round 0: After round function - Left: A697, Right: F5A2
+Debug - Round 1: Subkey: CE14
+Round Function - Input: F5A2, Subkey: CE14, Mixed: 1DB6, Result: FED9
+Debug - Round 1: After round function - Left: F5A2, Right: 584E
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 584E, Subkey: 3D51, Mixed: ACFC, Result: 6FB8
+Debug - Round 2: After round function - Left: 584E, Right: 9A1A
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 9A1A, Subkey: 5581, Mixed: 7CDF, Result: 4EBC
+Debug - Round 3: After round function - Left: 9A1A, Right: 16F2
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 16F2, Subkey: 4FBC, Mixed: 3573, Result: 44B0
+Debug - Round 4: After round function - Left: 16F2, Right: DEAA
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: DEAA, Subkey: 8F9, Mixed: 3D1F, Result: E08
+Debug - Round 5: After round function - Left: DEAA, Right: 18FA
+Debug - Round 6: Subkey: E065
+Round Function - Input: 18FA, Subkey: E065, Mixed: CAFF, Result: FAE2
+Debug - Round 6: After round function - Left: 18FA, Right: 2448
+Debug - Round 7: Subkey: F382
+Round Function - Input: 2448, Subkey: F382, Mixed: BE50, Result: BE11
+Debug - Round 7: After round function - Left: 2448, Right: A6EB
+Debug - Encrypted block: 2448A6EB
+Debug - Starting encryption block: Left: 612F, Right: 90FE
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 90FE, Subkey: 818F, Mixed: 9468, Result: 118C
+Debug - Round 0: After round function - Left: 90FE, Right: 70A3
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 70A3, Subkey: CE14, Mixed: F5B9, Result: A6D1
+Debug - Round 1: After round function - Left: 70A3, Right: 362F
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 362F, Subkey: 3D51, Mixed: 9C03, Result: EB3B
+Debug - Round 2: After round function - Left: 362F, Right: 9B98
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 9B98, Subkey: 5581, Mixed: 88CF, Result: BE39
+Debug - Round 3: After round function - Left: 9B98, Right: 8816
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 8816, Subkey: 4FBC, Mixed: BE96, Result: 5B73
+Debug - Round 4: After round function - Left: 8816, Right: C0EB
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: C0EB, Subkey: 8F9, Mixed: 4F26, Result: AE5C
+Debug - Round 5: After round function - Left: C0EB, Right: 264A
+Debug - Round 6: Subkey: E065
+Round Function - Input: 264A, Subkey: E065, Mixed: 3578, Result: B299
+Debug - Round 6: After round function - Left: 264A, Right: 7272
+Debug - Round 7: Subkey: F382
+Round Function - Input: 7272, Subkey: F382, Mixed: 2FA3, Result: 5FC9
+Debug - Round 7: After round function - Left: 7272, Right: 7983
+Debug - Encrypted block: 72727983
+Debug - Starting encryption block: Left: 6BFB, Right: DCFF
+Debug - Round 0: Subkey: 818F
+Round Function - Input: DCFF, Subkey: 818F, Mixed: F472, Result: 5452
+Debug - Round 0: After round function - Left: DCFF, Right: 3FA9
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 3FA9, Subkey: CE14, Mixed: 6DE8, Result: EC74
+Debug - Round 1: After round function - Left: 3FA9, Right: 308B
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 308B, Subkey: 3D51, Mixed: 6EE3, Result: 18AD
+Debug - Round 2: After round function - Left: 308B, Right: 2704
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 2704, Subkey: 5581, Mixed: E42B, Result: 1683
+Debug - Round 3: After round function - Left: 2704, Right: 2608
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 2608, Subkey: 4FBC, Mixed: AE23, Result: DA11
+Debug - Round 4: After round function - Left: 2608, Right: FD15
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: FD15, Subkey: 8F9, Mixed: 3070, Result: 334B
+Debug - Round 5: After round function - Left: FD15, Right: 1543
+Debug - Round 6: Subkey: E065
+Round Function - Input: 1543, Subkey: E065, Mixed: AD47, Result: 1A40
+Debug - Round 6: After round function - Left: 1543, Right: E755
+Debug - Round 7: Subkey: F382
+Round Function - Input: E755, Subkey: F382, Mixed: D6BE, Result: B4E8
+Debug - Round 7: After round function - Left: E755, Right: A1AB
+Debug - Encrypted block: E755A1AB
+Debug - Starting encryption block: Left: 9A0E, Right: DE00
+Debug - Round 0: Subkey: 818F
+Round Function - Input: DE00, Subkey: 818F, Mixed: FC7A, Result: D94D
+Debug - Round 0: After round function - Left: DE00, Right: 4343
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 4343, Subkey: CE14, Mixed: 8AB8, Result: 91D
+Debug - Round 1: After round function - Left: 4343, Right: D71D
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: D71D, Subkey: 3D51, Mixed: A370, Result: A5DB
+Debug - Round 2: After round function - Left: D71D, Right: E698
+Debug - Round 3: Subkey: 5581
+Round Function - Input: E698, Subkey: 5581, Mixed: E0C9, Result: B54C
+Debug - Round 3: After round function - Left: E698, Right: 6251
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 6251, Subkey: 4FBC, Mixed: 906D, Result: AF
+Debug - Round 4: After round function - Left: 6251, Right: E637
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: E637, Subkey: 8F9, Mixed: 7987, Result: C8FC
+Debug - Round 5: After round function - Left: E637, Right: AAAD
+Debug - Round 6: Subkey: E065
+Round Function - Input: AAAD, Subkey: E065, Mixed: 5894, Result: 19F4
+Debug - Round 6: After round function - Left: AAAD, Right: FFC3
+Debug - Round 7: Subkey: F382
+Round Function - Input: FFC3, Subkey: F382, Mixed: 9A2F, Result: AFFB
+Debug - Round 7: After round function - Left: FFC3, Right: 556
+Debug - Encrypted block: FFC30556
+Debug - Starting encryption block: Left: 3937, Right: 65BC
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 65BC, Subkey: 818F, Mixed: 3A5F, Result: D04
+Debug - Round 0: After round function - Left: 65BC, Right: 3433
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 3433, Subkey: CE14, Mixed: 1238, Result: 9285
+Debug - Round 1: After round function - Left: 3433, Right: F739
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: F739, Subkey: 3D51, Mixed: A451, Result: 75A2
+Debug - Round 2: After round function - Left: F739, Right: 4191
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 4191, Subkey: 5581, Mixed: B894, Result: FFF4
+Debug - Round 3: After round function - Left: 4191, Right: 8CD
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 8CD, Subkey: 4FBC, Mixed: C44A, Result: E47A
+Debug - Round 4: After round function - Left: 8CD, Right: A5EB
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: A5EB, Subkey: 8F9, Mixed: 7725, Result: 600D
+Debug - Round 5: After round function - Left: A5EB, Right: 68C0
+Debug - Round 6: Subkey: E065
+Round Function - Input: 68C0, Subkey: E065, Mixed: 492A, Result: 6ACC
+Debug - Round 6: After round function - Left: 68C0, Right: CF27
+Debug - Round 7: Subkey: F382
+Round Function - Input: CF27, Subkey: F382, Mixed: 154E, Result: 7205
+Debug - Round 7: After round function - Left: CF27, Right: 1AC5
+Debug - Encrypted block: CF271AC5
+Debug - Starting encryption block: Left: 6AEC, Right: 8052
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 8052, Subkey: 818F, Mixed: F08, Result: 8FCE
+Debug - Round 0: After round function - Left: 8052, Right: E522
+Debug - Round 1: Subkey: CE14
+Round Function - Input: E522, Subkey: CE14, Mixed: 99B5, Result: 8CE8
+Debug - Round 1: After round function - Left: E522, Right: CBA
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: CBA, Subkey: 3D51, Mixed: 505A, Result: 7747
+Debug - Round 2: After round function - Left: CBA, Right: 9265
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 9265, Subkey: 5581, Mixed: 3F37, Result: 8B4D
+Debug - Round 3: After round function - Left: 9265, Right: 87F7
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 87F7, Subkey: 4FBC, Mixed: BD9E, Result: DC32
+Debug - Round 4: After round function - Left: 87F7, Right: 4E57
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 4E57, Subkey: 8F9, Mixed: BA82, Result: 18AF
+Debug - Round 5: After round function - Left: 4E57, Right: 9F58
+Debug - Round 6: Subkey: E065
+Round Function - Input: 9F58, Subkey: E065, Mixed: FDEB, Result: AFF
+Debug - Round 6: After round function - Left: 9F58, Right: 44A8
+Debug - Round 7: Subkey: F382
+Round Function - Input: 44A8, Subkey: F382, Mixed: C151, Result: 12D2
+Debug - Round 7: After round function - Left: 44A8, Right: 8D8A
+Debug - Encrypted block: 44A88D8A
+Debug - Starting encryption block: Left: A9B1, Right: 91CF
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 91CF, Subkey: 818F, Mixed: 9AF0, Result: 9C33
+Debug - Round 0: After round function - Left: 91CF, Right: 3582
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 3582, Subkey: CE14, Mixed: 1CB0, Result: 1B1F
+Debug - Round 1: After round function - Left: 3582, Right: 8AD0
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 8AD0, Subkey: 3D51, Mixed: 410E, Result: 2759
+Debug - Round 2: After round function - Left: 8AD0, Right: 12DB
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 12DB, Subkey: 5581, Mixed: 42E3, Result: 306D
+Debug - Round 3: After round function - Left: 12DB, Right: BABD
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: BABD, Subkey: 4FBC, Mixed: 53C8, Result: D5EA
+Debug - Round 4: After round function - Left: BABD, Right: C731
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: C731, Subkey: 8F9, Mixed: 8156, Result: 64F7
+Debug - Round 5: After round function - Left: C731, Right: DE4A
+Debug - Round 6: Subkey: E065
+Round Function - Input: DE4A, Subkey: E065, Mixed: F57D, Result: 6482
+Debug - Round 6: After round function - Left: DE4A, Right: A3B3
+Debug - Round 7: Subkey: F382
+Round Function - Input: A3B3, Subkey: F382, Mixed: B9AC, Result: 7C5F
+Debug - Round 7: After round function - Left: A3B3, Right: A215
+Debug - Encrypted block: A3B3A215
+Debug - Starting encryption block: Left: AF0, Right: BBC6
+Debug - Round 0: Subkey: 818F
+Round Function - Input: BBC6, Subkey: 818F, Mixed: EAA9, Result: BDE2
+Debug - Round 0: After round function - Left: BBC6, Right: B712
+Debug - Round 1: Subkey: CE14
+Round Function - Input: B712, Subkey: CE14, Mixed: 2934, Result: 6F16
+Debug - Round 1: After round function - Left: B712, Right: D4D0
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: D4D0, Subkey: 3D51, Mixed: 9108, Result: 176E
+Debug - Round 2: After round function - Left: D4D0, Right: A07C
+Debug - Round 3: Subkey: 5581
+Round Function - Input: A07C, Subkey: 5581, Mixed: AFEF, Result: 98EF
+Debug - Round 3: After round function - Left: A07C, Right: 4C3F
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 4C3F, Subkey: 4FBC, Mixed: DFDC, Result: 1F86
+Debug - Round 4: After round function - Left: 4C3F, Right: BFFA
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: BFFA, Subkey: 8F9, Mixed: 479E, Result: 2252
+Debug - Round 5: After round function - Left: BFFA, Right: 6E6D
+Debug - Round 6: Subkey: E065
+Round Function - Input: 6E6D, Subkey: E065, Mixed: 7692, Result: D688
+Debug - Round 6: After round function - Left: 6E6D, Right: 6972
+Debug - Round 7: Subkey: F382
+Round Function - Input: 6972, Subkey: F382, Mixed: E7A2, Result: 44B5
+Debug - Round 7: After round function - Left: 6972, Right: 2AD8
+Debug - Encrypted block: 69722AD8
+Debug - Starting encryption block: Left: E7B5, Right: 8B2B
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 8B2B, Subkey: 818F, Mixed: 65D0, Result: 6289
+Debug - Round 0: After round function - Left: 8B2B, Right: 853C
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 853C, Subkey: CE14, Mixed: 9A82, Result: 3AAF
+Debug - Round 1: After round function - Left: 853C, Right: B184
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: B184, Subkey: 3D51, Mixed: 76AF, Result: 4753
+Debug - Round 2: After round function - Left: B184, Right: C26F
+Debug - Round 3: Subkey: 5581
+Round Function - Input: C26F, Subkey: 5581, Mixed: BF80, Result: BD18
+Debug - Round 3: After round function - Left: C26F, Right: C9C
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: C9C, Subkey: 4FBC, Mixed: E2C2, Result: 45A3
+Debug - Round 4: After round function - Left: C9C, Right: 87CC
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 87CC, Subkey: 8F9, Mixed: 862C, Result: 4337
+Debug - Round 5: After round function - Left: 87CC, Right: 4FAB
+Debug - Round 6: Subkey: E065
+Round Function - Input: 4FAB, Subkey: E065, Mixed: 8081, Result: 54BB
+Debug - Round 6: After round function - Left: 4FAB, Right: D377
+Debug - Round 7: Subkey: F382
+Round Function - Input: D377, Subkey: F382, Mixed: 37CE, Result: 579D
+Debug - Round 7: After round function - Left: D377, Right: 1836
+Debug - Encrypted block: D3771836
+Debug - Starting encryption block: Left: AE4C, Right: 763D
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 763D, Subkey: 818F, Mixed: BE67, Result: F56
+Debug - Round 0: After round function - Left: 763D, Right: A11A
+Debug - Round 1: Subkey: CE14
+Round Function - Input: A11A, Subkey: CE14, Mixed: 7973, Result: 870
+Debug - Round 1: After round function - Left: A11A, Right: 7E4D
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 7E4D, Subkey: 3D51, Mixed: DCF5, Result: CA74
+Debug - Round 2: After round function - Left: 7E4D, Right: 6B6E
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 6B6E, Subkey: 5581, Mixed: 77E, Result: 600C
+Debug - Round 3: After round function - Left: 6B6E, Right: 1E41
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 1E41, Subkey: 4FBC, Mixed: 6FEB, Result: 985F
+Debug - Round 4: After round function - Left: 1E41, Right: F331
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: F331, Subkey: 8F9, Mixed: E157, Result: 5723
+Debug - Round 5: After round function - Left: F331, Right: 4962
+Debug - Round 6: Subkey: E065
+Round Function - Input: 4962, Subkey: E065, Mixed: 4E39, Result: 1A69
+Debug - Round 6: After round function - Left: 4962, Right: E958
+Debug - Round 7: Subkey: F382
+Round Function - Input: E958, Subkey: F382, Mixed: E6D6, Result: 5CF
+Debug - Round 7: After round function - Left: E958, Right: 4CAD
+Debug - Encrypted block: E9584CAD
+Debug - Starting encryption block: Left: 9BD7, Right: 5862
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 5862, Subkey: 818F, Mixed: CF8E, Result: A891
+Debug - Round 0: After round function - Left: 5862, Right: 3346
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 3346, Subkey: CE14, Mixed: AD0, Result: DB9
+Debug - Round 1: After round function - Left: 3346, Right: 55DB
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 55DB, Subkey: 3D51, Mixed: 9964, Result: D9CD
+Debug - Round 2: After round function - Left: 55DB, Right: EA8B
+Debug - Round 3: Subkey: 5581
+Round Function - Input: EA8B, Subkey: 5581, Mixed: 62, Result: A4D1
+Debug - Round 3: After round function - Left: EA8B, Right: F10A
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: F10A, Subkey: 4FBC, Mixed: 632, Result: A03E
+Debug - Round 4: After round function - Left: F10A, Right: 4AB5
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 4AB5, Subkey: 8F9, Mixed: 9D72, Result: 3E02
+Debug - Round 5: After round function - Left: 4AB5, Right: CF08
+Debug - Round 6: Subkey: E065
+Round Function - Input: CF08, Subkey: E065, Mixed: 7B6D, Result: EEDF
+Debug - Round 6: After round function - Left: CF08, Right: A46A
+Debug - Round 7: Subkey: F382
+Round Function - Input: A46A, Subkey: F382, Mixed: BF64, Result: FCED
+Debug - Round 7: After round function - Left: A46A, Right: 33E5
+Debug - Encrypted block: A46A33E5
+Debug - Starting encryption block: Left: 36C4, Right: EBB5
+Debug - Round 0: Subkey: 818F
+Round Function - Input: EBB5, Subkey: 818F, Mixed: 6A23, Result: 1ED1
+Debug - Round 0: After round function - Left: EBB5, Right: 2815
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 2815, Subkey: CE14, Mixed: B14F, Result: 8191
+Debug - Round 1: After round function - Left: 2815, Right: 6A24
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 6A24, Subkey: 3D51, Mixed: 3BAD, Result: ADCB
+Debug - Round 2: After round function - Left: 6A24, Right: 85DE
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 85DE, Subkey: 5581, Mixed: DAFE, Result: B8B4
+Debug - Round 3: After round function - Left: 85DE, Right: D290
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: D290, Subkey: 4FBC, Mixed: 1261, Result: C6E1
+Debug - Round 4: After round function - Left: D290, Right: 433F
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 433F, Subkey: 8F9, Mixed: 61C2, Result: C553
+Debug - Round 5: After round function - Left: 433F, Right: 17C3
+Debug - Round 6: Subkey: E065
+Round Function - Input: 17C3, Subkey: E065, Mixed: C147, Result: 7600
+Debug - Round 6: After round function - Left: 17C3, Right: 353F
+Debug - Round 7: Subkey: F382
+Round Function - Input: 353F, Subkey: F382, Mixed: 4609, Result: 1040
+Debug - Round 7: After round function - Left: 353F, Right: 783
+Debug - Encrypted block: 353F0783
+Debug - Starting encryption block: Left: EE53, Right: B646
+Debug - Round 0: Subkey: 818F
+Round Function - Input: B646, Subkey: 818F, Mixed: BEA9, Result: ED22
+Debug - Round 0: After round function - Left: B646, Right: 371
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 371, Subkey: CE14, Mixed: 8C2E, Result: EF8F
+Debug - Round 1: After round function - Left: 371, Right: 59C9
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 59C9, Subkey: 3D51, Mixed: B8D4, Result: FCC0
+Debug - Round 2: After round function - Left: 59C9, Right: FFB1
+Debug - Round 3: Subkey: 5581
+Round Function - Input: FFB1, Subkey: 5581, Mixed: A992, Result: E18
+Debug - Round 3: After round function - Left: FFB1, Right: 57D1
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 57D1, Subkey: 4FBC, Mixed: 3C6D, Result: A8EF
+Debug - Round 4: After round function - Left: 57D1, Right: 575E
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 575E, Subkey: 8F9, Mixed: 2BB, Result: F726
+Debug - Round 5: After round function - Left: 575E, Right: A0F7
+Debug - Round 6: Subkey: E065
+Round Function - Input: A0F7, Subkey: E065, Mixed: AE4, Result: 4D05
+Debug - Round 6: After round function - Left: A0F7, Right: 1A5B
+Debug - Round 7: Subkey: F382
+Round Function - Input: 1A5B, Subkey: F382, Mixed: 6EE8, Result: EA84
+Debug - Round 7: After round function - Left: 1A5B, Right: 4A73
+Debug - Encrypted block: 1A5B4A73
+Debug - Starting encryption block: Left: 37D7, Right: B67C
+Debug - Round 0: Subkey: 818F
+Round Function - Input: B67C, Subkey: 818F, Mixed: C059, Result: 9713
+Debug - Round 0: After round function - Left: B67C, Right: A0C4
+Debug - Round 1: Subkey: CE14
+Round Function - Input: A0C4, Subkey: CE14, Mixed: 76C3, Result: 4B7
+Debug - Round 1: After round function - Left: A0C4, Right: B2CB
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: B2CB, Subkey: 3D51, Mixed: 80E7, Result: 34DE
+Debug - Round 2: After round function - Left: B2CB, Right: 941A
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 941A, Subkey: 5581, Mixed: 4CDF, Result: 7FBC
+Debug - Round 3: After round function - Left: 941A, Right: CD77
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: CD77, Subkey: 4FBC, Mixed: E998, Result: 6DE3
+Debug - Round 4: After round function - Left: CD77, Right: F9F9
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: F9F9, Subkey: 8F9, Mixed: 1790, Result: 10D5
+Debug - Round 5: After round function - Left: F9F9, Right: DDA2
+Debug - Round 6: Subkey: E065
+Round Function - Input: DDA2, Subkey: E065, Mixed: F03D, Result: 6706
+Debug - Round 6: After round function - Left: DDA2, Right: 9EFF
+Debug - Round 7: Subkey: F382
+Round Function - Input: 9EFF, Subkey: F382, Mixed: 940C, Result: 562D
+Debug - Round 7: After round function - Left: 9EFF, Right: 8B8F
+Debug - Encrypted block: 9EFF8B8F
+Debug - Starting encryption block: Left: 66B9, Right: BA66
+Debug - Round 0: Subkey: 818F
+Round Function - Input: BA66, Subkey: 818F, Mixed: DFA9, Result: 8FF2
+Debug - Round 0: After round function - Left: BA66, Right: E94B
+Debug - Round 1: Subkey: CE14
+Round Function - Input: E94B, Subkey: CE14, Mixed: BAFD, Result: 2F8A
+Debug - Round 1: After round function - Left: E94B, Right: 95EC
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 95EC, Subkey: 3D51, Mixed: 99EE, Result: FFA3
+Debug - Round 2: After round function - Left: 95EC, Right: 16E8
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 16E8, Subkey: 5581, Mixed: 634B, Result: 9179
+Debug - Round 3: After round function - Left: 16E8, Right: 495
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 495, Subkey: 4FBC, Mixed: A28A, Result: 87CE
+Debug - Round 4: After round function - Left: 495, Right: 9126
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 9126, Subkey: 8F9, Mixed: D0FC, Result: 1078
+Debug - Round 5: After round function - Left: 9126, Right: 14ED
+Debug - Round 6: Subkey: E065
+Round Function - Input: 14ED, Subkey: E065, Mixed: AA97, Result: 1AEF
+Debug - Round 6: After round function - Left: 14ED, Right: 8BC9
+Debug - Round 7: Subkey: F382
+Round Function - Input: 8BC9, Subkey: F382, Mixed: FA5B, Result: A54
+Debug - Round 7: After round function - Left: 8BC9, Right: 1EB9
+Debug - Encrypted block: 8BC91EB9
+Debug - Starting encryption block: Left: 3276, Right: 8DE5
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 8DE5, Subkey: 818F, Mixed: 7BA0, Result: 7E12
+Debug - Round 0: After round function - Left: 8DE5, Right: 4C64
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 4C64, Subkey: CE14, Mixed: D3C0, Result: D44C
+Debug - Round 1: After round function - Left: 4C64, Right: 59A9
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 59A9, Subkey: 3D51, Mixed: B7D4, Result: F690
+Debug - Round 2: After round function - Left: 59A9, Right: BAF4
+Debug - Round 3: Subkey: 5581
+Round Function - Input: BAF4, Subkey: 5581, Mixed: 83A8, Result: 160
+Debug - Round 3: After round function - Left: BAF4, Right: 58C9
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 58C9, Subkey: 4FBC, Mixed: 442D, Result: D263
+Debug - Round 4: After round function - Left: 58C9, Right: 6897
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 6897, Subkey: 8F9, Mixed: 8C83, Result: FF23
+Debug - Round 5: After round function - Left: 6897, Right: A7EA
+Debug - Round 6: Subkey: E065
+Round Function - Input: A7EA, Subkey: E065, Mixed: 427C, Result: 85C0
+Debug - Round 6: After round function - Left: A7EA, Right: ED57
+Debug - Round 7: Subkey: F382
+Round Function - Input: ED57, Subkey: F382, Mixed: 6CF, Result: 3799
+Debug - Round 7: After round function - Left: ED57, Right: 9073
+Debug - Encrypted block: ED579073
+Debug - Starting encryption block: Left: 5EA8, Right: FDB3
+Debug - Round 0: Subkey: 818F
+Round Function - Input: FDB3, Subkey: 818F, Mixed: FA13, Result: 8ED6
+Debug - Round 0: After round function - Left: FDB3, Right: D07E
+Debug - Round 1: Subkey: CE14
+Round Function - Input: D07E, Subkey: CE14, Mixed: F494, Result: B4B4
+Debug - Round 1: After round function - Left: D07E, Right: 4907
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 4907, Subkey: 3D51, Mixed: 32C4, Result: 74C3
+Debug - Round 2: After round function - Left: 4907, Right: A4BD
+Debug - Round 3: Subkey: 5581
+Round Function - Input: A4BD, Subkey: 5581, Mixed: D1F7, Result: 64C1
+Debug - Round 3: After round function - Left: A4BD, Right: 2DC6
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 2DC6, Subkey: 4FBC, Mixed: EC13, Result: 9976
+Debug - Round 4: After round function - Left: 2DC6, Right: 3DCB
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 3DCB, Subkey: 8F9, Mixed: 3622, Result: 91FD
+Debug - Round 5: After round function - Left: 3DCB, Right: BC3B
+Debug - Round 6: Subkey: E065
+Round Function - Input: BC3B, Subkey: E065, Mixed: E504, Result: A25F
+Debug - Round 6: After round function - Left: BC3B, Right: 9F94
+Debug - Round 7: Subkey: F382
+Round Function - Input: 9F94, Subkey: F382, Mixed: 98B4, Result: DF0E
+Debug - Round 7: After round function - Left: 9F94, Right: 6335
+Debug - Encrypted block: 9F946335
+Debug - Starting encryption block: Left: A48E, Right: 8E3F
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 8E3F, Subkey: 818F, Mixed: 7E70, Result: 78EB
+Debug - Round 0: After round function - Left: 8E3F, Right: DC65
+Debug - Round 1: Subkey: CE14
+Round Function - Input: DC65, Subkey: CE14, Mixed: 53CD, Result: C78D
+Debug - Round 1: After round function - Left: DC65, Right: 49B2
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 49B2, Subkey: 3D51, Mixed: 381C, Result: FC92
+Debug - Round 2: After round function - Left: 49B2, Right: 20F7
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 20F7, Subkey: 5581, Mixed: B3C3, Result: C5C7
+Debug - Round 3: After round function - Left: 20F7, Right: 8C75
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 8C75, Subkey: 4FBC, Mixed: E18E, Result: 8031
+Debug - Round 4: After round function - Left: 8C75, Right: A0C6
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: A0C6, Subkey: 8F9, Mixed: 4DFD, Result: DF1A
+Debug - Round 5: After round function - Left: A0C6, Right: 536F
+Debug - Round 6: Subkey: E065
+Round Function - Input: 536F, Subkey: E065, Mixed: 9EA1, Result: 4C55
+Debug - Round 6: After round function - Left: 536F, Right: EC93
+Debug - Round 7: Subkey: F382
+Round Function - Input: EC93, Subkey: F382, Mixed: AF, Result: 36B3
+Debug - Round 7: After round function - Left: EC93, Right: 65DC
+Debug - Encrypted block: EC9365DC
+Debug - Starting encryption block: Left: 97A2, Right: 7A6E
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 7A6E, Subkey: 818F, Mixed: DFEF, Result: E9EF
+Debug - Round 0: After round function - Left: 7A6E, Right: 7E4D
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 7E4D, Subkey: CE14, Mixed: 630A, Result: 41A6
+Debug - Round 1: After round function - Left: 7E4D, Right: 3BC8
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3BC8, Subkey: 3D51, Mixed: C8CB, Result: 3F61
+Debug - Round 2: After round function - Left: 3BC8, Right: 412C
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 412C, Subkey: 5581, Mixed: B56C, Result: 7093
+Debug - Round 3: After round function - Left: 412C, Right: 4B5B
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 4B5B, Subkey: 4FBC, Mixed: D8BC, Result: 1AEC
+Debug - Round 4: After round function - Left: 4B5B, Right: 5BC0
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 5BC0, Subkey: 8F9, Mixed: 25CB, Result: D0F1
+Debug - Round 5: After round function - Left: 5BC0, Right: 9BAA
+Debug - Round 6: Subkey: E065
+Round Function - Input: 9BAA, Subkey: E065, Mixed: E07B, Result: 1132
+Debug - Round 6: After round function - Left: 9BAA, Right: 4AF2
+Debug - Round 7: Subkey: F382
+Round Function - Input: 4AF2, Subkey: F382, Mixed: F3A1, Result: 21A5
+Debug - Round 7: After round function - Left: 4AF2, Right: BA0F
+Debug - Encrypted block: 4AF2BA0F
+Debug - Starting encryption block: Left: F267, Right: 4C2D
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 4C2D, Subkey: 818F, Mixed: 6DE6, Result: 8E10
+Debug - Round 0: After round function - Left: 4C2D, Right: 7C77
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 7C77, Subkey: CE14, Mixed: 545A, Result: 7607
+Debug - Round 1: After round function - Left: 7C77, Right: 3A2A
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3A2A, Subkey: 3D51, Mixed: BBDB, Result: 4B9C
+Debug - Round 2: After round function - Left: 3A2A, Right: 37EB
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 37EB, Subkey: 5581, Mixed: 6B64, Result: 2C2D
+Debug - Round 3: After round function - Left: 37EB, Right: 1607
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 1607, Subkey: 4FBC, Mixed: 2E1B, Result: DB80
+Debug - Round 4: After round function - Left: 1607, Right: EC6B
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: EC6B, Subkey: 8F9, Mixed: AB27, Result: 1C2A
+Debug - Round 5: After round function - Left: EC6B, Right: A2D
+Debug - Round 6: Subkey: E065
+Round Function - Input: A2D, Subkey: E065, Mixed: 5497, Result: E20F
+Debug - Round 6: After round function - Left: A2D, Right: E64
+Debug - Round 7: Subkey: F382
+Round Function - Input: E64, Subkey: F382, Mixed: F30, Result: E87
+Debug - Round 7: After round function - Left: E64, Right: 4AA
+Debug - Encrypted block: E6404AA
+Debug - Starting encryption block: Left: 5563, Right: 2720
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 2720, Subkey: 818F, Mixed: 457D, Result: D782
+Debug - Round 0: After round function - Left: 2720, Right: 82E1
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 82E1, Subkey: CE14, Mixed: 87AA, Result: A404
+Debug - Round 1: After round function - Left: 82E1, Right: 8324
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 8324, Subkey: 3D51, Mixed: 3AE, Result: 6017
+Debug - Round 2: After round function - Left: 8324, Right: E2F6
+Debug - Round 3: Subkey: 5581
+Round Function - Input: E2F6, Subkey: 5581, Mixed: C3B9, Result: 9571
+Debug - Round 3: After round function - Left: E2F6, Right: 1655
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 1655, Subkey: 4FBC, Mixed: 308B, Result: C7FD
+Debug - Round 4: After round function - Left: 1655, Right: 250B
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 250B, Subkey: 8F9, Mixed: 7021, Result: A00D
+Debug - Round 5: After round function - Left: 250B, Right: B658
+Debug - Round 6: Subkey: E065
+Round Function - Input: B658, Subkey: E065, Mixed: B5EC, Result: 728B
+Debug - Round 6: After round function - Left: B658, Right: 5780
+Debug - Round 7: Subkey: F382
+Round Function - Input: 5780, Subkey: F382, Mixed: 5812, Result: FA40
+Debug - Round 7: After round function - Left: 5780, Right: 4C18
+Debug - Encrypted block: 57804C18
+Debug - Starting encryption block: Left: 465F, Right: BCD3
+Debug - Round 0: Subkey: 818F
+Round Function - Input: BCD3, Subkey: 818F, Mixed: F311, Result: 207E
+Debug - Round 0: After round function - Left: BCD3, Right: 6621
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 6621, Subkey: CE14, Mixed: A1A9, Result: F052
+Debug - Round 1: After round function - Left: 6621, Right: 4C81
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 4C81, Subkey: 3D51, Mixed: 4E94, Result: BD4
+Debug - Round 2: After round function - Left: 4C81, Right: 6DF5
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 6DF5, Subkey: 5581, Mixed: 1BB6, Result: FE79
+Debug - Round 3: After round function - Left: 6DF5, Right: B2F8
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: B2F8, Subkey: 4FBC, Mixed: 15A0, Result: 1372
+Debug - Round 4: After round function - Left: B2F8, Right: 7E87
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 7E87, Subkey: 8F9, Mixed: 3C04, Result: 780F
+Debug - Round 5: After round function - Left: 7E87, Right: CAF7
+Debug - Round 6: Subkey: E065
+Round Function - Input: CAF7, Subkey: E065, Mixed: 5AE5, Result: 4951
+Debug - Round 6: After round function - Left: CAF7, Right: 37D6
+Debug - Round 7: Subkey: F382
+Round Function - Input: 37D6, Subkey: F382, Mixed: 5AC1, Result: 8CCF
+Debug - Round 7: After round function - Left: 37D6, Right: 4638
+Debug - Encrypted block: 37D64638
+Debug - Starting encryption block: Left: FE16, Right: 6A5F
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 6A5F, Subkey: 818F, Mixed: 5F77, Result: EC59
+Debug - Round 0: After round function - Left: 6A5F, Right: 124F
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 124F, Subkey: CE14, Mixed: 31F, Result: 34E8
+Debug - Round 1: After round function - Left: 124F, Right: 5EB7
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 5EB7, Subkey: 3D51, Mixed: E044, Result: A5BB
+Debug - Round 2: After round function - Left: 5EB7, Right: B7F4
+Debug - Round 3: Subkey: 5581
+Round Function - Input: B7F4, Subkey: 5581, Mixed: 6BA8, Result: ECE0
+Debug - Round 3: After round function - Left: B7F4, Right: B257
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: B257, Subkey: 4FBC, Mixed: 1098, Result: 92B3
+Debug - Round 4: After round function - Left: B257, Right: 2547
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 2547, Subkey: 8F9, Mixed: 7201, Result: A173
+Debug - Round 5: After round function - Left: 2547, Right: 1324
+Debug - Round 6: Subkey: E065
+Round Function - Input: 1324, Subkey: E065, Mixed: 9C4F, Result: A981
+Debug - Round 6: After round function - Left: 1324, Right: 8CC6
+Debug - Round 7: Subkey: F382
+Round Function - Input: 8CC6, Subkey: F382, Mixed: 244, Result: 47DB
+Debug - Round 7: After round function - Left: 8CC6, Right: 54FF
+Debug - Encrypted block: 8CC654FF
+Debug - Starting encryption block: Left: 128A, Right: 3285
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 3285, Subkey: 818F, Mixed: A0A5, Result: B345
+Debug - Round 0: After round function - Left: 3285, Right: A1CF
+Debug - Round 1: Subkey: CE14
+Round Function - Input: A1CF, Subkey: CE14, Mixed: 7F1B, Result: 8E70
+Debug - Round 1: After round function - Left: A1CF, Right: BCF5
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: BCF5, Subkey: 3D51, Mixed: D237, Result: 63DD
+Debug - Round 2: After round function - Left: BCF5, Right: C212
+Debug - Round 3: Subkey: 5581
+Round Function - Input: C212, Subkey: 5581, Mixed: BC98, Result: 3973
+Debug - Round 3: After round function - Left: C212, Right: 8586
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 8586, Subkey: 4FBC, Mixed: AA16, Result: 4E2B
+Debug - Round 4: After round function - Left: 8586, Right: 8C39
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 8C39, Subkey: 8F9, Mixed: A994, Result: ECA4
+Debug - Round 5: After round function - Left: 8C39, Right: 6922
+Debug - Round 6: Subkey: E065
+Round Function - Input: 6922, Subkey: E065, Mixed: 4C3A, Result: 6DB9
+Debug - Round 6: After round function - Left: 6922, Right: E180
+Debug - Round 7: Subkey: F382
+Round Function - Input: E180, Subkey: F382, Mixed: A816, Result: 4E8B
+Debug - Round 7: After round function - Left: E180, Right: 27A9
+Debug - Encrypted block: E18027A9
+Debug - Starting encryption block: Left: BEC1, Right: 2817
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 2817, Subkey: 818F, Mixed: 4D35, Result: 5B00
+Debug - Round 0: After round function - Left: 2817, Right: E5C1
+Debug - Round 1: Subkey: CE14
+Round Function - Input: E5C1, Subkey: CE14, Mixed: 9EAD, Result: A7B
+Debug - Round 1: After round function - Left: E5C1, Right: 226C
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 226C, Subkey: 3D51, Mixed: FDEA, Result: D9A8
+Debug - Round 2: After round function - Left: 226C, Right: 3C69
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 3C69, Subkey: 5581, Mixed: 8F54, Result: C808
+Debug - Round 3: After round function - Left: 3C69, Right: EA64
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: EA64, Subkey: 4FBC, Mixed: D101, Result: 7A3
+Debug - Round 4: After round function - Left: EA64, Right: 3BCA
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 3BCA, Subkey: 8F9, Mixed: 261A, Result: 253
+Debug - Round 5: After round function - Left: 3BCA, Right: E837
+Debug - Round 6: Subkey: E065
+Round Function - Input: E837, Subkey: E065, Mixed: 44E6, Result: A440
+Debug - Round 6: After round function - Left: E837, Right: 9F8A
+Debug - Round 7: Subkey: F382
+Round Function - Input: 9F8A, Subkey: F382, Mixed: 9864, Result: DDBD
+Debug - Round 7: After round function - Left: 9F8A, Right: 358A
+Debug - Encrypted block: 9F8A358A
+Debug - Starting encryption block: Left: A3FB, Right: 10D8
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 10D8, Subkey: 818F, Mixed: 933C, Result: 55E4
+Debug - Round 0: After round function - Left: 10D8, Right: F61F
+Debug - Round 1: Subkey: CE14
+Round Function - Input: F61F, Subkey: CE14, Mixed: 219E, Result: 4372
+Debug - Round 1: After round function - Left: F61F, Right: 53AA
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 53AA, Subkey: 3D51, Mixed: 87DC, Result: 4706
+Debug - Round 2: After round function - Left: 53AA, Right: B119
+Debug - Round 3: Subkey: 5581
+Round Function - Input: B119, Subkey: 5581, Mixed: 34D0, Result: 3159
+Debug - Round 3: After round function - Left: B119, Right: 62F3
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 62F3, Subkey: 4FBC, Mixed: 957D, Result: 682
+Debug - Round 4: After round function - Left: 62F3, Right: B79B
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: B79B, Subkey: 8F9, Mixed: 4A6, Result: E354
+Debug - Round 5: After round function - Left: B79B, Right: 81A7
+Debug - Round 6: Subkey: E065
+Round Function - Input: 81A7, Subkey: E065, Mixed: 1063, Result: 64E5
+Debug - Round 6: After round function - Left: 81A7, Right: D37E
+Debug - Round 7: Subkey: F382
+Round Function - Input: D37E, Subkey: F382, Mixed: 3806, Result: DE76
+Debug - Round 7: After round function - Left: D37E, Right: 5FD1
+Debug - Encrypted block: D37E5FD1
+Debug - Starting encryption block: Left: F3C9, Right: E3B3
+Debug - Round 0: Subkey: 818F
+Round Function - Input: E3B3, Subkey: 818F, Mixed: 2A13, Result: 59D6
+Debug - Round 0: After round function - Left: E3B3, Right: AA1F
+Debug - Round 1: Subkey: CE14
+Round Function - Input: AA1F, Subkey: CE14, Mixed: C19B, Result: 35E8
+Debug - Round 1: After round function - Left: AA1F, Right: D65B
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: D65B, Subkey: 3D51, Mixed: 9D60, Result: 9DFE
+Debug - Round 2: After round function - Left: D65B, Right: 37E1
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 37E1, Subkey: 5581, Mixed: 6B14, Result: 2E7C
+Debug - Round 3: After round function - Left: 37E1, Right: F827
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: F827, Subkey: 4FBC, Mixed: 3F1A, Result: 1D83
+Debug - Round 4: After round function - Left: F827, Right: 2A62
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 2A62, Subkey: 8F9, Mixed: 9AD9, Result: CF0B
+Debug - Round 5: After round function - Left: 2A62, Right: 372C
+Debug - Round 6: Subkey: E065
+Round Function - Input: 372C, Subkey: E065, Mixed: BC88, Result: 3C36
+Debug - Round 6: After round function - Left: 372C, Right: 1654
+Debug - Round 7: Subkey: F382
+Round Function - Input: 1654, Subkey: F382, Mixed: 4EB0, Result: 4AFF
+Debug - Round 7: After round function - Left: 1654, Right: 7DD3
+Debug - Encrypted block: 16547DD3
+Debug - Starting encryption block: Left: E0D7, Right: 8A2B
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 8A2B, Subkey: 818F, Mixed: 5DD0, Result: 5D09
+Debug - Round 0: After round function - Left: 8A2B, Right: BDDE
+Debug - Round 1: Subkey: CE14
+Round Function - Input: BDDE, Subkey: CE14, Mixed: 5F94, Result: 1A84
+Debug - Round 1: After round function - Left: BDDE, Right: 90AF
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 90AF, Subkey: 3D51, Mixed: 7006, Result: 93F6
+Debug - Round 2: After round function - Left: 90AF, Right: 2E28
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 2E28, Subkey: 5581, Mixed: 1D4C, Result: DD69
+Debug - Round 3: After round function - Left: 2E28, Right: 4DC6
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 4DC6, Subkey: 4FBC, Mixed: EC14, Result: AC2C
+Debug - Round 4: After round function - Left: 4DC6, Right: 8204
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 8204, Subkey: 8F9, Mixed: 57EC, Result: 90EB
+Debug - Round 5: After round function - Left: 8204, Right: DD2D
+Debug - Round 6: Subkey: E065
+Round Function - Input: DD2D, Subkey: E065, Mixed: EC95, Result: F8E6
+Debug - Round 6: After round function - Left: DD2D, Right: 7AE2
+Debug - Round 7: Subkey: F382
+Round Function - Input: 7AE2, Subkey: F382, Mixed: 7323, Result: 561
+Debug - Round 7: After round function - Left: 7AE2, Right: D84C
+Debug - Encrypted block: 7AE2D84C
+Debug - Starting encryption block: Left: 7182, Right: D8AB
+Debug - Round 0: Subkey: 818F
+Round Function - Input: D8AB, Subkey: 818F, Mixed: D1D2, Result: 756C
+Debug - Round 0: After round function - Left: D8AB, Right: 4EE
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 4EE, Subkey: CE14, Mixed: 9816, Result: 798B
+Debug - Round 1: After round function - Left: 4EE, Right: A120
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: A120, Subkey: 3D51, Mixed: F38E, Result: 97D1
+Debug - Round 2: After round function - Left: A120, Right: 933F
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 933F, Subkey: 5581, Mixed: 4607, Result: F6A4
+Debug - Round 3: After round function - Left: 933F, Right: 5784
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 5784, Subkey: 4FBC, Mixed: 3A05, Result: 2B3B
+Debug - Round 4: After round function - Left: 5784, Right: B804
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: B804, Subkey: 8F9, Mixed: 7EE, Result: 6443
+Debug - Round 5: After round function - Left: B804, Right: 33C7
+Debug - Round 6: Subkey: E065
+Round Function - Input: 33C7, Subkey: E065, Mixed: A160, Result: A2BE
+Debug - Round 6: After round function - Left: 33C7, Right: 1ABA
+Debug - Round 7: Subkey: F382
+Round Function - Input: 1ABA, Subkey: F382, Mixed: 71E0, Result: 77A6
+Debug - Round 7: After round function - Left: 1ABA, Right: 4461
+Debug - Encrypted block: 1ABA4461
+Debug - Starting encryption block: Left: 85B1, Right: 9661
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 9661, Subkey: 818F, Mixed: BF80, Result: BD18
+Debug - Round 0: After round function - Left: 9661, Right: 38A9
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 38A9, Subkey: CE14, Mixed: 35E8, Result: B1F4
+Debug - Round 1: After round function - Left: 38A9, Right: 2795
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 2795, Subkey: 3D51, Mixed: 2733, Result: 529C
+Debug - Round 2: After round function - Left: 2795, Right: 6A35
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 6A35, Subkey: 5581, Mixed: FDB5, Result: EB28
+Debug - Round 3: After round function - Left: 6A35, Right: CCBD
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: CCBD, Subkey: 4FBC, Mixed: E3C8, Result: 60EA
+Debug - Round 4: After round function - Left: CCBD, Right: ADF
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: ADF, Subkey: 8F9, Mixed: 9EC0, Result: 9CBC
+Debug - Round 5: After round function - Left: ADF, Right: 5001
+Debug - Round 6: Subkey: E065
+Round Function - Input: 5001, Subkey: E065, Mixed: 8331, Result: 51F8
+Debug - Round 6: After round function - Left: 5001, Right: 5B27
+Debug - Round 7: Subkey: F382
+Round Function - Input: 5B27, Subkey: F382, Mixed: 754A, Result: 574A
+Debug - Round 7: After round function - Left: 5B27, Right: 74B
+Debug - Encrypted block: 5B27074B
+Debug - Starting encryption block: Left: C905, Right: B982
+Debug - Round 0: Subkey: 818F
+Round Function - Input: B982, Subkey: 818F, Mixed: D889, Result: 8AD8
+Debug - Round 0: After round function - Left: B982, Right: 43DD
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 43DD, Subkey: CE14, Mixed: 8F88, Result: DA6
+Debug - Round 1: After round function - Left: 43DD, Right: B424
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: B424, Subkey: 3D51, Mixed: 8BAF, Result: BEA3
+Debug - Round 2: After round function - Left: B424, Right: FD7E
+Debug - Round 3: Subkey: 5581
+Round Function - Input: FD7E, Subkey: 5581, Mixed: 97FA, Result: B575
+Debug - Round 3: After round function - Left: FD7E, Right: 151
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 151, Subkey: 4FBC, Mixed: 886A, Result: A9A0
+Debug - Round 4: After round function - Left: 151, Right: 54DE
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 54DE, Subkey: 8F9, Mixed: EEBA, Result: CC31
+Debug - Round 5: After round function - Left: 54DE, Right: CD60
+Debug - Round 6: Subkey: E065
+Round Function - Input: CD60, Subkey: E065, Mixed: 6E2D, Result: FA43
+Debug - Round 6: After round function - Left: CD60, Right: AE9D
+Debug - Round 7: Subkey: F382
+Round Function - Input: AE9D, Subkey: F382, Mixed: 10FD, Result: 87AA
+Debug - Round 7: After round function - Left: AE9D, Right: 4ACA
+Debug - Encrypted block: AE9D4ACA
+Debug - Starting encryption block: Left: A91D, Right: 95B5
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 95B5, Subkey: 818F, Mixed: BA20, Result: BF5A
+Debug - Round 0: After round function - Left: 95B5, Right: 1647
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 1647, Subkey: CE14, Mixed: 22DF, Result: 179C
+Debug - Round 1: After round function - Left: 1647, Right: 8229
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 8229, Subkey: 3D51, Mixed: FBD5, Result: E882
+Debug - Round 2: After round function - Left: 8229, Right: FEC5
+Debug - Round 3: Subkey: 5581
+Round Function - Input: FEC5, Subkey: 5581, Mixed: A232, Result: 6FE
+Debug - Round 3: After round function - Left: FEC5, Right: 84D7
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 84D7, Subkey: 4FBC, Mixed: A49E, Result: C7C2
+Debug - Round 4: After round function - Left: 84D7, Right: 3907
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 3907, Subkey: 8F9, Mixed: 1002, Result: B2A7
+Debug - Round 5: After round function - Left: 3907, Right: 3670
+Debug - Round 6: Subkey: E065
+Round Function - Input: 3670, Subkey: E065, Mixed: B6A8, Result: 3490
+Debug - Round 6: After round function - Left: 3670, Right: D97
+Debug - Round 7: Subkey: F382
+Round Function - Input: D97, Subkey: F382, Mixed: 8C8, Result: 8BFA
+Debug - Round 7: After round function - Left: D97, Right: BD8A
+Debug - Encrypted block: D97BD8A
+Debug - Starting encryption block: Left: 5968, Right: 928E
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 928E, Subkey: 818F, Mixed: A0E8, Result: 21E4
+Debug - Round 0: After round function - Left: 928E, Right: 788C
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 788C, Subkey: CE14, Mixed: 3502, Result: 97B7
+Debug - Round 1: After round function - Left: 788C, Right: 539
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 539, Subkey: 3D51, Mixed: 1452, Result: B394
+Debug - Round 2: After round function - Left: 539, Right: CB18
+Debug - Round 3: Subkey: 5581
+Round Function - Input: CB18, Subkey: 5581, Mixed: 4C9, Result: 560C
+Debug - Round 3: After round function - Left: CB18, Right: 5335
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 5335, Subkey: 4FBC, Mixed: 178D, Result: 8141
+Debug - Round 4: After round function - Left: 5335, Right: 4A59
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 4A59, Subkey: 8F9, Mixed: 9A92, Result: 3FC8
+Debug - Round 5: After round function - Left: 4A59, Right: 6CFD
+Debug - Round 6: Subkey: E065
+Round Function - Input: 6CFD, Subkey: E065, Mixed: 6B12, Result: CCD0
+Debug - Round 6: After round function - Left: 6CFD, Right: 8689
+Debug - Round 7: Subkey: F382
+Round Function - Input: 8689, Subkey: F382, Mixed: D05B, Result: 21B4
+Debug - Round 7: After round function - Left: 8689, Right: 4D49
+Debug - Encrypted block: 86894D49
+Debug - Starting encryption block: Left: 7BA6, Right: ED3F
+Debug - Round 0: Subkey: 818F
+Round Function - Input: ED3F, Subkey: 818F, Mixed: 7673, Result: 6E0
+Debug - Round 0: After round function - Left: ED3F, Right: 7D46
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 7D46, Subkey: CE14, Mixed: 5AD2, Result: FCDC
+Debug - Round 1: After round function - Left: 7D46, Right: 11E3
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 11E3, Subkey: 3D51, Mixed: 79A2, Result: DC15
+Debug - Round 2: After round function - Left: 11E3, Right: A153
+Debug - Round 3: Subkey: 5581
+Round Function - Input: A153, Subkey: 5581, Mixed: B6A7, Result: 1C2
+Debug - Round 3: After round function - Left: A153, Right: 1021
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 1021, Subkey: 4FBC, Mixed: FEEA, Result: D9F8
+Debug - Round 4: After round function - Left: 1021, Right: 78AB
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 78AB, Subkey: 8F9, Mixed: D24, Result: 4F11
+Debug - Round 5: After round function - Left: 78AB, Right: 5F30
+Debug - Round 6: Subkey: E065
+Round Function - Input: 5F30, Subkey: E065, Mixed: FCA9, Result: AD42
+Debug - Round 6: After round function - Left: 5F30, Right: D5E9
+Debug - Round 7: Subkey: F382
+Round Function - Input: D5E9, Subkey: F382, Mixed: 4B5E, Result: 2F06
+Debug - Round 7: After round function - Left: D5E9, Right: 7036
+Debug - Encrypted block: D5E97036
+Debug - Starting encryption block: Left: 7FF6, Right: D914
+Debug - Round 0: Subkey: 818F
+Round Function - Input: D914, Subkey: 818F, Mixed: D51A, Result: F563
+Debug - Round 0: After round function - Left: D914, Right: 8A95
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 8A95, Subkey: CE14, Mixed: C54A, Result: E64A
+Debug - Round 1: After round function - Left: 8A95, Right: 3F5E
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3F5E, Subkey: 3D51, Mixed: E57B, Result: 1222
+Debug - Round 2: After round function - Left: 3F5E, Right: 98B7
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 98B7, Subkey: 5581, Mixed: 71C7, Result: C668
+Debug - Round 3: After round function - Left: 98B7, Right: F936
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: F936, Subkey: 4FBC, Mixed: 4792, Result: E478
+Debug - Round 4: After round function - Left: F936, Right: 7CCF
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 7CCF, Subkey: 8F9, Mixed: 2E44, Result: 6F1B
+Debug - Round 5: After round function - Left: 7CCF, Right: 962D
+Debug - Round 6: Subkey: E065
+Round Function - Input: 962D, Subkey: E065, Mixed: B493, Result: C5DE
+Debug - Round 6: After round function - Left: 962D, Right: B911
+Debug - Round 7: Subkey: F382
+Round Function - Input: B911, Subkey: F382, Mixed: 649D, Result: F014
+Debug - Round 7: After round function - Left: B911, Right: 6639
+Debug - Encrypted block: B9116639
+Debug - Starting encryption block: Left: 59C2, Right: AD69
+Debug - Round 0: Subkey: 818F
+Round Function - Input: AD69, Subkey: 818F, Mixed: 77C1, Result: A05F
+Debug - Round 0: After round function - Left: AD69, Right: F99D
+Debug - Round 1: Subkey: CE14
+Round Function - Input: F99D, Subkey: CE14, Mixed: 3D8E, Result: 59F1
+Debug - Round 1: After round function - Left: F99D, Right: F498
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: F498, Subkey: 3D51, Mixed: 8F49, Result: DF04
+Debug - Round 2: After round function - Left: F498, Right: 2699
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 2699, Subkey: 5581, Mixed: E0D3, Result: 9112
+Debug - Round 3: After round function - Left: 2699, Right: 658A
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 658A, Subkey: 4FBC, Mixed: AA35, Result: B9F0
+Debug - Round 4: After round function - Left: 658A, Right: 9F69
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 9F69, Subkey: 8F9, Mixed: 4315, Result: 54AE
+Debug - Round 5: After round function - Left: 9F69, Right: 3124
+Debug - Round 6: Subkey: E065
+Round Function - Input: 3124, Subkey: E065, Mixed: 8C48, Result: 942
+Debug - Round 6: After round function - Left: 3124, Right: 962B
+Debug - Round 7: Subkey: F382
+Round Function - Input: 962B, Subkey: F382, Mixed: 4D6C, Result: 8C13
+Debug - Round 7: After round function - Left: 962B, Right: BD37
+Debug - Encrypted block: 962BBD37
+Debug - Starting encryption block: Left: EF26, Right: 594E
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 594E, Subkey: 818F, Mixed: D6EE, Result: B733
+Debug - Round 0: After round function - Left: 594E, Right: 5815
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 5815, Subkey: CE14, Mixed: 3149, Result: 66A4
+Debug - Round 1: After round function - Left: 5815, Right: 3FEA
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3FEA, Subkey: 3D51, Mixed: E9DB, Result: 187C
+Debug - Round 2: After round function - Left: 3FEA, Right: 4069
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 4069, Subkey: 5581, Mixed: AF54, Result: EE08
+Debug - Round 3: After round function - Left: 4069, Right: D1E2
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: D1E2, Subkey: 4FBC, Mixed: CF1, Result: DEC4
+Debug - Round 4: After round function - Left: D1E2, Right: 9EAD
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 9EAD, Subkey: 8F9, Mixed: 3D35, Result: 2C00
+Debug - Round 5: After round function - Left: 9EAD, Right: FDE2
+Debug - Round 6: Subkey: E065
+Round Function - Input: FDE2, Subkey: E065, Mixed: F23E, Result: 9590
+Debug - Round 6: After round function - Left: FDE2, Right: B3D
+Debug - Round 7: Subkey: F382
+Round Function - Input: B3D, Subkey: F382, Mixed: F5FF, Result: C4F2
+Debug - Round 7: After round function - Left: B3D, Right: 3910
+Debug - Encrypted block: B3D3910
+Debug - Starting encryption block: Left: FEAC, Right: 912F
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 912F, Subkey: 818F, Mixed: 95F0, Result: 9543
+Debug - Round 0: After round function - Left: 912F, Right: 6BEF
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 6BEF, Subkey: CE14, Mixed: D019, Result: 878F
+Debug - Round 1: After round function - Left: 6BEF, Right: 16A0
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 16A0, Subkey: 3D51, Mixed: 9F8A, Result: BB5E
+Debug - Round 2: After round function - Left: 16A0, Right: D0B1
+Debug - Round 3: Subkey: 5581
+Round Function - Input: D0B1, Subkey: 5581, Mixed: 3191, Result: E2A6
+Debug - Round 3: After round function - Left: D0B1, Right: F406
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: F406, Subkey: 4FBC, Mixed: 1E12, Result: B920
+Debug - Round 4: After round function - Left: F406, Right: 6991
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 6991, Subkey: 8F9, Mixed: 9453, Result: E6CA
+Debug - Round 5: After round function - Left: 6991, Right: 12CC
+Debug - Round 6: Subkey: E065
+Round Function - Input: 12CC, Subkey: E065, Mixed: 998F, Result: AB9D
+Debug - Round 6: After round function - Left: 12CC, Right: C20C
+Debug - Round 7: Subkey: F382
+Round Function - Input: C20C, Subkey: F382, Mixed: AC75, Result: BA6C
+Debug - Round 7: After round function - Left: C20C, Right: A8A0
+Debug - Encrypted block: C20CA8A0
+Debug - Starting encryption block: Left: BE9D, Right: 380E
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 380E, Subkey: 818F, Mixed: CCED, Result: 5E07
+Debug - Round 0: After round function - Left: 380E, Right: E09A
+Debug - Round 1: Subkey: CE14
+Round Function - Input: E09A, Subkey: CE14, Mixed: 7575, Result: 661C
+Debug - Round 1: After round function - Left: E09A, Right: 5E12
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 5E12, Subkey: 3D51, Mixed: DB1C, Result: 1DE2
+Debug - Round 2: After round function - Left: 5E12, Right: FD78
+Debug - Round 3: Subkey: 5581
+Round Function - Input: FD78, Subkey: 5581, Mixed: 97CA, Result: B4C2
+Debug - Round 3: After round function - Left: FD78, Right: EAD0
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: EAD0, Subkey: 4FBC, Mixed: D461, Result: 241
+Debug - Round 4: After round function - Left: EAD0, Right: FF39
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: FF39, Subkey: 8F9, Mixed: 4190, Result: 44F5
+Debug - Round 5: After round function - Left: FF39, Right: AE25
+Debug - Round 6: Subkey: E065
+Round Function - Input: AE25, Subkey: E065, Mixed: 7454, Result: 3738
+Debug - Round 6: After round function - Left: AE25, Right: C801
+Debug - Round 7: Subkey: F382
+Round Function - Input: C801, Subkey: F382, Mixed: DC1D, Result: 48BC
+Debug - Round 7: After round function - Left: C801, Right: E699
+Debug - Encrypted block: C801E699
+Debug - Starting encryption block: Left: FEEF, Right: 4D89
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 4D89, Subkey: 818F, Mixed: 78C6, Result: 984A
+Debug - Round 0: After round function - Left: 4D89, Right: 66A5
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 66A5, Subkey: CE14, Mixed: A5C9, Result: F25C
+Debug - Round 1: After round function - Left: 66A5, Right: BFD5
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: BFD5, Subkey: 3D51, Mixed: E937, Result: 5BAD
+Debug - Round 2: After round function - Left: BFD5, Right: 3D08
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 3D08, Subkey: 5581, Mixed: 944C, Result: 5299
+Debug - Round 3: After round function - Left: 3D08, Right: ED4C
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: ED4C, Subkey: 4FBC, Mixed: E841, Result: 3C47
+Debug - Round 4: After round function - Left: ED4C, Right: 14F
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 14F, Subkey: 8F9, Mixed: 5240, Result: 5114
+Debug - Round 5: After round function - Left: 14F, Right: BC58
+Debug - Round 6: Subkey: E065
+Round Function - Input: BC58, Subkey: E065, Mixed: E5EC, Result: 238B
+Debug - Round 6: After round function - Left: BC58, Right: 22C4
+Debug - Round 7: Subkey: F382
+Round Function - Input: 22C4, Subkey: F382, Mixed: B230, Result: B617
+Debug - Round 7: After round function - Left: 22C4, Right: A4F
+Debug - Encrypted block: 22C40A4F
+Debug - Starting encryption block: Left: AD3D, Right: DB0A
+Debug - Round 0: Subkey: 818F
+Round Function - Input: DB0A, Subkey: 818F, Mixed: E4CA, Result: C752
+Debug - Round 0: After round function - Left: DB0A, Right: 6A6F
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 6A6F, Subkey: CE14, Mixed: C419, Result: 91CF
+Debug - Round 1: After round function - Left: 6A6F, Right: 4AC5
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 4AC5, Subkey: 3D51, Mixed: 40B4, Result: 8E
+Debug - Round 2: After round function - Left: 4AC5, Right: 6AE1
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 6AE1, Subkey: 5581, Mixed: 316, Result: E59B
+Debug - Round 3: After round function - Left: 6AE1, Right: AF5E
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: AF5E, Subkey: 4FBC, Mixed: F8D7, Result: 485B
+Debug - Round 4: After round function - Left: AF5E, Right: 22BA
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 22BA, Subkey: 8F9, Mixed: 5D99, Result: 817
+Debug - Round 5: After round function - Left: 22BA, Right: A749
+Debug - Round 6: Subkey: E065
+Round Function - Input: A749, Subkey: E065, Mixed: 3D74, Result: 7E62
+Debug - Round 6: After round function - Left: A749, Right: 5CD8
+Debug - Round 7: Subkey: F382
+Round Function - Input: 5CD8, Subkey: F382, Mixed: 82D2, Result: 245C
+Debug - Round 7: After round function - Left: 5CD8, Right: 8315
+Debug - Encrypted block: 5CD88315
+Debug - Starting encryption block: Left: 11B, Right: BA14
+Debug - Round 0: Subkey: 818F
+Round Function - Input: BA14, Subkey: 818F, Mixed: DD19, Result: 893F
+Debug - Round 0: After round function - Left: BA14, Right: 8824
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 8824, Subkey: CE14, Mixed: B1C2, Result: 1453
+Debug - Round 1: After round function - Left: 8824, Right: AE47
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: AE47, Subkey: 3D51, Mixed: 5CC7, Result: E858
+Debug - Round 2: After round function - Left: AE47, Right: 607C
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 607C, Subkey: 5581, Mixed: AFED, Result: 3EB7
+Debug - Round 3: After round function - Left: 607C, Right: 90F0
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 90F0, Subkey: 4FBC, Mixed: 567, Result: B586
+Debug - Round 4: After round function - Left: 90F0, Right: D5FA
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: D5FA, Subkey: 8F9, Mixed: F79E, Result: 9352
+Debug - Round 5: After round function - Left: D5FA, Right: 3A2
+Debug - Round 6: Subkey: E065
+Round Function - Input: 3A2, Subkey: E065, Mixed: 203F, Result: 13DE
+Debug - Round 6: After round function - Left: 3A2, Right: C624
+Debug - Round 7: Subkey: F382
+Round Function - Input: C624, Subkey: F382, Mixed: CD35, Result: DB00
+Debug - Round 7: After round function - Left: C624, Right: D8A2
+Debug - Encrypted block: C624D8A2
+Debug - Starting encryption block: Left: 98F8, Right: 39D7
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 39D7, Subkey: 818F, Mixed: DB35, Result: CEA0
+Debug - Round 0: After round function - Left: 39D7, Right: 5658
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 5658, Subkey: CE14, Mixed: 2361, Result: F731
+Debug - Round 1: After round function - Left: 5658, Right: CEE6
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: CEE6, Subkey: 3D51, Mixed: 61B8, Result: E1ED
+Debug - Round 2: After round function - Left: CEE6, Right: B7B5
+Debug - Round 3: Subkey: 5581
+Round Function - Input: B7B5, Subkey: 5581, Mixed: 69B0, Result: 698F
+Debug - Round 3: After round function - Left: B7B5, Right: A769
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: A769, Subkey: 4FBC, Mixed: B92F, Result: 8C2B
+Debug - Round 4: After round function - Left: A769, Right: 3B9E
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 3B9E, Subkey: 8F9, Mixed: 24BA, Result: 6D1
+Debug - Round 5: After round function - Left: 3B9E, Right: A1B8
+Debug - Round 6: Subkey: E065
+Round Function - Input: A1B8, Subkey: E065, Mixed: 10EC, Result: D7BB
+Debug - Round 6: After round function - Left: A1B8, Right: EC25
+Debug - Round 7: Subkey: F382
+Round Function - Input: EC25, Subkey: F382, Mixed: FD3E, Result: 9BA0
+Debug - Round 7: After round function - Left: EC25, Right: 3A18
+Debug - Encrypted block: EC253A18
+Debug - Starting encryption block: Left: 937E, Right: F09C
+Debug - Round 0: Subkey: 818F
+Round Function - Input: F09C, Subkey: 818F, Mixed: 915B, Result: 61E4
+Debug - Round 0: After round function - Left: F09C, Right: F29A
+Debug - Round 1: Subkey: CE14
+Round Function - Input: F29A, Subkey: CE14, Mixed: 576, Result: E64D
+Debug - Round 1: After round function - Left: F29A, Right: 16D1
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 16D1, Subkey: 3D51, Mixed: A112, Result: 6B0
+Debug - Round 2: After round function - Left: 16D1, Right: F42A
+Debug - Round 3: Subkey: 5581
+Round Function - Input: F42A, Subkey: 5581, Mixed: 4D5A, Result: 6BF7
+Debug - Round 3: After round function - Left: F42A, Right: 7D26
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 7D26, Subkey: 4FBC, Mixed: 6716, Result: 80DB
+Debug - Round 4: After round function - Left: 7D26, Right: 74F1
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 74F1, Subkey: 8F9, Mixed: EF53, Result: 9DDA
+Debug - Round 5: After round function - Left: 74F1, Right: E0FC
+Debug - Round 6: Subkey: E065
+Round Function - Input: E0FC, Subkey: E065, Mixed: B0E, Result: 6D79
+Debug - Round 6: After round function - Left: E0FC, Right: 1988
+Debug - Round 7: Subkey: F382
+Round Function - Input: 1988, Subkey: F382, Mixed: 6850, Result: 6E31
+Debug - Round 7: After round function - Left: 1988, Right: 8ECD
+Debug - Encrypted block: 19888ECD
+Debug - Starting encryption block: Left: 1C57, Right: 36E8
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 36E8, Subkey: 818F, Mixed: C3BD, Result: 51AE
+Debug - Round 0: After round function - Left: 36E8, Right: 4DF9
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 4DF9, Subkey: CE14, Mixed: E068, Result: 63CC
+Debug - Round 1: After round function - Left: 4DF9, Right: 5524
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 5524, Subkey: 3D51, Mixed: 93AC, Result: 50BF
+Debug - Round 2: After round function - Left: 5524, Right: 1D46
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 1D46, Subkey: 5581, Mixed: 963B, Result: 624E
+Debug - Round 3: After round function - Left: 1D46, Right: 376A
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 376A, Subkey: 4FBC, Mixed: 3934, Result: 7A16
+Debug - Round 4: After round function - Left: 376A, Right: 6750
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 6750, Subkey: 8F9, Mixed: 824B, Result: 7329
+Debug - Round 5: After round function - Left: 6750, Right: 4443
+Debug - Round 6: Subkey: E065
+Round Function - Input: 4443, Subkey: E065, Mixed: 2541, Result: F2D7
+Debug - Round 6: After round function - Left: 4443, Right: 9587
+Debug - Round 7: Subkey: F382
+Round Function - Input: 9587, Subkey: F382, Mixed: 484C, Result: 8959
+Debug - Round 7: After round function - Left: 9587, Right: CD1A
+Debug - Encrypted block: 9587CD1A
+Debug - Starting encryption block: Left: 9AA7, Right: F92
+Debug - Round 0: Subkey: 818F
+Round Function - Input: F92, Subkey: 818F, Mixed: 890C, Result: 4A3D
+Debug - Round 0: After round function - Left: F92, Right: D09A
+Debug - Round 1: Subkey: CE14
+Round Function - Input: D09A, Subkey: CE14, Mixed: F574, Result: B5E2
+Debug - Round 1: After round function - Left: D09A, Right: BA70
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: BA70, Subkey: 3D51, Mixed: BE0F, Result: 8EB5
+Debug - Round 2: After round function - Left: BA70, Right: 5E2F
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 5E2F, Subkey: 5581, Mixed: 9D85, Result: 8C93
+Debug - Round 3: After round function - Left: 5E2F, Right: 36E3
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 36E3, Subkey: 4FBC, Mixed: 34FC, Result: F538
+Debug - Round 4: After round function - Left: 36E3, Right: AB17
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: AB17, Subkey: 8F9, Mixed: A085, Result: B103
+Debug - Round 5: After round function - Left: AB17, Right: 87E0
+Debug - Round 6: Subkey: E065
+Round Function - Input: 87E0, Subkey: E065, Mixed: 422B, Result: B123
+Debug - Round 6: After round function - Left: 87E0, Right: 1A34
+Debug - Round 7: Subkey: F382
+Round Function - Input: 1A34, Subkey: F382, Mixed: 6DB0, Result: 6ECF
+Debug - Round 7: After round function - Left: 1A34, Right: E92F
+Debug - Encrypted block: 1A34E92F
+Debug - Starting encryption block: Left: 1783, Right: 6B98
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 6B98, Subkey: 818F, Mixed: 693F, Result: 580E
+Debug - Round 0: After round function - Left: 6B98, Right: 4F8D
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 4F8D, Subkey: CE14, Mixed: ED08, Result: 6C2E
+Debug - Round 1: After round function - Left: 4F8D, Right: 7B6
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 7B6, Subkey: 3D51, Mixed: 283A, Result: C79
+Debug - Round 2: After round function - Left: 7B6, Right: 43F4
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 43F4, Subkey: 5581, Mixed: CBAC, Result: B3F
+Debug - Round 3: After round function - Left: 43F4, Right: C89
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: C89, Subkey: 4FBC, Mixed: E22A, Result: C01C
+Debug - Round 4: After round function - Left: C89, Right: 83E8
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 83E8, Subkey: 8F9, Mixed: 670C, Result: A49D
+Debug - Round 5: After round function - Left: 83E8, Right: A814
+Debug - Round 6: Subkey: E065
+Round Function - Input: A814, Subkey: E065, Mixed: 43CC, Result: 87A1
+Debug - Round 6: After round function - Left: A814, Right: 449
+Debug - Round 7: Subkey: F382
+Round Function - Input: 449, Subkey: F382, Mixed: BE5F, Result: 8CC4
+Debug - Round 7: After round function - Left: 449, Right: 24D0
+Debug - Encrypted block: 44924D0
+Debug - Starting encryption block: Left: 844, Right: 22F4
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 22F4, Subkey: 818F, Mixed: 241D, Result: B33C
+Debug - Round 0: After round function - Left: 22F4, Right: BB78
+Debug - Round 1: Subkey: CE14
+Round Function - Input: BB78, Subkey: CE14, Mixed: 4C64, Result: C7D
+Debug - Round 1: After round function - Left: BB78, Right: 2E89
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 2E89, Subkey: 3D51, Mixed: 5ED3, Result: 2AF2
+Debug - Round 2: After round function - Left: 2E89, Right: 918A
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 918A, Subkey: 5581, Mixed: 385F, Result: 9E4
+Debug - Round 3: After round function - Left: 918A, Right: 276D
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 276D, Subkey: 4FBC, Mixed: B94B, Result: 4D59
+Debug - Round 4: After round function - Left: 276D, Right: DCD3
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: DCD3, Subkey: 8F9, Mixed: 2E67, Result: 9A56
+Debug - Round 5: After round function - Left: DCD3, Right: BD3B
+Debug - Round 6: Subkey: E065
+Round Function - Input: BD3B, Subkey: E065, Mixed: ED04, Result: A8DF
+Debug - Round 6: After round function - Left: BD3B, Right: 740C
+Debug - Round 7: Subkey: F382
+Round Function - Input: 740C, Subkey: F382, Mixed: 3C73, Result: 4900
+Debug - Round 7: After round function - Left: 740C, Right: F43B
+Debug - Encrypted block: 740CF43B
+Debug - Starting encryption block: Left: BAFD, Right: 7B31
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 7B31, Subkey: 818F, Mixed: E607, Result: 54A4
+Debug - Round 0: After round function - Left: 7B31, Right: EE59
+Debug - Round 1: Subkey: CE14
+Round Function - Input: EE59, Subkey: CE14, Mixed: E36D, Result: 715F
+Debug - Round 1: After round function - Left: EE59, Right: A6E
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: A6E, Subkey: 3D51, Mixed: 3DFA, Result: 1895
+Debug - Round 2: After round function - Left: A6E, Right: F6CC
+Debug - Round 3: Subkey: 5581
+Round Function - Input: F6CC, Subkey: 5581, Mixed: 626A, Result: 4480
+Debug - Round 3: After round function - Left: F6CC, Right: 4EEE
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 4EEE, Subkey: 4FBC, Mixed: F554, Result: B368
+Debug - Round 4: After round function - Left: 4EEE, Right: 45A4
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 45A4, Subkey: 8F9, Mixed: 74EA, Result: 5618
+Debug - Round 5: After round function - Left: 45A4, Right: 18F6
+Debug - Round 6: Subkey: E065
+Round Function - Input: 18F6, Subkey: E065, Mixed: CADF, Result: FF1C
+Debug - Round 6: After round function - Left: 18F6, Right: BAB8
+Debug - Round 7: Subkey: F382
+Round Function - Input: BAB8, Subkey: F382, Mixed: 71D5, Result: 66E2
+Debug - Round 7: After round function - Left: BAB8, Right: 7E14
+Debug - Encrypted block: BAB87E14
+Debug - Starting encryption block: Left: 25FF, Right: 17EF
+Debug - Round 0: Subkey: 818F
+Round Function - Input: 17EF, Subkey: 818F, Mixed: CBF4, Result: 882A
+Debug - Round 0: After round function - Left: 17EF, Right: ADD5
+Debug - Round 1: Subkey: CE14
+Round Function - Input: ADD5, Subkey: CE14, Mixed: DF4B, Result: 29B9
+Debug - Round 1: After round function - Left: ADD5, Right: 3E56
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 3E56, Subkey: 3D51, Mixed: DD3B, Result: 291E
+Debug - Round 2: After round function - Left: 3E56, Right: 84CB
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 84CB, Subkey: 5581, Mixed: D266, Result: 34F8
+Debug - Round 3: After round function - Left: 84CB, Right: AAE
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: AAE, Subkey: 4FBC, Mixed: D352, Result: 73A4
+Debug - Round 4: After round function - Left: AAE, Right: F76F
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: F76F, Subkey: 8F9, Mixed: 340, Result: 664
+Debug - Round 5: After round function - Left: F76F, Right: CCA
+Debug - Round 6: Subkey: E065
+Round Function - Input: CCA, Subkey: E065, Mixed: 697F, Result: 5C9A
+Debug - Round 6: After round function - Left: CCA, Right: ABF5
+Debug - Round 7: Subkey: F382
+Round Function - Input: ABF5, Subkey: F382, Mixed: FBBC, Result: 3F7C
+Debug - Round 7: After round function - Left: ABF5, Right: 33B6
+Debug - Encrypted block: ABF533B6
+Debug - Starting encryption block: Left: 5420, Right: B11C
+Debug - Round 0: Subkey: 818F
+Round Function - Input: B11C, Subkey: 818F, Mixed: 9559, Result: C303
+Debug - Round 0: After round function - Left: B11C, Right: 9723
+Debug - Round 1: Subkey: CE14
+Round Function - Input: 9723, Subkey: CE14, Mixed: 29BB, Result: DAF6
+Debug - Round 1: After round function - Left: 9723, Right: 6BEA
+Debug - Round 2: Subkey: 3D51
+Round Function - Input: 6BEA, Subkey: 3D51, Mixed: 49DD, Result: DC90
+Debug - Round 2: After round function - Left: 6BEA, Right: 4BB3
+Debug - Round 3: Subkey: 5581
+Round Function - Input: 4BB3, Subkey: 5581, Mixed: 9A5, Result: 1A95
+Debug - Round 3: After round function - Left: 4BB3, Right: 717F
+Debug - Round 4: Subkey: 4FBC
+Round Function - Input: 717F, Subkey: 4FBC, Mixed: 9DE, Result: 6DFE
+Debug - Round 4: After round function - Left: 717F, Right: 264D
+Debug - Round 5: Subkey: 8F9
+Round Function - Input: 264D, Subkey: 8F9, Mixed: 7A31, Result: AB48
+Debug - Round 5: After round function - Left: 264D, Right: DA37
+Debug - Round 6: Subkey: E065
+Round Function - Input: DA37, Subkey: E065, Mixed: D4E5, Result: C631
+Debug - Round 6: After round function - Left: DA37, Right: E07C
+Debug - Round 7: Subkey: F382
+Round Function - Input: E07C, Subkey: F382, Mixed: 9FF6, Result: 7A35
+Debug - Round 7: After round function - Left: E07C, Right: A002
+Debug - Encrypted block: E07CA002
+Inside validate_key function
+Key length check passed.
+Key age check passed.
+Key successfully evolved and validated.
+thread 'htm::temporal_keys::tests::test_quantum_key_evolution' panicked at src/htm/temporal_keys.rs:538:9:
+Evolved key should have high entropy
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    htm::temporal_keys::tests::test_quantum_key_evolution
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

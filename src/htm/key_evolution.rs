@@ -1,13 +1,15 @@
+//key_evolution.rs
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::encryption::confusion_diffusion::feistel_network::FeistelNetwork;
 use crate::htm::htm_model::HTMModel;
 // Additional import for the quantum oracle
 use crate::encryption::noise::chaotic_maps::apply_chaotic_map;
 
-
 pub fn quantum_evolve_key(htm_model: &HTMModel, key: &[u8]) -> Vec<u8> {
     let key_length = key.len();
-
-    
 
     // Step 2: Pass through a Feistel network
     let feistel_network = FeistelNetwork::new();
@@ -22,7 +24,6 @@ pub fn quantum_evolve_key(htm_model: &HTMModel, key: &[u8]) -> Vec<u8> {
     let final_output = htm_model.apply_transformation(&chaotic_map_output);
     let final_output = fix_length(final_output, key_length);
 
-   
     final_output
 }
 
@@ -41,10 +42,6 @@ mod tests {
     use crate::encryption::confusion_diffusion::feistel_network::FeistelNetwork;
     use crate::encryption::noise::chaotic_maps::apply_chaotic_map;
     use crate::htm::htm_model::HTMModel;
-    
-   
-
-   
 
     fn mock_apply_chaotic_map(input: &[u8]) -> Vec<u8> {
         // This is a simple mock implementation that returns a fixed result for testing.

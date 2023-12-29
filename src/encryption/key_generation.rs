@@ -1,4 +1,8 @@
-extern crate rand;
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
+pub extern crate rand;
 use crate::encryption::asymmetric_encryption::keygen::PrivateKey;
 use crate::encryption::asymmetric_encryption::keygen::PublicKey;
 use crate::encryption::noise::cellular_automata;
@@ -43,7 +47,7 @@ pub fn generate_sdr_key() -> (Vec<u8>, Vec<u8>) {
     let sdr_a = generate_temporal_key(&htm_model, &initial_key);
 
     let sdr_b = cellular_automata::evolve(&sdr_a, 5);
-    let sdr_b = chaotic_maps::perturb(&sdr_b, 0.5, 100);
+    let sdr_b = chaotic_maps::perturb(&sdr_b, 0.5);
 
     (sdr_a, sdr_b)
 }
@@ -54,7 +58,7 @@ pub fn generate_sdr_keys() -> (Vec<u8>, Vec<u8>) {
     let sdr_a = generate_temporal_key(&htm_model, &initial_key);
 
     let sdr_b = cellular_automata::evolve(&sdr_a, 5);
-    let sdr_b = chaotic_maps::perturb(&sdr_b, 0.5, 100);
+    let sdr_b = chaotic_maps::perturb(&sdr_b, 0.5);
 
     (sdr_a, sdr_b)
 }

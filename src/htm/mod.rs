@@ -5,8 +5,10 @@ pub mod columns;
 pub mod dendrites;
 pub mod encoders;
 pub mod htm_model;
+pub mod htm_system;
 pub mod key_evolution;
 pub mod key_properties;
+pub mod layers;
 pub mod synapses;
 pub mod temporal_keys;
 

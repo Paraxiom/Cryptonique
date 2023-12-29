@@ -1,4 +1,7 @@
-// error_correction_codes.rs
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 
 // Function to calculate the Hamming code for a block of data
 pub fn hamming_code(block: u8) -> u16 {

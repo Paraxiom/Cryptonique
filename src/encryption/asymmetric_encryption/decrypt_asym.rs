@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::encryption::asymmetric_encryption::PrivateKey;
 
 // Assume `0` is the padding byte

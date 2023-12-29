@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::encryption::asymmetric_encryption::decrypt_asym::decrypt_asymmetric;
 use crate::encryption::asymmetric_encryption::encrypt_asym::encrypt_asymmetric;
 use crate::encryption::asymmetric_encryption::keygen::{PrivateKey, PublicKey};

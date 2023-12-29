@@ -1,3 +1,8 @@
+//key_properties.rs
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 extern crate num_complex;
 use crate::htm::htm_model::HTMModel;
 use crate::shared_state::SharedState;

@@ -1,14 +1,20 @@
-
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::encryption::confusion_diffusion::confusion::apply_confusion;
 use crate::encryption::confusion_diffusion::feistel_network::FeistelNetwork;
 use crate::encryption::fft_initialize::fft_initialize;
+use crate::encryption::hashing;
 use crate::encryption::hashing::hash;
 use crate::encryption::hashing::HashType::SHA256;
 use crate::encryption::key_generation;
 use crate::encryption::key_generation::generate_temporal_keys;
 use crate::encryption::key_generation::KeyGenConfig;
+use crate::encryption::noise::chaotic_maps;
 use crate::encryption::operations::validate_key;
 use crate::htm::htm_model::HTMModel;
+
 use crate::htm::key_evolution::quantum_evolve_key;
 use crate::shared_state::SharedState;
 extern crate num_complex;
@@ -51,7 +57,8 @@ impl TemporalKey {
 
         for _ in 0..num_iterations {
             // Apply a set of complex transformations
-            self.current_key = Self::complex_transformation(self.current_key.clone(), &mut rng);
+            self.current_key =
+                Self::complex_transformation(self.current_key.clone(), &mut rng, &self.htm_model);
 
             // Differential cryptanalysis check
             if !resists_differential_cryptanalysis(&self.current_key) {
@@ -76,10 +83,29 @@ impl TemporalKey {
         }
     }
 
-    fn complex_transformation(key: Vec<u8>, rng: &mut impl Rng) -> Vec<u8> {
-        // Example transformation: mixing, hashing, and shifting
-        // Implement actual transformation logic here
+    fn complex_transformation(
+        mut key: Vec<u8>,
+        rng: &mut impl Rng,
+        htm_model: &HTMModel,
+    ) -> Vec<u8> {
+        // Step 1: Apply Chaotic Map Transformation
+        key = chaotic_maps::apply_chaotic_map(&key);
+
+        // Step 2: Hash the key for added randomness
+        key = hashing::hash(&key, hashing::HashType::SHA256); // Assuming you have a hash function
+
+        // Step 3: Apply HTM Model Transformation
+        key = htm_model.apply_transformation(&key);
+
+        // Step 4: Final mix (you may need another custom function here)
+        key = Self::final_mix(&key, rng);
         key
+    }
+    fn final_mix(key: &[u8], rng: &mut impl Rng) -> Vec<u8> {
+        // Implement your logic for the final mix
+        key.iter()
+            .map(|&x| rng.gen::<u8>().wrapping_add(x))
+            .collect()
     }
 
     // Method to get the number of evolution steps the key has undergone
@@ -110,23 +136,16 @@ impl TemporalKey {
             return false;
         }
 
-
-        
-
-        
-
         // Entropy Check
         if !check_key_entropy(&self.current_key) {
             println!("Validation failed: Key entropy is too low.");
             return false;
         }
 
-       
         true
     }
 
     // Helper functions
-
 
     fn check_key_entropy(key: &[u8]) -> bool {
         Self::calculate_entropy(key) > SOME_ENTROPY_THRESHOLD
@@ -168,25 +187,50 @@ impl TemporalKey {
     }
 
     pub fn quantum_evolve_key(&mut self) {
-        let original_length = self.current_key.len();
+        // Remember the original key for comparison later
+        let original_key = self.current_key.clone();
+        let original_length = original_key.len(); // Define original_length based on original key
+
+        // Apply complex transformations for quantum key evolution
         self.apply_complex_transformations();
-    
-        // Adjust the key length to exactly 256 bytes
-        self.current_key.resize(256, 0);
-    
-        // Check if the key is valid and its length hasn't changed
-        if self.validate_key() && self.current_key.len() == original_length {
-            println!("Key successfully evolved and validated.");
-        } else {
-            println!("Key evolution failed validation or length check. Regenerating key...");
+
+        // Post-transformation validation and checks
+        if self.current_key.len() != original_length {
+            println!(
+                "Key evolution failed: Length mismatch after transformation. Regenerating key..."
+            );
             self.current_key = Self::regenerate_key();
+        } else if !self.validate_key() {
+            println!("Key evolution failed validation. Regenerating key...");
+            self.current_key = Self::regenerate_key();
+        } else {
+            println!("Key successfully evolved and validated.");
         }
-    
-        // Update metadata
-        self.generation_time = SystemTime::now();
-        self.evolution_steps += 1;
+
+        // Check if the evolved key is sufficiently different from the original
+        if Self::is_key_sufficiently_evolved(&original_key, &self.current_key) {
+            self.generation_time = SystemTime::now();
+            self.evolution_steps += 1;
+        } else {
+            println!("Key evolution insufficient. Re-evolving the key.");
+            self.quantum_evolve_key(); // Recursive call for re-evolution
+        }
     }
-    
+
+    // Define the minimum difference threshold for key evolution
+    const SOME_MIN_DIFFERENCE_THRESHOLD: usize = 50; // Example value, adjust as needed
+
+    // Additional method to check if the evolved key is sufficiently different from the original
+    fn is_key_sufficiently_evolved(original_key: &[u8], evolved_key: &[u8]) -> bool {
+        // Implement logic to determine if the key has evolved sufficiently
+        original_key
+            .iter()
+            .zip(evolved_key.iter())
+            .filter(|&(a, b)| a != b)
+            .count()
+            >= Self::SOME_MIN_DIFFERENCE_THRESHOLD
+    }
+
     // Regenerate key method
     fn regenerate_key() -> Vec<u8> {
         // Placeholder logic for new key generation
@@ -199,25 +243,18 @@ impl TemporalKey {
         // Example: Using Feistel networks for encryption
         self.apply_feistel_network();
 
-       
-
         // Step 3: Additional Transformations
         // Example: Applying chaotic maps or other non-linear transformations
         self.apply_chaotic_maps();
     }
 
-    // Placeholder for applying Feistel network transformations
     fn apply_feistel_network(&mut self) {
-        let feistel_network = FeistelNetwork::new(); // Assuming a FeistelNetwork struct exists
+        let feistel_network = FeistelNetwork::new();
         self.current_key = feistel_network.encrypt(&self.current_key);
     }
 
-  
-
     // Placeholder for applying chaotic maps
     fn apply_chaotic_maps(&mut self) {
-        // Implement your chaotic map transformation logic here
-        // This is just a placeholder
         self.current_key = self
             .current_key
             .iter()
@@ -263,8 +300,6 @@ pub fn generate_temporal_key(htm_model: &HTMModel, initial_key: &[u8]) -> Vec<u8
     current_key
 }
 
-
-
 fn generate_high_entropy_key(length: usize) -> Vec<u8> {
     let mut rng = StdRng::from_entropy();
     let mut key = vec![0u8; length];
@@ -293,7 +328,6 @@ mod tests {
     use std::sync::Arc;
     use std::time::Duration;
 
-  
     use crate::encryption::confusion_diffusion::confusion::apply_confusion;
     use crate::encryption::confusion_diffusion::feistel_network::FeistelNetwork;
     use crate::encryption::fft_initialize::fft_initialize;
@@ -358,215 +392,6 @@ mod tests {
             entropy_after
         );
     }
-
-    // #[test]
-    // fn test_deutsch_consistency() {
-    //     let mut htm_model = HTMModel::new();
-    //     // Initialize with some test data, for example, a simple byte array
-    //     let initial_key = vec![1, 2, 3, 4, 5, 6, 7, 8];
-    //     let key_properties = KeyProperties::new(&initial_key);
-    //     // Assuming fft_initialize and deutschs_algorithm functions are defined and accessible
-    //     // First run
-    //     let initial_qubits1 = fft_initialize(&initial_key);
-
-    //     // Assuming these calls are within a function in `src/htm/temporal_keys.rs`
-
-    //     // Initialize the auxiliary qubit
-    //     let auxiliary_qubit = initialize_auxiliary_qubit();
-
-    //     // Determine the function type (randomly or with specific logic)
-    //     let function_type = determine_function_type(); // Or a specific value like 0 or 1
-
-    //     // Corrected call to deutschs_algorithm with all required arguments
-    //     let output1 = deutschs_algorithm(
-    //         &initial_qubits1,
-    //         &auxiliary_qubit,
-    //         function_type,
-    //         &key_properties,
-    //     );
-
-    //     // Second run with the same key
-    //     let initial_qubits2 = fft_initialize(&initial_key);
-    //     let output2 = deutschs_algorithm(
-    //         &initial_qubits2,
-    //         &auxiliary_qubit,
-    //         function_type,
-    //         &key_properties,
-    //     );
-
-    //     assert_eq!(
-    //         output1, output2,
-    //         "Deutsch's algorithm outputs should be consistent"
-    //     );
-    // }
-
-    // #[test]
-    // fn test_deutsch_impact_analysis() {
-    //     let mut htm_model = HTMModel::new();
-    //     // Initialize with some test data, for example, a simple byte array
-    //     let initial_key = vec![1, 2, 3, 4, 5, 6, 7, 8];
-    //     let key_properties = KeyProperties::new(&initial_key);
-    //     // Evolve key with Deutsch's algorithm
-    //     let initial_qubits_with_deutsch = fft_initialize(&initial_key);
-
-    //     // Assuming these calls are within a function in `src/htm/temporal_keys.rs`
-
-    //     // Initialize the auxiliary qubit
-    //     let auxiliary_qubit = initialize_auxiliary_qubit();
-
-    //     // Determine the function type (randomly or with specific logic)
-    //     let function_type = determine_function_type(); // Or a specific value like 0 or 1
-
-    //     // Corrected call to deutschs_algorithm with all required arguments
-    //     let deutsch_output_with = deutschs_algorithm(
-    //         &initial_qubits_with_deutsch,
-    //         &auxiliary_qubit,
-    //         function_type,
-    //         &key_properties,
-    //     );
-
-    //     let to_encrypt_with = if deutsch_output_with {
-    //         vec![1, 0, 0, 0]
-    //     } else {
-    //         vec![0, 0, 0, 0]
-    //     };
-    //     let mut feistel_output_with = FeistelNetwork::new().encrypt(&to_encrypt_with);
-    //     apply_confusion(&mut feistel_output_with, &mut htm_model);
-    //     let evolved_key_with = hash(&feistel_output_with, SHA256);
-
-    //     // Evolve key without Deutsch's algorithm (bypassing or simulating a different outcome)
-    //     let initial_qubits_without_deutsch = fft_initialize(&initial_key);
-    //     // Simulate a different outcome for the Deutsch's algorithm
-    //     let to_encrypt_without = vec![0, 0, 0, 0]; // Assuming a different path
-    //     let mut feistel_output_without = FeistelNetwork::new().encrypt(&to_encrypt_without);
-    //     apply_confusion(&mut feistel_output_without, &mut htm_model);
-    //     let evolved_key_without = hash(&feistel_output_without, SHA256);
-
-    //     assert_ne!(
-    //         evolved_key_with, evolved_key_without,
-    //         "Evolved keys should differ"
-    //     );
-    // }
-
-    // #[test]
-    // fn test_deutsch_security_assessment() {
-    //     let mut htm_model = HTMModel::new();
-    //     let initial_key = vec![1, 2, 3, 4, 5, 6, 7, 8]; // Sample test data
-    //     let key_properties = KeyProperties::new(&initial_key);
-    //     // Example of evolving key with Deutsch's algorithm
-    //     // You will need to replace this with your actual key evolution logic
-    //     let initial_qubits_with_deutsch = fft_initialize(&initial_key);
-    //     // Assuming these calls are within a function in `src/htm/temporal_keys.rs`
-
-    //     // Initialize the auxiliary qubit
-    //     let auxiliary_qubit = initialize_auxiliary_qubit();
-
-    //     // Determine the function type (randomly or with specific logic)
-    //     let function_type = determine_function_type(); // Or a specific value like 0 or 1
-
-    //     // Corrected call to deutschs_algorithm with all required arguments
-    //     let deutch_output_with = deutschs_algorithm(
-    //         &initial_qubits_with_deutsch,
-    //         &auxiliary_qubit,
-    //         function_type,
-    //         &key_properties,
-    //     );
-
-    //     let to_encrypt_with = if deutch_output_with {
-    //         vec![1, 0, 0, 0]
-    //     } else {
-    //         vec![0, 0, 0, 0]
-    //     };
-    //     let mut feistel_output_with = FeistelNetwork::new().encrypt(&to_encrypt_with);
-    //     apply_confusion(&mut feistel_output_with, &mut htm_model);
-    //     let evolved_key_with = hash(&feistel_output_with, SHA256);
-
-    //     // Example of evolving key without Deutsch's algorithm
-    //     // Here, you can simulate the process without using Deutsch's algorithm
-    //     // or manipulate the outcome to represent the 'without' scenario
-    //     let initial_qubits_without_deutsch = fft_initialize(&initial_key);
-    //     let to_encrypt_without = vec![0, 0, 0, 0]; // Assuming a different path
-    //     let mut feistel_output_without = FeistelNetwork::new().encrypt(&to_encrypt_without);
-    //     apply_confusion(&mut feistel_output_without, &mut htm_model);
-    //     let evolved_key_without = hash(&feistel_output_without, SHA256);
-
-    //     //  // Perform security checks on both keys
-    //     //  let entropy_with = calculate_entropy(&evolved_key_with);
-    //     //  let entropy_without = calculate_entropy(&evolved_key_without);
-    //     //  let randomness_with = check_randomness(&evolved_key_with, 100);
-    //     //  let randomness_without = check_randomness(&evolved_key_without, 100);
-
-    //     // Example assertions (you can adjust these based on your security requirements)
-    //     //  assert!(entropy_with >= SOME_THRESHOLD, "Key with Deutsch's algorithm has low entropy");
-    //     //  assert!(entropy_without >= SOME_THRESHOLD, "Key without Deutsch's algorithm has low entropy");
-    //     //  assert!(randomness_with, "Key with Deutsch's algorithm fails randomness check");
-    //     //  assert!(randomness_without, "Key without Deutsch's algorithm fails randomness check");
-    // }
-
-    // #[test]
-    // fn test_deutsch_performance() {
-    //     let htm_model = HTMModel::new();
-    //     let initial_key = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Sample key
-    //     let evolution_interval = Duration::from_secs(10); // Adjust as needed
-
-    //     // Evolve key with Deutsch's algorithm
-    //     let start_time_with = std::time::Instant::now();
-    //     let mut temporal_key_with =
-    //         TemporalKey::new(initial_key.clone(), htm_model.clone(), evolution_interval);
-    //     temporal_key_with.quantum_evolve_key(); // Assuming this uses Deutsch's algorithm
-    //     let duration_with = start_time_with.elapsed();
-
-    //     // Evolve key without Deutsch's algorithm using the existing evolve_key method
-    //     let start_time_without = std::time::Instant::now();
-    //     let mut temporal_key_without = TemporalKey::new(initial_key, htm_model, evolution_interval);
-    //     temporal_key_without.evolve_key(10, 1); // Classical method for evolution
-    //     let duration_without = start_time_without.elapsed();
-
-    //     // Compare durations
-    //     println!("Duration with Deutsch's algorithm: {:?}", duration_with);
-    //     println!(
-    //         "Duration without Deutsch's algorithm: {:?}",
-    //         duration_without
-    //     );
-
-    //     // Example assertion (adjust based on expected performance difference)
-    //     assert!(
-    //         duration_with <= duration_without,
-    //         "Deutsch's algorithm should not be significantly slower"
-    //     );
-    // }
-
-    // #[test]
-    // fn test_deutsch_quantum_characteristic() {
-    //     let htm_model = HTMModel::new();
-    //     let initial_key_length = 256; // Adjusting the key length to 256 bytes for standardization
-    //     let initial_key = generate_high_entropy_key(initial_key_length); // Generating a high-entropy initial key
-    //     let evolution_interval = Duration::from_secs(10);
-
-    //     // Evolve the key using Deutsch's algorithm
-    //     let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
-    //     temporal_key.quantum_evolve_key();
-    //     let evolved_key = temporal_key.get_key();
-
-    //     // Check that evolved key is different from the initial key
-    //     assert_ne!(
-    //         evolved_key, &initial_key,
-    //         "Evolved key should not match the initial key"
-    //     );
-
-    //     // Check that the evolved key maintains the same length as the initial key
-    //     assert_eq!(
-    //         evolved_key.len(),
-    //         initial_key.len(),
-    //         "Evolved key should maintain length"
-    //     );
-
-    //     // Check for high entropy in the evolved key
-    //     assert!(
-    //         has_sufficient_entropy(evolved_key),
-    //         "Evolved key should have high entropy"
-    //     );
-    // }
 
     use rand::distributions::{Distribution, Uniform};
 
@@ -671,83 +496,63 @@ mod tests {
         let htm_model = HTMModel::new();
         let initial_key = generate_high_entropy_key(256);
         println!("Generated high-entropy key: {:?}", initial_key);
-    
+
         let evolution_interval = Duration::from_secs(10);
         let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
-    
+
         temporal_key.evolve_key(10, 1);
         let evolved_key = temporal_key.get_key();
-    
+
         // // Ensure the evolved key is different from the initial key
         // assert_ne!(evolved_key, &initial_key, "Evolved key should not match the initial key");
-    
+
         // // Check the length of the evolved key
         // assert_eq!(evolved_key.len(), 256, "Evolved key should maintain a length of 256");
-    
+
         // // Check if the evolved key resists differential cryptanalysis
         // assert!(
         //     resists_differential_cryptanalysis(evolved_key),
         //     "Evolved key should resist differential cryptanalysis"
         // );
-    
-       
+
         // assert!(
         //     has_sufficient_entropy(evolved_key),
         //     "Evolved key should have high entropy"
         // );
     }
- 
-    
 
     #[test]
     fn test_quantum_key_evolution() {
         let htm_model = HTMModel::new();
-        let initial_key = vec![0; 256];
-        let evolution_interval = Duration::from_secs(10);
+        let initial_key = generate_high_entropy_key(256);
+        let mut temporal_key =
+            TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
-
-        // Perform the quantum key evolution
         temporal_key.quantum_evolve_key();
+        let evolved_key = temporal_key.get_key();
 
-        // Retrieve the evolved key
-        let evolved_key = temporal_key.get_key().clone();
-
-        // Check if the evolution steps counter has incremented
-        assert_eq!(
-            temporal_key.get_evolution_steps(),
-            1,
-            "The key should have evolved exactly once"
+        assert_ne!(
+            evolved_key, &initial_key,
+            "The evolved key should be different from the initial key"
         );
-
-        // // Ensure the evolved key is different from the initial key
-        // assert_ne!(
-        //     evolved_key, initial_key,
-        //     "The evolved key should be different from the initial key"
-        // );
-
-        // Optional: Additional checks can be added to verify other properties of the evolved key
-        // such as its length, entropy, etc.
+        assert!(
+            has_sufficient_entropy(evolved_key),
+            "Evolved key should have high entropy"
+        );
     }
 
     #[test]
     fn test_key_constant_or_balanced() {
         let htm_model = HTMModel::new();
-        let initial_key = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let initial_key = generate_high_entropy_key(256);
+        let mut temporal_key = TemporalKey::new(initial_key, htm_model, Duration::from_secs(10));
 
-        // Create a TemporalKey instance
-        let evolution_interval = Duration::from_secs(10); // Adjust the interval as needed
-        let mut temporal_key = TemporalKey::new(initial_key, htm_model, evolution_interval);
-
-        // Evolve the key
-        temporal_key.quantum_evolve_key(); // This will evolve the key within the TemporalKey struct
+        temporal_key.quantum_evolve_key();
         let evolved_key = temporal_key.get_key();
 
-        // Analyze the key
         let is_constant = check_if_constant(evolved_key);
         let is_balanced = check_if_balanced(evolved_key);
 
-        // Assert expectations
         assert!(
             is_constant || is_balanced,
             "Key is neither constant nor balanced"
@@ -780,46 +585,31 @@ mod tests {
 
     #[test]
     fn test_temporal_key_evolution() {
-        println!("Running test_temporal_key_evolution");
-
-        // Step 1: Generate an initial key pair
-        println!("Step 1: Generate initial keys");
-        let config = KeyGenConfig::default();
-        let (initial_key_a, _) = generate_temporal_keys(config);
-        println!("Initial key generated: {:?}", initial_key_a);
-
-        // Step 2: Initialize the HTM model
-        println!("Step 2: Initialize HTM Model");
         let htm_model = HTMModel::new();
+        let initial_key = generate_high_entropy_key(256);
+        let mut temporal_key =
+            TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        // // Create a TemporalKey instance using the initial key and HTM model
-        // let mut temporal_key =
-        //     TemporalKey::new(initial_key_a.clone(), htm_model, Duration::from_secs(10));
-        // println!("TemporalKey instance created.");
+        temporal_key.evolve_key(10, 1);
+        let evolved_key = temporal_key.get_key();
 
-        // // Step 3: Evolve the key using Quantum operations
-        // println!("Step 3: Evolve the key");
-        // temporal_key.quantum_evolve_key(); // This method does not return a Result
-
-        // // Directly validate the evolved key since quantum_evolve_key doesn't return a Result
-        // println!("Step 4: Validate the evolved key");
-        // let is_valid = temporal_key.validate_key();
-        // println!("Is the key valid? {}", is_valid);
-        // assert!(is_valid, "Key evolution failed validation.");
-
-        // // Retrieve the evolved key for further assertions
-        // let evolved_key = temporal_key.get_key();
-
-        // // Step 5: Ensure the key is robust against common attack vectors
-        // println!("Step 5: Ensure robustness against attacks");
-        // assert!(
-        //     evolved_key.len() >= 256,
-        //     "Key length must be at least 256 bits to resist brute force attacks"
-        // );
-        // assert!(
-        //     evolved_key.iter().any(|&x| x != 0),
-        //     "Key must not be all zeros to resist known-plaintext attacks"
-        // );
+        assert_ne!(
+            evolved_key, &initial_key,
+            "Evolved key should not match the initial key"
+        );
+        assert_eq!(
+            evolved_key.len(),
+            256,
+            "Evolved key should maintain a length of 256"
+        );
+        assert!(
+            resists_differential_cryptanalysis(evolved_key),
+            "Evolved key should resist differential cryptanalysis"
+        );
+        assert!(
+            has_sufficient_entropy(evolved_key),
+            "Evolved key should have high entropy"
+        );
     }
 }
 
@@ -830,7 +620,6 @@ fn check_key_entropy(key: &[u8]) -> bool {
     }
     unique_bytes.len() as f64 / key.len() as f64 > 0.6 // Threshold for entropy; adjust as needed
 }
-
 
 fn resists_differential_cryptanalysis(key: &[u8]) -> bool {
     // Check for immediate repetition

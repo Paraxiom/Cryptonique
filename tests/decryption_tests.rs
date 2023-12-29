@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use cryptonique::encryption::operations::{decrypt_data, encrypt_data};
 use cryptonique::htm::htm_model::HTMModel;
 use cryptonique::htm::temporal_keys::TemporalKey;

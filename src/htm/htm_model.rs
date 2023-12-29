@@ -1,3 +1,4 @@
+//htm_model.rs
 use crate::htm::columns::column::Column;
 use crate::htm::dendrites::dendrite::Dendrite;
 use crate::htm::encoders::scalar_encoder::ScalarEncoder;
@@ -92,4 +93,20 @@ impl HTMModel {
     pub fn get_key(&self, key: &Vec<u8>) -> Option<&SystemTime> {
         self.keys.get(key)
     }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_htm_model_initialization() {
+        let htm_model = HTMModel::new();
+        assert!(htm_model.dendrites.is_empty());
+        assert!(htm_model.columns.is_empty());
+        assert!(htm_model.encoders.is_empty());
+        assert!(htm_model.keys.is_empty());
+        assert_eq!(htm_model.learning_rate, 0.1);
+    }
+
+    // Additional tests...
 }

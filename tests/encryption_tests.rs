@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 // Import necessary modules and functions
 use cryptonique::encryption::operations::{decrypt_data, encrypt_data};
 

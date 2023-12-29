@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::utils::cross_verify::verify_decrypt;
 use rand::Rng;
 use std::collections::HashSet;

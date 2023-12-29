@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use super::keygen::PublicKey;
 
 pub fn encrypt_asymmetric(data: &[u8], public_key: &PublicKey) -> Result<Vec<u8>, String> {

@@ -1,3 +1,7 @@
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use std::collections::HashMap;
 
 // Function to encode a string into binary using a simple one-hot encoding

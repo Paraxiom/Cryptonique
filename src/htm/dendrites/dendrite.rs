@@ -1,17 +1,27 @@
 // src/htm/dendrites/dendrite.rs
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
 use crate::htm::synapses::synapse::Synapse;
+
+const DEFAULT_ACTIVATION_THRESHOLD: f32 = 1.0;
+const DEFAULT_CONNECTION_THRESHOLD: f32 = 0.5;
+const PREDICTIVE_THRESHOLD: usize = 3;
+const PREDICTIVE_SYNAPSE_THRESHOLD: usize = 3;
 #[derive(Clone)]
 pub struct DendriteSegment {
-    synapses: Vec<Synapse>, // Each segment contains multiple synapses.
+    synapses: Vec<Synapse>,
+    activation_threshold: f32,
 }
 
 impl DendriteSegment {
-    pub fn new() -> Self {
+    pub fn new(activation_threshold: f32) -> Self {
         DendriteSegment {
             synapses: Vec::new(),
+            activation_threshold,
         }
     }
-
     pub fn add_synapse(&mut self, synapse: Synapse) {
         self.synapses.push(synapse);
     }
@@ -20,7 +30,16 @@ impl DendriteSegment {
         &self.synapses
     }
 
-    // Adding `strength_delta` parameter to adjust the strength/weakening magnitude
+    pub fn is_active(&self) -> bool {
+        let total_weight: f32 = self.synapses.iter().map(|s| s.get_weight()).sum();
+        total_weight >= self.activation_threshold
+    }
+
+    pub fn is_connected(&self) -> bool {
+        self.synapses
+            .iter()
+            .any(|s| s.get_weight() > DEFAULT_CONNECTION_THRESHOLD)
+    }
     pub fn update_synapses(&mut self, active: bool, strength_delta: f32) {
         for synapse in &mut self.synapses {
             if active {
@@ -30,24 +49,17 @@ impl DendriteSegment {
             }
         }
     }
-    pub fn is_active(&self) -> bool {
-        // Threshold for considering a dendrite segment as active
-        let activation_threshold = 1.0;
-        // Sum of the weights of all synapses in this segment
-        let total_weight: f32 = self.synapses.iter().map(|s| s.get_weight()).sum();
-        // Segment is active if total_weight >= activation_threshold
-        total_weight >= activation_threshold
-    }
-
-    pub fn is_connected(&self) -> bool {
-        // Threshold for considering a synapse as connected
-        let connection_threshold = 0.5;
-        // Segment is connected if any synapse is connected
-        self.synapses
+    pub fn is_predictive(&self) -> bool {
+        // Example: a segment is predictive if it has enough active synapses
+        let active_synapses_count = self
+            .synapses
             .iter()
-            .any(|s| s.get_weight() > connection_threshold)
+            .filter(|synapse| synapse.is_active())
+            .count();
+        active_synapses_count >= PREDICTIVE_SYNAPSE_THRESHOLD
     }
 }
+
 #[derive(Clone)]
 pub struct Dendrite {
     pub segments: Vec<DendriteSegment>,
@@ -68,28 +80,73 @@ impl Dendrite {
         &self.segments
     }
 
-    pub fn update_segments(&mut self, active: bool, strength_delta: f32) {
-        for segment in &mut self.segments {
-            segment.update_synapses(active, strength_delta);
-        }
-    }
-
-    pub fn get_active_segments(&self) -> Vec<&DendriteSegment> {
-        self.segments.iter().filter(|s| s.is_active()).collect()
-    }
-
-    pub fn get_connected_segments(&self) -> Vec<&DendriteSegment> {
-        self.segments.iter().filter(|s| s.is_connected()).collect()
+    pub fn get_segments_mut(&mut self) -> &mut Vec<DendriteSegment> {
+        &mut self.segments
     }
 
     pub fn remove_segment(&mut self, idx: usize) {
-        self.segments.remove(idx);
+        if idx < self.segments.len() {
+            self.segments.remove(idx);
+        }
+        // Optionally handle the error case or log a message
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_dendrite_segment_activation() {
+        let mut segment = DendriteSegment::new(DEFAULT_ACTIVATION_THRESHOLD);
+        segment.add_synapse(Synapse::new(0, 0, 0.6)); // Corrected function call
+        segment.add_synapse(Synapse::new(1, 0, 0.5)); // Corrected function call
+
+        assert!(segment.is_active(), "Segment should be active");
     }
 
-    pub fn get_segment(&mut self, idx: usize) -> Option<&mut DendriteSegment> {
-        self.segments.get_mut(idx)
+    #[test]
+    fn test_dendrite_segment_connection() {
+        let mut segment = DendriteSegment::new(DEFAULT_ACTIVATION_THRESHOLD);
+        segment.add_synapse(Synapse::new(0, 0, 0.3));
+        segment.add_synapse(Synapse::new(0, 0, 0.6));
+
+        assert!(segment.is_connected(), "Segment should be connected");
     }
-    pub fn get_segments_mut(&mut self) -> &mut Vec<DendriteSegment> {
-        &mut self.segments
+
+    #[test]
+    fn test_adding_removing_synapses() {
+        let mut segment = DendriteSegment::new(DEFAULT_ACTIVATION_THRESHOLD);
+        // Define a synapse
+        let connected_cell_index = 0; // Assuming you're connecting to cell with index 0
+        let synapse_weight = 0.5; // Example weight
+        let synapse = Synapse::new(0, connected_cell_index, synapse_weight); // Create a synapse instance
+
+        // Add the synapse to the segment
+        segment.add_synapse(synapse.clone());
+        assert_eq!(segment.get_synapses().len(), 1, "Should have 1 synapse");
+
+        // Assuming a method to remove a synapse is implemented
+        // segment.remove_synapse(0);
+        // assert!(segment.get_synapses().is_empty(), "Segment should be empty");
+    }
+
+    #[test]
+    fn test_dendrite_segment_manipulation() {
+        let mut dendrite = Dendrite::new();
+        let segment = DendriteSegment::new(DEFAULT_ACTIVATION_THRESHOLD);
+        dendrite.add_segment(segment);
+
+        assert_eq!(
+            dendrite.get_segments().len(),
+            1,
+            "Dendrite should have 1 segment"
+        );
+
+        dendrite.remove_segment(0);
+        assert!(
+            dendrite.get_segments().is_empty(),
+            "Dendrite should have no segments"
+        );
     }
 }

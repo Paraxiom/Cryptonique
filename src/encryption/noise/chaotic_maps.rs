@@ -1,92 +1,56 @@
-pub const R: f64 = 3.9; // Constant for logistic map
+#![allow(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
+use crate::encryption::key_generation::rand::Rng;
+// Constants for various chaotic maps
+const R: f64 = 3.9; // Logistic map constant
+const A_HENON: f64 = 1.4;
+const B_HENON: f64 = 0.3;
+const A_LOZI: f64 = 1.7;
+const B_LOZI: f64 = 0.5;
 
-// Generate a sequence using logistic map
-pub fn logistic_map(x: f64, steps: usize) -> Vec<f64> {
-    let mut sequence = Vec::new();
-    let mut current = x;
-
-    for _ in 0..steps {
-        let next = R * current * (1.0 - current);
-        sequence.push(next);
-        current = next;
-    }
-
-    sequence
-}
-
-// Convert sequence to binary (as an example)
-pub fn sequence_to_binary(sequence: Vec<f64>) -> Vec<u8> {
-    sequence
-        .iter()
-        .map(|&x| if x >= 0.5 { 1 } else { 0 })
-        .collect()
-}
-
-// In chaotic_maps.rs
-
-pub fn perturb(sdr: &Vec<u8>, x: f64, steps: usize) -> Vec<u8> {
-    let logistic_sequence = logistic_map(x, steps);
-    let binary_sequence = sequence_to_binary(logistic_sequence);
-
-    let mut perturbed_sdr = Vec::new();
-
-    for (bit, perturb_bit) in sdr.iter().zip(binary_sequence.iter()) {
-        let new_bit = bit ^ perturb_bit; // XOR operation for perturbation
-        perturbed_sdr.push(new_bit);
-    }
-
-    perturbed_sdr
-}
-// Function to generate a sequence using Rule 30
-pub fn rule_30(initial: Vec<u8>, n: usize) -> Vec<Vec<u8>> {
-    let mut sequence = Vec::with_capacity(n);
-    sequence.push(initial);
-
-    for _ in 0..n {
-        let mut next = Vec::with_capacity(sequence[0].len());
-
-        for i in 0..sequence[0].len() {
-            let left = sequence.last().unwrap()[(i + sequence[0].len() - 1) % sequence[0].len()];
-            let center = sequence.last().unwrap()[i];
-            let right = sequence.last().unwrap()[(i + 1) % sequence[0].len()];
-
-            next.push(left ^ (center | right));
-        }
-
-        sequence.push(next);
-    }
-
-    sequence
-}
-
-pub fn validate_noise(noise: &[u8]) -> bool {
-    // Validate the noise
-    // This is a placeholder and should be replaced with actual logic
-    true
-}
-
-/// Apply a chaotic map to the Feistel network output to produce a transformed key.
-/// Uses a logistic map for the chaotic transformation.
+// Enhanced Chaotic Map Function
 pub fn apply_chaotic_map(feistel_output: &[u8]) -> Vec<u8> {
-    // Define the logistic map constant
-    const R: f64 = 3.9;
+    // Initialize variables for the various maps
+    let mut x = feistel_output[0] as f64 / 255.0; // Initial condition normalized to [0, 1]
+    let mut y = feistel_output[1] as f64 / 255.0; // Second initial condition for 2D maps
 
-    // Use the first byte of the Feistel output as the initial condition, normalized to [0, 1]
-    let initial_condition = feistel_output[0] as f64 / 255.0;
+    let mut transformed_key = Vec::with_capacity(feistel_output.len());
 
-    // Generate a logistic sequence based on this initial condition
-    let mut logistic_sequence = Vec::new();
-    let mut x = initial_condition;
-    for _ in 0..feistel_output.len() {
-        x = R * x * (1.0 - x);
-        logistic_sequence.push((x * 255.0) as u8);
+    for &byte in feistel_output.iter() {
+        // Apply a combination of chaotic maps
+        x = R * x * (1.0 - x); // Logistic map
+        let henon_x = 1.0 - A_HENON * x.powi(2) + y;
+        let henon_y = B_HENON * x;
+        x = henon_x;
+        y = henon_y;
+
+        let lozi_x = 1.0 - A_LOZI * x.abs() + y;
+        let lozi_y = B_LOZI * x;
+        x = lozi_x;
+        y = lozi_y;
+
+        // Add more maps here if needed (e.g., Sine-Sine, Tinkerbell, Bernoulli)
+
+        // Convert the chaotic value to a byte and XOR with the input byte
+        let chaotic_byte = (x * 255.0) as u8;
+        transformed_key.push(byte ^ chaotic_byte);
     }
 
-    // XOR the Feistel output with the logistic sequence to produce the transformed key
-    let transformed_key: Vec<u8> = feistel_output
-        .iter()
-        .zip(logistic_sequence.iter())
-        .map(|(&a, &b)| a ^ b)
-        .collect();
     transformed_key
 }
+pub fn perturb(data: &[u8], intensity: f64) -> Vec<u8> {
+    let mut rng = rand::thread_rng();
+    data.iter()
+        .map(|&byte| {
+            // Generate a random value and apply it based on the intensity
+            let random_value = rng.gen::<u8>();
+            let perturbed_byte = byte.wrapping_add((random_value as f64 * intensity) as u8);
+            perturbed_byte
+        })
+        .collect()
+}
+// References:
+// 1. Moysis, L., Azar, A. T., Tutueva, A. V., & Butusov, D. N. (2020). Discrete Time Chaotic Maps With Application to Random Bit Generation. Pages 542-582.
+// 2. Gao, Z.-M., Zhao, J., & Zhang, Y.-J. (2022). Review of Chaotic Mapping Enabled Nature-Inspired Algorithms. Information Sciences, 19(8), 8215-8258.
