@@ -1,5 +1,6 @@
 //scalar_encoder.rs
-use crate::encryption::key_generation::rand::prelude::SliceRandom;
+use rand::seq::SliceRandom;
+
 use rand::Rng;
 #[derive(Clone)]
 pub struct ScalarEncoder {
@@ -23,10 +24,10 @@ impl ScalarEncoder {
         let mut rng = rand::thread_rng();
         let mut sdr = vec![0; self.output_size];
         let num_active_bits = (self.sparsity * self.output_size as f64).round() as usize;
-    
+
         let mut available_positions: Vec<usize> = (0..self.output_size).collect();
         let mut selected_positions = Vec::new(); // To store selected positions for debug
-    
+
         for _ in 0..num_active_bits {
             if let Some(pos) = available_positions.choose(&mut rng).copied() {
                 sdr[pos] = 1;
@@ -36,19 +37,12 @@ impl ScalarEncoder {
                 break; // No more candidates available
             }
         }
-    
+
         // Debug print to check the distribution of active positions
         println!("Selected positions: {:?}", selected_positions);
-    
+
         sdr
     }
-    
-    
-    
-    
-    
-    
-    
 }
 
 #[cfg(test)]
@@ -141,38 +135,31 @@ mod tests {
         let max_val = 100.0;
         let output_size = 1000; // Adjusted output size
         let sparsity = 0.2; // Sparsity level
-    
+
         let encoder = ScalarEncoder::new(min_val, max_val, output_size, sparsity);
-    
+
         let mut total_active_bits = 0;
         let num_trials = 10; // Reduced number of trials
-    
+
         for i in 0..num_trials {
             let encoded_data = encoder.encode(50.0); // Test encoding a value
             let active_bits = encoded_data.iter().filter(|&&bit| bit == 1).count();
-            if i < 5 { // Limit debug output
+            if i < 5 {
+                // Limit debug output
                 println!("Trial {}: Active Bits = {}", i, active_bits);
             }
             total_active_bits += active_bits;
         }
-    
+
         let average_active_bits = total_active_bits as f64 / num_trials as f64;
         let expected_active_bits = (output_size as f64 * sparsity).round();
-    
+
         // Adjusted acceptable variance
         let acceptable_variance = 130.0; // Adjust based on observed variance
-    
+
         assert!(
             (average_active_bits - expected_active_bits).abs() <= acceptable_variance,
             "Encoded data should have an average number of active bits within the acceptable range."
         );
     }
-    
-    
-    
-    
-
-    
-    
-
 }

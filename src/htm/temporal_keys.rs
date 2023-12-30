@@ -9,8 +9,7 @@ use crate::encryption::hashing;
 use crate::encryption::hashing::hash;
 use crate::encryption::hashing::HashType::SHA256;
 use crate::encryption::key_generation;
-use crate::encryption::key_generation::generate_temporal_keys;
-use crate::encryption::key_generation::KeyGenConfig;
+
 use crate::encryption::noise::chaotic_maps;
 use crate::encryption::operations::validate_key;
 use crate::htm::htm_model::HTMModel;
@@ -20,6 +19,7 @@ use crate::shared_state::SharedState;
 extern crate num_complex;
 use chrono::prelude::*;
 use num_complex::Complex;
+use prost::Message;
 use std::sync::Arc;
 use std::time::Duration;
 use std::time::SystemTime;
@@ -28,7 +28,6 @@ use rand::Rng;
 use rand::{rngs::StdRng, SeedableRng};
 use rand::{thread_rng, RngCore};
 use std::collections::HashSet;
-// At the top of src/htm/temporal_keys.rs
 
 use crate::htm::key_properties::KeyProperties;
 const SOME_ENTROPY_THRESHOLD: f64 = 200.0;
@@ -48,28 +47,65 @@ impl TemporalKey {
             current_key: initial_key,
             generation_time: SystemTime::now(),
             evolution_interval,
-            htm_model,
+            htm_model, // Assigning the passed HTMModel
             evolution_steps: 0,
         }
     }
-    pub fn evolve_key(&mut self, num_iterations: usize, steps: usize) {
+    fn prepare_htm_input(&self, key: &[u8]) -> Vec<u8> {
+        // For demonstration, we'll simply convert the key into a binary representation
+        let mut htm_input = Vec::new();
+
+        for &byte in key {
+            // Convert each byte to its binary representation
+            for i in 0..8 {
+                // Extract each bit using bitwise operations
+                let bit = (byte >> (7 - i)) & 1;
+                htm_input.push(bit);
+            }
+        }
+
+        htm_input
+    }
+
+    pub fn evolve_key(&mut self, num_iterations: usize, steps: usize, learning_rate: f32) {
         let mut rng = rand::thread_rng();
 
         for _ in 0..num_iterations {
-            // Apply a set of complex transformations
-            self.current_key =
-                Self::complex_transformation(self.current_key.clone(), &mut rng, &self.htm_model);
+            // Convert part of the key to a format suitable for HTM processing
+            let htm_input = self.prepare_htm_input(&self.current_key);
 
-            // Differential cryptanalysis check
-            if !resists_differential_cryptanalysis(&self.current_key) {
-                continue; // Re-evolve if check fails
+            // Apply the adapt and learn process to the HTM model
+            let adapted_result = self.htm_model.adapt_and_learn(&htm_input, learning_rate);
+
+            // Incorporate the adapted result from HTM into the key transformation
+            let htm_transformed_key = self.apply_htm_adaptation(&adapted_result);
+
+            // Apply additional complex transformations
+            let transformed_key = Self::complex_transformation(
+                htm_transformed_key.encode_to_vec(),
+                &mut rng,
+                &mut self.htm_model,
+            );
+
+            // Check the transformed key's properties
+            if transformed_key.len() != self.current_key.len() {
+                println!("Key transformation altered the key length. Re-evolving...");
+                continue;
             }
 
-            // Entropy check
-            let entropy = Self::calculate_entropy(&self.current_key);
-            if entropy < SOME_ENTROPY_THRESHOLD {
-                continue; // Re-evolve if entropy is too low
+            if Self::calculate_entropy(&transformed_key) < SOME_ENTROPY_THRESHOLD {
+                println!("Key transformation resulted in low entropy. Re-evolving...");
+                continue;
             }
+
+            if !resists_differential_cryptanalysis(&transformed_key) {
+                println!("Key failed differential cryptanalysis check. Re-evolving...");
+                continue;
+            }
+
+            // Update the current key if it passes all checks
+            self.current_key = transformed_key;
+            println!("Key successfully transformed.");
 
             // Key validated
             break;
@@ -80,27 +116,35 @@ impl TemporalKey {
             println!("Key successfully evolved and validated.");
         } else {
             println!("Key evolution failed validation.");
+            // Consider logic to regenerate or re-evolve the key here if validation fails
         }
     }
 
     fn complex_transformation(
         mut key: Vec<u8>,
         rng: &mut impl Rng,
-        htm_model: &HTMModel,
+        htm_model: &mut HTMModel,
     ) -> Vec<u8> {
         // Step 1: Apply Chaotic Map Transformation
         key = chaotic_maps::apply_chaotic_map(&key);
 
-        // Step 2: Hash the key for added randomness
-        key = hashing::hash(&key, hashing::HashType::SHA256); // Assuming you have a hash function
+        // Step 2: Modify the hashing step to preserve key length
+        let hash_part = hashing::hash(&key[0..16], hashing::HashType::SHA256); // Hashing first 16 bytes
+        let key_len = key.len(); // Store the length of the key to avoid simultaneous mutable and immutable borrows
+
+        for (i, &byte) in hash_part.iter().enumerate() {
+            let index = i % key_len; // Calculate the index using the stored key length
+            key[index] ^= byte; // Mixing hashed bytes back into the key
+        }
 
         // Step 3: Apply HTM Model Transformation
         key = htm_model.apply_transformation(&key);
 
-        // Step 4: Final mix (you may need another custom function here)
+        // Step 4: Final mix
         key = Self::final_mix(&key, rng);
         key
     }
+
     fn final_mix(key: &[u8], rng: &mut impl Rng) -> Vec<u8> {
         // Implement your logic for the final mix
         key.iter()
@@ -113,35 +157,55 @@ impl TemporalKey {
         self.evolution_steps
     }
     fn validate_key(&self) -> bool {
-        println!("Inside validate_key function");
+        println!("Starting key validation process...");
 
         // Length Check
+        println!("Checking key length...");
         if self.current_key.len() != 256 {
-            println!("Validation failed: Key length is not 256.");
+            println!(
+                "Validation failed: Key length is not 256. Actual length: {}",
+                self.current_key.len()
+            );
             return false;
         } else {
-            println!("Key length check passed.");
+            println!(
+                "Key length check passed. Length: {}",
+                self.current_key.len()
+            );
         }
 
         // Temporal Check
-        if let Ok(elapsed) = SystemTime::now().duration_since(self.generation_time) {
-            if elapsed > self.evolution_interval {
-                println!("Validation failed: Key has expired.");
-                return false;
-            } else {
-                println!("Key age check passed.");
+        println!("Checking key age...");
+        match SystemTime::now().duration_since(self.generation_time) {
+            Ok(elapsed) => {
+                if elapsed > self.evolution_interval {
+                    println!(
+                        "Validation failed: Key has expired. Elapsed time: {:?}",
+                        elapsed
+                    );
+                    return false;
+                } else {
+                    println!("Key age check passed. Elapsed time: {:?}", elapsed);
+                }
             }
-        } else {
-            println!("System time is set before the key was generated. This should not happen.");
-            return false;
+            Err(_) => {
+                println!(
+                    "System time is set before the key was generated. This should not happen."
+                );
+                return false;
+            }
         }
 
         // Entropy Check
+        println!("Checking key entropy...");
         if !check_key_entropy(&self.current_key) {
             println!("Validation failed: Key entropy is too low.");
             return false;
+        } else {
+            println!("Key entropy check passed.");
         }
 
+        println!("Key validation successful.");
         true
     }
 
@@ -181,40 +245,50 @@ impl TemporalKey {
         if now.signed_duration_since(DateTime::<Utc>::from(self.generation_time))
             >= chrono::Duration::from_std(self.evolution_interval).unwrap()
         {
-            self.evolve_key(1, 1); // Evolve the key once
+            self.evolve_key(1, 1, 0.1); // Evolve the key once
             self.generation_time = SystemTime::now();
         }
     }
 
     pub fn quantum_evolve_key(&mut self) {
-        // Remember the original key for comparison later
+        // Additional debugging info
+        println!("Starting key evolution...");
+
         let original_key = self.current_key.clone();
-        let original_length = original_key.len(); // Define original_length based on original key
+        let original_length = original_key.len();
+        let mut evolution_attempts = 0;
+        const MAX_EVOLUTION_ATTEMPTS: usize = 10;
 
-        // Apply complex transformations for quantum key evolution
-        self.apply_complex_transformations();
+        while evolution_attempts < MAX_EVOLUTION_ATTEMPTS {
+            self.apply_complex_transformations();
 
-        // Post-transformation validation and checks
-        if self.current_key.len() != original_length {
-            println!(
-                "Key evolution failed: Length mismatch after transformation. Regenerating key..."
-            );
+            if self.current_key.len() != original_length {
+                println!(
+                    "Evolution attempt {}: Key length altered.",
+                    evolution_attempts + 1
+                );
+            } else if !self.validate_key() {
+                println!(
+                    "Evolution attempt {}: Key failed validation.",
+                    evolution_attempts + 1
+                );
+            } else if !Self::is_key_sufficiently_evolved(&original_key, &self.current_key) {
+                println!(
+                    "Evolution attempt {}: Insufficient evolution.",
+                    evolution_attempts + 1
+                );
+            } else {
+                println!("Key evolution successful.");
+                self.generation_time = SystemTime::now();
+                self.evolution_steps += 1;
+                return;
+            }
+
             self.current_key = Self::regenerate_key();
-        } else if !self.validate_key() {
-            println!("Key evolution failed validation. Regenerating key...");
-            self.current_key = Self::regenerate_key();
-        } else {
-            println!("Key successfully evolved and validated.");
+            evolution_attempts += 1;
         }
 
-        // Check if the evolved key is sufficiently different from the original
-        if Self::is_key_sufficiently_evolved(&original_key, &self.current_key) {
-            self.generation_time = SystemTime::now();
-            self.evolution_steps += 1;
-        } else {
-            println!("Key evolution insufficient. Re-evolving the key.");
-            self.quantum_evolve_key(); // Recursive call for re-evolution
-        }
+        println!("Maximum evolution attempts reached. Final key used.");
     }
 
     // Define the minimum difference threshold for key evolution
@@ -275,27 +349,32 @@ impl TemporalKey {
         1.0 / expected_pattern_score // Higher score for greater deviation
     }
     // Function to calculate a score based on expected patterns of the key
- fn calculate_expected_pattern_score(&self) -> f32 {
-    // Calculate the deviation from the uniform distribution
-    let deviation = self.calculate_deviation_from_uniform_distribution();
-    // Normalize the deviation to a score between 0 and 1
-    // This is a basic normalization; you might need a more complex approach based on your requirements
-    1.0 - (1.0 / (1.0 + deviation))
-}
-
-// Function to calculate deviation from uniform distribution of byte values in the key
-fn calculate_deviation_from_uniform_distribution(&self) -> f32 {
-    let mut byte_counts = [0usize; 256];
-    for &byte in &self.current_key {
-        byte_counts[byte as usize] += 1;
+    fn calculate_expected_pattern_score(&self) -> f32 {
+        // Calculate the deviation from the uniform distribution
+        let deviation = self.calculate_deviation_from_uniform_distribution();
+        // Normalize the deviation to a score between 0 and 1
+        // This is a basic normalization; you might need a more complex approach based on your requirements
+        1.0 - (1.0 / (1.0 + deviation))
     }
 
-    let expected_count = self.current_key.len() / 256;
-    byte_counts.iter().fold(0.0, |acc, &count| {
-        let diff = (count as isize - expected_count as isize).abs() as f32;
-        acc + diff
-    }) / self.current_key.len() as f32
-}
+    // Function to calculate deviation from uniform distribution of byte values in the key
+    fn calculate_deviation_from_uniform_distribution(&self) -> f32 {
+        let mut byte_counts = [0usize; 256];
+        for &byte in &self.current_key {
+            byte_counts[byte as usize] += 1;
+        }
+
+        let expected_count = self.current_key.len() / 256;
+        byte_counts.iter().fold(0.0, |acc, &count| {
+            let diff = (count as isize - expected_count as isize).abs() as f32;
+            acc + diff
+        }) / self.current_key.len() as f32
+    }
+    fn apply_htm_adaptation(&mut self, adapted_result: &[u8]) {
+        // Implement the adaptation logic here
+        // Example:
+        // self.current_key = adapted_result.to_vec();
+    }
 }
 
 fn create_quantum_representation(key: &[u8]) -> Vec<Complex<f32>> {
@@ -309,8 +388,6 @@ fn create_quantum_representation(key: &[u8]) -> Vec<Complex<f32>> {
         })
         .collect()
 }
-
- 
 
 fn determine_function_type_based_on_key(key: &[u8]) -> u8 {
     let sum: u64 = key.iter().map(|&x| x as u64).sum(); // Use u64 to prevent overflow
@@ -326,7 +403,7 @@ fn determine_function_type() -> u8 {
     rng.gen_range(0..2) // Randomly returns 0 or 1
 }
 
-pub fn generate_temporal_key(htm_model: &HTMModel, initial_key: &[u8]) -> Vec<u8> {
+pub fn generate_temporal_key(htm_model: &mut HTMModel, initial_key: &[u8]) -> Vec<u8> {
     let mut current_key = initial_key.to_vec();
 
     // For the purpose of this example, we'll evolve the key 10 times.
@@ -537,7 +614,7 @@ mod tests {
         let evolution_interval = Duration::from_secs(10);
         let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
 
-        temporal_key.evolve_key(10, 1);
+        temporal_key.evolve_key(10, 1, 0.1);
         let evolved_key = temporal_key.get_key();
 
         // // Ensure the evolved key is different from the initial key
@@ -627,7 +704,7 @@ mod tests {
         let mut temporal_key =
             TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        temporal_key.evolve_key(10, 1);
+        temporal_key.evolve_key(10, 1, 0.1);
         let evolved_key = temporal_key.get_key();
 
         assert_ne!(

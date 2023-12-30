@@ -34,58 +34,63 @@ impl AnomalyChecker {
         self.recent_keys.push_back(key);
     }
 
-  // Check for anomalies based on recent keys and HTM model
-  pub fn check_anomaly(&self, htm_model: &HTMModel) -> bool {
-    let anomaly_score = self.calculate_anomaly_score(htm_model);
-    let threshold = if self.config.dynamic_threshold {
-        self.calculate_dynamic_threshold()
-    } else {
-        self.config.static_threshold
-    };
+    // Check for anomalies based on recent keys and HTM model
+    pub fn check_anomaly(&self, htm_model: &HTMModel) -> bool {
+        let anomaly_score = self.calculate_anomaly_score(htm_model);
+        let threshold = if self.config.dynamic_threshold {
+            self.calculate_dynamic_threshold()
+        } else {
+            self.config.static_threshold
+        };
 
-    anomaly_score > threshold
-}
-
-// Calculate the anomaly score based on the recent keys and HTM model
-fn calculate_anomaly_score(&self, htm_model: &HTMModel) -> f32 {
-    let mut score = 0.0;
-
-    // Example logic: Sum of differences between expected and actual keys
-    for key in &self.recent_keys {
-        score += htm_model.compare_with_expected(key);
+        anomaly_score > threshold
     }
 
-    if self.config.complexity_metric {
-        score += self.calculate_complexity_metric();
+    // Calculate the anomaly score based on the recent keys and HTM model
+    fn calculate_anomaly_score(&self, htm_model: &HTMModel) -> f32 {
+        let mut score = 0.0;
+
+        // Example logic: Sum of differences between expected and actual keys
+        for key in &self.recent_keys {
+            score += htm_model.compare_with_expected(key);
+        }
+
+        if self.config.complexity_metric {
+            score += self.calculate_complexity_metric();
+        }
+
+        if self.config.temporal_correlation {
+            score += self.calculate_temporal_correlation();
+        }
+
+        score
     }
 
-    if self.config.temporal_correlation {
-        score += self.calculate_temporal_correlation();
+    // Example function to calculate a complexity metric
+    fn calculate_complexity_metric(&self) -> f32 {
+        // Example: Variance of the TemporalKeys
+        let mean =
+            self.recent_keys.iter().map(|k| k.value()).sum::<f32>() / self.recent_keys.len() as f32;
+        self.recent_keys
+            .iter()
+            .map(|k| (k.value() - mean).powi(2))
+            .sum::<f32>()
+            / self.recent_keys.len() as f32
     }
 
-    score
-}
+    // Example function to calculate temporal correlation
+    fn calculate_temporal_correlation(&self) -> f32 {
+        // Implement the logic for temporal correlation analysis
+        0.0
+    }
 
-// Example function to calculate a complexity metric
-fn calculate_complexity_metric(&self) -> f32 {
-    // Example: Variance of the TemporalKeys
-    let mean = self.recent_keys.iter().map(|k| k.value()).sum::<f32>() / self.recent_keys.len() as f32;
-    self.recent_keys.iter().map(|k| (k.value() - mean).powi(2)).sum::<f32>() / self.recent_keys.len() as f32
-}
-
-// Example function to calculate temporal correlation
-fn calculate_temporal_correlation(&self) -> f32 {
-    // Implement the logic for temporal correlation analysis
-    0.0
-}
-
-// Calculate dynamic threshold based on recent anomaly scores
-fn calculate_dynamic_threshold(&self) -> f32 {
-    // Example: Average of recent scores
-    let sum: f32 = self.recent_keys.iter().map(|k| k.anomaly_score()).sum();
-    let count = self.recent_keys.len() as f32;
-    sum / count
-}
+    // Calculate dynamic threshold based on recent anomaly scores
+    fn calculate_dynamic_threshold(&self) -> f32 {
+        // Example: Average of recent scores
+        let sum: f32 = self.recent_keys.iter().map(|k| k.anomaly_score()).sum();
+        let count = self.recent_keys.len() as f32;
+        sum / count
+    }
 
     // Additional helper methods can be added as needed
 }
@@ -105,19 +110,19 @@ mod tests {
         }
     }
 
-  // Implement a helper method to create a TemporalKey instance for testing
-  fn create_temporal_key_for_testing() -> TemporalKey {
-    // Use the actual constructor of TemporalKey here, 
-    // and set the properties to values suitable for your tests.
-    // This is a placeholder and should be replaced with your actual implementation.
-    TemporalKey::new(vec![], HTMModel::new(), Duration::from_secs(1))
-}
+    // Implement a helper method to create a TemporalKey instance for testing
+    fn create_temporal_key_for_testing() -> TemporalKey {
+        // Use the actual constructor of TemporalKey here,
+        // and set the properties to values suitable for your tests.
+        // This is a placeholder and should be replaced with your actual implementation.
+        TemporalKey::new(vec![], HTMModel::new(), Duration::from_secs(1))
+    }
 
-// Mock or test implementation for creating an HTMModel instance
-fn create_htm_model_for_test() -> HTMModel {
-    // Replace with actual logic to create an HTMModel for testing
-    HTMModel::new() // Assuming HTMModel has a new() method or similar
-}
+    // Mock or test implementation for creating an HTMModel instance
+    fn create_htm_model_for_test() -> HTMModel {
+        // Replace with actual logic to create an HTMModel for testing
+        HTMModel::new() // Assuming HTMModel has a new() method or similar
+    }
 
     #[test]
     fn test_anomaly_checker_initialization() {
@@ -139,9 +144,9 @@ fn create_htm_model_for_test() -> HTMModel {
         // Initialization of AnomalyCheckerConfig with all required fields
         let mut checker = AnomalyChecker::new(AnomalyCheckerConfig {
             window_size: 2,
-            dynamic_threshold: true, // Example value
-            static_threshold: 0.5,   // Example value
-            complexity_metric: true, // Example value
+            dynamic_threshold: true,    // Example value
+            static_threshold: 0.5,      // Example value
+            complexity_metric: true,    // Example value
             temporal_correlation: true, // Example value
         });
 
@@ -192,7 +197,4 @@ fn create_htm_model_for_test() -> HTMModel {
         // If the expected score is indeed 0.0 due to the way mocks are set up, change the assertion here
         assert_eq!(score, 0.0); // Adjusted expected value
     }
-
-   
 }
-

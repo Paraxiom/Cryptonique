@@ -5,7 +5,7 @@
 #[cfg(test)]
 mod tests {
 
-    use cryptonique::spatial_pooling::spatial_pooler;
+    use cryptonique::htm::spatial_pooling::adapt_and_learn::spatial_pooler;
 
     #[test]
     fn test_spatial_pooler_basic() {
@@ -33,7 +33,7 @@ mod tests {
 
 #[cfg(test)]
 mod overlap_tests {
-    use cryptonique::spatial_pooling::overlap::calculate_overlap;
+    use cryptonique::htm::spatial_pooling::overlap::calculate_overlap;
 
     #[test]
     fn test_calculate_overlap() {

@@ -2,7 +2,8 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 #![allow(unused_imports)]
-use crate::encryption::key_generation::rand::Rng;
+use rand::seq::SliceRandom;
+use rand::Rng;
 // Constants for various chaotic maps
 const R: f64 = 3.9; // Logistic map constant
 const A_HENON: f64 = 1.4;
@@ -44,13 +45,17 @@ pub fn perturb(data: &[u8], intensity: f64) -> Vec<u8> {
     let mut rng = rand::thread_rng();
     data.iter()
         .map(|&byte| {
-            // Generate a random value and apply it based on the intensity
-            let random_value = rng.gen::<u8>();
-            let perturbed_byte = byte.wrapping_add((random_value as f64 * intensity) as u8);
-            perturbed_byte
+            // Generate a scaled random value based on intensity
+            let random_factor = rng.gen::<f64>(); // Generate a random number between 0.0 and 1.0
+            let scaled_intensity = 255.0 * intensity; // Scale intensity to byte range
+            let perturbation = (scaled_intensity * random_factor) as u8;
+
+            // Apply perturbation with wrapping to avoid overflow/underflow
+            byte.wrapping_add(perturbation)
         })
         .collect()
 }
+
 // References:
 // 1. Moysis, L., Azar, A. T., Tutueva, A. V., & Butusov, D. N. (2020). Discrete Time Chaotic Maps With Application to Random Bit Generation. Pages 542-582.
 // 2. Gao, Z.-M., Zhao, J., & Zhang, Y.-J. (2022). Review of Chaotic Mapping Enabled Nature-Inspired Algorithms. Information Sciences, 19(8), 8215-8258.

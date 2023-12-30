@@ -8,7 +8,7 @@ use crate::htm::htm_model::HTMModel;
 // Additional import for the quantum oracle
 use crate::encryption::noise::chaotic_maps::apply_chaotic_map;
 
-pub fn quantum_evolve_key(htm_model: &HTMModel, key: &[u8]) -> Vec<u8> {
+pub fn quantum_evolve_key(htm_model: &mut HTMModel, key: &[u8]) -> Vec<u8> {
     let key_length = key.len();
 
     // Step 2: Pass through a Feistel network
@@ -56,11 +56,11 @@ mod tests {
 
     #[test]
     fn test_quantum_evolve_key() {
-        let htm_model = HTMModel::new();
+        let mut htm_model = HTMModel::new();
         let key = vec![0, 1, 2, 3, 4];
 
         // Call the quantum_evolve_key function
-        let result = quantum_evolve_key(&htm_model, &key);
+        let result = quantum_evolve_key(&mut htm_model, &key);
 
         // Assert properties of the result rather than exact values
         assert!(!result.is_empty(), "The result should not be empty");

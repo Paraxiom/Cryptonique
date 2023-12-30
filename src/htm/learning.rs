@@ -37,7 +37,8 @@ impl LearningAlgorithm {
             total_error += error.powi(2);
 
             for (i, &input_val) in input.iter().enumerate() {
-                let weight_update = self.learning_rate * error * input_val + self.momentum * self.last_weight_update[i];
+                let weight_update = self.learning_rate * error * input_val
+                    + self.momentum * self.last_weight_update[i];
                 self.weights[i] += weight_update;
                 self.last_weight_update[i] = weight_update;
             }
@@ -52,7 +53,7 @@ impl LearningAlgorithm {
         if input.len() != self.weights.len() {
             panic!("Input length does not match weights length");
         }
-        
+
         input.iter().zip(&self.weights).map(|(&i, &w)| i * w).sum()
     }
 
@@ -65,7 +66,11 @@ impl LearningAlgorithm {
         Ok(())
     }
 
-    pub fn load_model(path: &str, learning_rate: f64, momentum: f64) -> Result<Self, std::io::Error> {
+    pub fn load_model(
+        path: &str,
+        learning_rate: f64,
+        momentum: f64,
+    ) -> Result<Self, std::io::Error> {
         let contents = std::fs::read_to_string(path)?;
         let weights: Vec<f64> = contents.lines().map(|line| line.parse().unwrap()).collect();
 
@@ -125,7 +130,8 @@ mod tests {
 
         algorithm.save_model(path).expect("Failed to save model");
 
-        let loaded_algorithm = LearningAlgorithm::load_model(path, 0.1, 0.9).expect("Failed to load model");
+        let loaded_algorithm =
+            LearningAlgorithm::load_model(path, 0.1, 0.9).expect("Failed to load model");
 
         assert_eq!(algorithm.weights, loaded_algorithm.weights);
         std::fs::remove_file(path).expect("Failed to delete test model file");

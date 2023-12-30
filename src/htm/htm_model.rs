@@ -3,10 +3,11 @@ use crate::htm::columns::column::Column;
 use crate::htm::dendrites::dendrite::Dendrite;
 use crate::htm::encoders::scalar_encoder::ScalarEncoder;
 use crate::htm::temporal_keys::TemporalKey;
+use crate::htm::spatial_pooling::adapt_and_learn::adapt_and_learn;
+
 use rand::Rng;
 use std::collections::HashMap;
 use std::time::SystemTime;
-
 #[derive(Clone)]
 pub struct HTMModel {
     // Placeholder fields for the POC
@@ -15,6 +16,7 @@ pub struct HTMModel {
     encoders: Vec<ScalarEncoder>,
     keys: HashMap<Vec<u8>, SystemTime>,
     learning_rate: f64,
+    previous_state: Vec<u8>,
 }
 
 impl HTMModel {
@@ -26,6 +28,7 @@ impl HTMModel {
             encoders: vec![],
             keys: HashMap::new(),
             learning_rate: 0.1,
+            previous_state: vec![],
         }
     }
 
@@ -39,22 +42,6 @@ impl HTMModel {
         noise_pattern
     }
     // Add the apply_transformation method
-
-    /// Apply a simplified transformation to simulate HTM's pattern recognition and temporal memory.
-    pub fn apply_transformation(&self, input: &[u8]) -> Vec<u8> {
-        let mut transformed = Vec::new();
-
-        // Loop through each byte in the input
-        for &byte in input.iter() {
-            // Shift the bits of the byte to the left, wrapping around the leftmost bit
-            let new_byte = (byte << 1) | (byte >> 7);
-
-            // Append the transformed byte to the output vector
-            transformed.push(new_byte);
-        }
-
-        transformed
-    }
 
     pub fn learn(&mut self, data: &[u8]) {
         // 1. Encode the data
@@ -98,6 +85,54 @@ impl HTMModel {
         // Example implementation
         0.0
     }
+    pub fn adapt_and_learn(&mut self, input: &[u8], learning_rate: f32) -> Vec<u8> {
+        // Assuming 'some_state' is a mutable Vec<f32> required by adapt_and_learn
+        let mut some_state: Vec<f32> = Vec::new();
+         adapt_and_learn(input, &mut some_state, learning_rate)
+    }
+    pub fn apply_transformation(&mut self, input: &[u8]) -> Vec<u8> {
+        let spatial_pooling_output: Vec<u8> = input
+            .iter()
+            .map(|&byte| self.simulate_spatial_pooling(byte))
+            .flatten()
+            .collect();
+        self.simulate_temporal_memory(&spatial_pooling_output)
+    }
+
+    fn simulate_spatial_pooling(&self, byte: u8) -> Vec<u8> {
+        let mut activated_columns = vec![0; 8];
+        // Advanced logic to determine column activation
+        // Here you can implement more complex algorithms that determine how each byte activates different columns
+        for (i, column) in activated_columns.iter_mut().enumerate() {
+            *column = if byte & (1 << i) != 0 { 1 } else { 0 };
+        }
+        activated_columns
+    }
+
+    fn simulate_temporal_memory(&mut self, input: &[u8]) -> Vec<u8> {
+        // Implement a more complex temporal memory simulation
+        // This could involve comparing the current input with the previous state to determine the output
+        let mut temporal_memory_output = vec![];
+        for (i, &value) in input.iter().enumerate() {
+            // Compare with the previous state and decide on the output
+            let previous_value = self.previous_state.get(i).cloned().unwrap_or(0);
+            temporal_memory_output.push(self.calculate_temporal_response(value, previous_value));
+        }
+        // Update the previous state with the current input
+        self.previous_state = input.to_vec();
+        temporal_memory_output
+    }
+    fn calculate_temporal_response(&self, current_value: u8, previous_value: u8) -> u8 {
+        // Implement logic to calculate the response based on current and previous values
+        // For example, you could return a different value if the current and previous values are the same
+        if current_value == previous_value {
+            // Logic when current and previous values are the same
+            0
+        } else {
+            // Logic for other cases
+            current_value
+        }
+    }
 }
 #[cfg(test)]
 mod tests {
@@ -113,5 +148,30 @@ mod tests {
         assert_eq!(htm_model.learning_rate, 0.1);
     }
 
-   
+    #[test]
+    fn test_spatial_pooling() {
+        let htm_model = HTMModel::new();
+        let input_byte: u8 = 0b10101010; // Example input
+        let activated_columns = htm_model.simulate_spatial_pooling(input_byte);
+
+        // Validate that the correct columns are activated
+        for (i, &column) in activated_columns.iter().enumerate() {
+            let expected_state = if input_byte & (1 << i) != 0 { 1 } else { 0 };
+            assert_eq!(
+                column, expected_state,
+                "Column {} activation state mismatch",
+                i
+            );
+        }
+    }
+
+    #[test]
+    fn test_temporal_memory() {
+        let mut htm_model = HTMModel::new();
+        let input = vec![0, 1, 1, 0, 1, 0, 0, 1]; // Example input
+        let output = htm_model.simulate_temporal_memory(&input);
+
+        // Validate the output
+        assert_eq!(output, input, "Temporal memory output mismatch");
+    }
 }

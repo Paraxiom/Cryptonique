@@ -8,7 +8,11 @@ pub fn perturb_sdr_with_chaos(sdr: &[bool], initial_conditions: f64) -> Vec<bool
     for i in 0..sdr.len() {
         let left = if i == 0 { false } else { sdr[i - 1] };
         let center = sdr[i];
-        let right = if i == sdr.len() - 1 { false } else { sdr[i + 1] };
+        let right = if i == sdr.len() - 1 {
+            false
+        } else {
+            sdr[i + 1]
+        };
 
         // Rule 30: XOR of (left, center, right)
         new_sdr[i] = left ^ (center || right);
@@ -34,7 +38,10 @@ mod tests {
         let initial_conditions = 0.5;
         let perturbed_sdr = perturb_sdr_with_chaos(&sdr, initial_conditions);
 
-        assert_ne!(sdr, perturbed_sdr, "Perturbed SDR should differ from the original");
+        assert_ne!(
+            sdr, perturbed_sdr,
+            "Perturbed SDR should differ from the original"
+        );
     }
 
     #[test]
@@ -45,7 +52,10 @@ mod tests {
         let result1 = perturb_sdr_with_chaos(&sdr, initial_conditions);
         let result2 = perturb_sdr_with_chaos(&sdr, initial_conditions);
 
-        assert_eq!(result1, result2, "Function should be deterministic with the same inputs");
+        assert_eq!(
+            result1, result2,
+            "Function should be deterministic with the same inputs"
+        );
     }
 
     #[test]
@@ -56,8 +66,15 @@ mod tests {
         let perturbed_empty_sdr = perturb_sdr_with_chaos(&empty_sdr, 0.4);
         let perturbed_single_element_sdr = perturb_sdr_with_chaos(&single_element_sdr, 0.4);
 
-        assert!(perturbed_empty_sdr.is_empty(), "Perturbed empty SDR should still be empty");
-        assert_eq!(perturbed_single_element_sdr.len(), 1, "Perturbed single element SDR should have one element");
+        assert!(
+            perturbed_empty_sdr.is_empty(),
+            "Perturbed empty SDR should still be empty"
+        );
+        assert_eq!(
+            perturbed_single_element_sdr.len(),
+            1,
+            "Perturbed single element SDR should have one element"
+        );
     }
 
     #[test]
@@ -69,7 +86,9 @@ mod tests {
         let result1 = perturb_sdr_with_chaos(&sdr, initial_condition1);
         let result2 = perturb_sdr_with_chaos(&sdr, initial_condition2);
 
-        assert_ne!(result1, result2, "Different initial conditions should yield different results");
+        assert_ne!(
+            result1, result2,
+            "Different initial conditions should yield different results"
+        );
     }
 }
-

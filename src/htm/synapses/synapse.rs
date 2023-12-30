@@ -107,14 +107,13 @@ mod tests {
     }
 
     #[test]
-fn test_weight_validation() {
-    // Test for weight within valid range
-    let synapse = Synapse::new(0, 0, 0.2);
-    assert_eq!(synapse.get_weight(), 0.2); // Weight remains as 0.2
+    fn test_weight_validation() {
+        // Test for weight within valid range
+        let synapse = Synapse::new(0, 0, 0.2);
+        assert_eq!(synapse.get_weight(), 0.2); // Weight remains as 0.2
 
-    // Test for weight below valid range
-    let synapse = Synapse::new(0, 0, -0.1);
-    assert_eq!(synapse.get_weight(), 0.0); // Weight is clamped to 0.0
-}
-
+        // Test for weight below valid range
+        let synapse = Synapse::new(0, 0, -0.1);
+        assert_eq!(synapse.get_weight(), 0.0); // Weight is clamped to 0.0
+    }
 }
