@@ -2,6 +2,7 @@
 use crate::htm::columns::column::Column;
 use crate::htm::dendrites::dendrite::Dendrite;
 use crate::htm::encoders::scalar_encoder::ScalarEncoder;
+use crate::htm::temporal_keys::TemporalKey;
 use rand::Rng;
 use std::collections::HashMap;
 use std::time::SystemTime;
@@ -93,6 +94,10 @@ impl HTMModel {
     pub fn get_key(&self, key: &Vec<u8>) -> Option<&SystemTime> {
         self.keys.get(key)
     }
+    pub fn compare_with_expected(&self, key: &TemporalKey) -> f32 {
+        // Example implementation
+        0.0
+    }
 }
 #[cfg(test)]
 mod tests {
@@ -108,5 +113,5 @@ mod tests {
         assert_eq!(htm_model.learning_rate, 0.1);
     }
 
-    // Additional tests...
+   
 }

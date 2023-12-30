@@ -11,6 +11,8 @@ pub mod key_properties;
 pub mod layers;
 pub mod synapses;
 pub mod temporal_keys;
+pub mod noise_generation;
+pub mod learning;
 
 use crate::encryption::frequency_analysis::{select_bands, to_frequency_domain, to_time_domain};
 use crate::htm::htm_model::HTMModel;

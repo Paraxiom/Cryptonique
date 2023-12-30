@@ -261,6 +261,41 @@ impl TemporalKey {
             .map(|&x| x.wrapping_add(1))
             .collect();
     }
+    // Method to calculate the value of the key based on its entropy
+    pub fn value(&self) -> f32 {
+        // Converting the entropy (which is in double) to a float value for this method
+        Self::calculate_entropy(&self.current_key) as f32
+    }
+
+    // Method to calculate an anomaly score for the key
+    pub fn anomaly_score(&self) -> f32 {
+        // Example: Calculating deviation from expected patterns
+        // This is a placeholder logic; you should replace it with your actual calculation.
+        let expected_pattern_score = self.calculate_expected_pattern_score();
+        1.0 / expected_pattern_score // Higher score for greater deviation
+    }
+    // Function to calculate a score based on expected patterns of the key
+ fn calculate_expected_pattern_score(&self) -> f32 {
+    // Calculate the deviation from the uniform distribution
+    let deviation = self.calculate_deviation_from_uniform_distribution();
+    // Normalize the deviation to a score between 0 and 1
+    // This is a basic normalization; you might need a more complex approach based on your requirements
+    1.0 - (1.0 / (1.0 + deviation))
+}
+
+// Function to calculate deviation from uniform distribution of byte values in the key
+fn calculate_deviation_from_uniform_distribution(&self) -> f32 {
+    let mut byte_counts = [0usize; 256];
+    for &byte in &self.current_key {
+        byte_counts[byte as usize] += 1;
+    }
+
+    let expected_count = self.current_key.len() / 256;
+    byte_counts.iter().fold(0.0, |acc, &count| {
+        let diff = (count as isize - expected_count as isize).abs() as f32;
+        acc + diff
+    }) / self.current_key.len() as f32
+}
 }
 
 fn create_quantum_representation(key: &[u8]) -> Vec<Complex<f32>> {
@@ -274,6 +309,8 @@ fn create_quantum_representation(key: &[u8]) -> Vec<Complex<f32>> {
         })
         .collect()
 }
+
+ 
 
 fn determine_function_type_based_on_key(key: &[u8]) -> u8 {
     let sum: u64 = key.iter().map(|&x| x as u64).sum(); // Use u64 to prevent overflow
