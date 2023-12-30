@@ -14,6 +14,7 @@ pub mod temporal_keys;
 pub mod noise_generation;
 pub mod learning;
 
+
 use crate::encryption::frequency_analysis::{select_bands, to_frequency_domain, to_time_domain};
 use crate::htm::htm_model::HTMModel;
 const NUM_BANDS: usize = 4; // Or any other suitable value
