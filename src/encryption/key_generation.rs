@@ -129,19 +129,28 @@ mod tests {
     #[test]
     fn test_key_generation() {
         let (key_a, key_b) = generate_keys(KeyGenConfig::default());
-
+    
+        // Debugging key lengths
+        println!("Key A Length: {}, Key B Length: {}", key_a.len(), key_b.len());
+    
         assert_eq!(key_a.len(), KEY_SIZE);
         assert_eq!(key_b.len(), KEY_SIZE);
-
+    
         // Calculate overlap
         let overlap = key_a
             .iter()
             .zip(key_b.iter())
             .filter(|(&a, &b)| a == 1 && b == 1)
             .count();
-
-        assert_eq!(overlap, (KEY_SIZE as f32 * OVERLAP_PERCENTAGE) as usize);
+    
+        let expected_overlap = (KEY_SIZE as f32 * OVERLAP_PERCENTAGE).round() as usize;
+    
+        // Debugging overlap
+        println!("Calculated Overlap: {}, Expected Overlap: {}", overlap, expected_overlap);
+    
+        assert_eq!(overlap, expected_overlap);
     }
+    
     #[test]
     fn test_overlap() {
         let (sdr_a, sdr_b) = generate_sdr_key(); // Directly use `generate_sdr_key` to get the pair

@@ -11,7 +11,7 @@ use crate::encryption::hashing::HashType::SHA256;
 use crate::encryption::key_generation;
 
 use crate::encryption::noise::chaotic_maps;
-use crate::encryption::operations::validate_key;
+
 use crate::htm::htm_model::HTMModel;
 
 use crate::htm::key_evolution::quantum_evolve_key;

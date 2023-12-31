@@ -4,13 +4,8 @@ pub mod frequency_analysis;
 pub mod hashing;
 pub mod key_generation;
 pub mod noise;
-pub mod operations;
 
-// pub use operations::encrypt_data;
-// pub use operations::{decrypt, encrypt}; // Export the encrypt and decrypt functions
 
-// pub use operations::decrypt_data;
-pub mod asymmetric_encryption;
 
 pub fn encrypt_with_noise(message: &[u8], noise: &[u8]) -> Vec<u8> {
     // Placeholder encryption using noise for the POC

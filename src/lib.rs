@@ -7,6 +7,6 @@ pub mod htm;
 pub mod sdr;
 pub mod shared_state;
 
-pub mod transaction;
+
 
 pub mod utils;
