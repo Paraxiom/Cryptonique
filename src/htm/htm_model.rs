@@ -3,8 +3,8 @@ use crate::htm::columns::column::Column;
 use crate::htm::dendrites::dendrite::Dendrite;
 use crate::htm::encoders::scalar_encoder::ScalarEncoder;
 use crate::htm::temporal_keys::TemporalKey;
-use crate::htm::spatial_pooling::adapt_and_learn::adapt_and_learn;
 
+use crate::htm::spatial_pooling::adapt_and_learn::adapt_and_learn;
 use rand::Rng;
 use std::collections::HashMap;
 use std::time::SystemTime;

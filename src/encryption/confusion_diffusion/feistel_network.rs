@@ -72,37 +72,37 @@ impl FeistelNetwork {
     fn round_function(&self, right_half: u16, subkey: u16) -> u16 {
         let mixed = right_half.wrapping_add(subkey).rotate_left(3);
         let result = mixed ^ mixed.wrapping_mul(0x5A5A).rotate_right(5);
-        println!(
-            "Round Function - Input: {:X}, Subkey: {:X}, Mixed: {:X}, Result: {:X}",
-            right_half, subkey, mixed, result
-        );
+        // println!(
+        //     "Round Function - Input: {:X}, Subkey: {:X}, Mixed: {:X}, Result: {:X}",
+        //     right_half, subkey, mixed, result
+        // );
         result
     }
 
     fn encrypt_block(&self, block: u32) -> u32 {
         let (mut left, mut right) = ((block >> 16) as u16, (block & 0xFFFF) as u16);
 
-        println!(
-            "Debug - Starting encryption block: Left: {:X}, Right: {:X}",
-            left, right
-        );
+        // println!(
+        //     "Debug - Starting encryption block: Left: {:X}, Right: {:X}",
+        //     left, right
+        // );
 
         for round in 0..8 {
             let subkey = self.generate_subkey(round) as u16;
-            println!("Debug - Round {}: Subkey: {:X}", round, subkey);
+            // println!("Debug - Round {}: Subkey: {:X}", round, subkey);
 
             // Process round
             let temp = right;
             right = left ^ self.round_function(right, subkey);
             left = temp;
-            println!(
-                "Debug - Round {}: After round function - Left: {:X}, Right: {:X}",
-                round, left, right
-            );
+            // println!(
+            //     "Debug - Round {}: After round function - Left: {:X}, Right: {:X}",
+            //     round, left, right
+            // );
         }
 
         let encrypted_block = ((left as u32) << 16) | (right as u32);
-        println!("Debug - Encrypted block: {:X}", encrypted_block);
+        // println!("Debug - Encrypted block: {:X}", encrypted_block);
         encrypted_block
     }
 
@@ -110,26 +110,26 @@ impl FeistelNetwork {
         let mut left = (block >> 16) as u16;
         let mut right = (block & 0xFFFF) as u16;
 
-        println!(
-            "Debug - Starting decryption block: Left: {:X}, Right: {:X}",
-            left, right
-        );
+        // println!(
+        //     "Debug - Starting decryption block: Left: {:X}, Right: {:X}",
+        //     left, right
+        // );
 
         for round in (0..8).rev() {
             let subkey = self.generate_subkey(round as u8) as u16;
-            println!("Debug - Round {}: Subkey: {:X}", round, subkey);
+            // println!("Debug - Round {}: Subkey: {:X}", round, subkey);
 
             let temp = left;
             left = right ^ self.round_function(left, subkey);
             right = temp;
-            println!(
-                "Debug - Round {}: After round function - Left: {:X}, Right: {:X}",
-                round, left, right
-            );
+            // println!(
+            //     "Debug - Round {}: After round function - Left: {:X}, Right: {:X}",
+            //     round, left, right
+            // );
         }
 
         let decrypted_block = ((left as u32) << 16) | (right as u32);
-        println!("Debug - Decrypted block: {:X}", decrypted_block);
+        // println!("Debug - Decrypted block: {:X}", decrypted_block);
         decrypted_block
     }
 

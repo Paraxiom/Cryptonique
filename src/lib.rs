@@ -10,3 +10,4 @@ pub mod shared_state;
 
 
 pub mod utils;
+pub mod quantum_algorithms;

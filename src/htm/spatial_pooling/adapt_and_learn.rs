@@ -30,36 +30,36 @@ pub fn spatial_pooler(binary_data: &[u8]) -> Vec<u8> {
     learned
 }
 
-    
-    
-    pub fn adapt_and_learn(
-        inhibited_columns: &[u8],
-        synapses: &mut [f32],
-        learning_rate: f32,
-    ) -> Vec<u8> {
-        // Function logic...
-        for (i, &inhibited) in inhibited_columns.iter().enumerate() {
-            if inhibited == 1 {
-                // Strengthen the synapse
-                synapses[i] += learning_rate;
-            } else {
-                // Weaken the synapse
-                synapses[i] -= learning_rate;
-            }
+pub fn adapt_and_learn(
+    inhibited_columns: &[u8],
+    synapses: &mut [f32],
+    learning_rate: f32,
+) -> Vec<u8> {
+    // Function logic...
+    for (i, &inhibited) in inhibited_columns.iter().enumerate() {
+        if inhibited == 1 {
+            // Strengthen the synapse
+            synapses[i] += learning_rate;
+        } else {
+            // Weaken the synapse
+            synapses[i] -= learning_rate;
         }
-
-        // Determine new active columns based on updated synapse strengths
-        let new_active_columns = synapses
-            .iter()
-            .map(|&strength| if strength > 0.5 { 1 } else { 0 })
-            .collect::<Vec<u8>>();
-
-        println!(
-            "Adapt and Learn: Updated active columns: {:?}",
-            new_active_columns
-        );
-        new_active_columns
     }
+
+    // Determine new active columns based on updated synapse strengths
+    let new_active_columns = synapses
+        .iter()
+        .map(|&strength| if strength > 0.5 { 1 } else { 0 })
+        .collect::<Vec<u8>>();
+
+    println!(
+        "Adapt and Learn: Updated active columns: {:?}",
+        new_active_columns
+    );
+    new_active_columns
+}
+    
+   
 
 #[cfg(test)]
 mod tests {
