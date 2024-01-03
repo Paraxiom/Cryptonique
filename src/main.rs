@@ -23,6 +23,10 @@ use uuid::Uuid;
 pub mod quantumtimesandwich {
     tonic::include_proto!("quantumtimesandwich");
 }
+pub mod quantum_algorithms;
+use quantum_algorithms::*;
+use crate::quantum_algorithms::quantum_resistant_algos::{AlgorithmType, quantum_resistant_algorithm_factory};
+
 
 async fn run_client() -> Result<(), Box<dyn std::error::Error>> {
     // Connect to QuantumTimeSandwich gRPC server
@@ -65,19 +69,41 @@ async fn run_client() -> Result<(), Box<dyn std::error::Error>> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let session_id = 1.to_string(); //Uuid::new_v4().to_string();
-    println!("Session ID: {}", session_id);
     let args: Vec<String> = env::args().collect();
-    let session_id = 1.to_string(); //"your_session_id_here"; // Replace with actual session_id
 
+    // Command-line argument parsing
     match args.get(1).map(String::as_str) {
-        Some("alice") => run_as_alice(session_id.to_string()).await,
-        Some("bob") => run_as_bob(session_id.to_string()).await,
+        Some("generate-keypair") => {
+            let algorithm = match args.get(2).map(String::as_str) {
+                Some("kyber") => AlgorithmType::Kyber,
+                Some("bike") => AlgorithmType::Bike,
+                Some("classicmceliece") => AlgorithmType::ClassicMcEliece,
+                Some("frodo") => AlgorithmType::Frodo,
+                Some("hqc") => AlgorithmType::Hqc,
+                Some("ntruprime") => AlgorithmType::NtruPrime,
+                Some("dilithium") => AlgorithmType::Dilithium,
+                Some("falcon") => AlgorithmType::Falcon,
+                Some("sphincs") => AlgorithmType::Sphincs,
+                _ => return Err("Unsupported algorithm".into()),
+            };
+    
+            let algorithm_instance = quantum_resistant_algorithm_factory(algorithm);
+            let (public_key, secret_key) = algorithm_instance.generate_keypair()?;
+            println!("Public Key: {:?}\nSecret Key: {:?}", public_key, secret_key);
+        },
+        Some("encrypt") => {
+            // Implement encryption logic
+        },
+        Some("decrypt") => {
+            // Implement decryption logic
+        },
+        // Add other command cases here (sign, verify, etc.)
         _ => {
-            println!("Usage: cryptonique [alice|bob]");
-            Err("Invalid argument".into())
+            println!("Usage: cryptonique [command] [algorithm]");
         }
     }
+
+    Ok(())
 }
 async fn run_as_alice(session_id: String) -> Result<(), Box<dyn std::error::Error>> {
     info!("Running as Alice...");

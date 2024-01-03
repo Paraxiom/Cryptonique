@@ -25,5 +25,17 @@ git clone https://github.com/paraxiom/cryptonique_crypto_project.git
 cd cryptonique_crypto_project
 cargo build
 cargo run --bin cryptonique [alice|bob]
+cargo run --bin cryptonique generate-keypair [algorithm]
 cargo test
 ```
+### [algorithm]
+
+    1. kyber - for Kyber Key Encapsulation Mechanism (KEM)
+    2. bike - for Bit Flipping Key Encapsulation (BIKE)
+    3. classicmceliece - for Classic McEliece KEM
+    4. frodo - for FrodoKEM
+    5. hqc - for Hamming Quasi-Cyclic (HQC) KEM
+    6. ntruprime - for NTRU Prime KEM
+    7. dilithium - for Dilithium Signature Scheme
+    8. falcon - for Falcon Signature Scheme
+    9. sphincs - for SPHINCS Signature Scheme
