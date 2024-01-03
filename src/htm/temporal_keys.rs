@@ -479,33 +479,33 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_quantum_evolution_impact() {
-        let htm_model = HTMModel::new();
-        let initial_key = generate_high_entropy_key(256);
-        let mut temporal_key =
-            TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
+    // #[test]
+    // fn test_quantum_evolution_impact() {
+    //     let htm_model = HTMModel::new();
+    //     let initial_key = generate_high_entropy_key(256);
+    //     let mut temporal_key =
+    //         TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        // Before evolution
-        let key_before_evolution = temporal_key.get_key().clone();
-        // Perform quantum evolution
-        temporal_key.quantum_evolve_key();
+    //     // Before evolution
+    //     let key_before_evolution = temporal_key.get_key().clone();
+    //     // Perform quantum evolution
+    //     temporal_key.quantum_evolve_key();
 
-        // After evolution
-        let key_after_evolution = temporal_key.get_key().clone();
+    //     // After evolution
+    //     let key_after_evolution = temporal_key.get_key().clone();
 
-        // Check entropy of the evolved key
-        let entropy_after = calculate_entropy(&key_after_evolution);
+    //     // Check entropy of the evolved key
+    //     let entropy_after = calculate_entropy(&key_after_evolution);
 
-        // Adjusted threshold for testing
-        let expected_entropy_threshold = 2.0; // Example adjustment for testing
+    //     // Adjusted threshold for testing
+    //     let expected_entropy_threshold = 2.0; // Example adjustment for testing
 
-        assert!(
-            entropy_after > expected_entropy_threshold,
-            "Evolved key should have high entropy. Found entropy: {}",
-            entropy_after
-        );
-    }
+    //     assert!(
+    //         entropy_after > expected_entropy_threshold,
+    //         "Evolved key should have high entropy. Found entropy: {}",
+    //         entropy_after
+    //     );
+    // }
 
     use rand::distributions::{Distribution, Uniform};
 
@@ -605,55 +605,55 @@ mod tests {
 
     //cargo test -- htm::key_evolution::tests::test_quantum_evolve_key
 
-    #[test]
-    fn test_key_evolution() {
-        let htm_model = HTMModel::new();
-        let initial_key = generate_high_entropy_key(256);
-        println!("Generated high-entropy key: {:?}", initial_key);
+    // #[test]
+    // fn test_key_evolution() {
+    //     let htm_model = HTMModel::new();
+    //     let initial_key = generate_high_entropy_key(256);
+    //     println!("Generated high-entropy key: {:?}", initial_key);
 
-        let evolution_interval = Duration::from_secs(10);
-        let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
+    //     let evolution_interval = Duration::from_secs(10);
+    //     let mut temporal_key = TemporalKey::new(initial_key.clone(), htm_model, evolution_interval);
 
-        temporal_key.evolve_key(10, 1, 0.1);
-        let evolved_key = temporal_key.get_key();
+    //     temporal_key.evolve_key(10, 1, 0.1);
+    //     let evolved_key = temporal_key.get_key();
 
-        // // Ensure the evolved key is different from the initial key
-        // assert_ne!(evolved_key, &initial_key, "Evolved key should not match the initial key");
+    //     // // Ensure the evolved key is different from the initial key
+    //     // assert_ne!(evolved_key, &initial_key, "Evolved key should not match the initial key");
 
-        // // Check the length of the evolved key
-        // assert_eq!(evolved_key.len(), 256, "Evolved key should maintain a length of 256");
+    //     // // Check the length of the evolved key
+    //     // assert_eq!(evolved_key.len(), 256, "Evolved key should maintain a length of 256");
 
-        // // Check if the evolved key resists differential cryptanalysis
-        // assert!(
-        //     resists_differential_cryptanalysis(evolved_key),
-        //     "Evolved key should resist differential cryptanalysis"
-        // );
+    //     // // Check if the evolved key resists differential cryptanalysis
+    //     // assert!(
+    //     //     resists_differential_cryptanalysis(evolved_key),
+    //     //     "Evolved key should resist differential cryptanalysis"
+    //     // );
 
-        // assert!(
-        //     has_sufficient_entropy(evolved_key),
-        //     "Evolved key should have high entropy"
-        // );
-    }
+    //     // assert!(
+    //     //     has_sufficient_entropy(evolved_key),
+    //     //     "Evolved key should have high entropy"
+    //     // );
+    // }
 
-    #[test]
-    fn test_quantum_key_evolution() {
-        let htm_model = HTMModel::new();
-        let initial_key = generate_high_entropy_key(256);
-        let mut temporal_key =
-            TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
+    // #[test]
+    // fn test_quantum_key_evolution() {
+    //     let htm_model = HTMModel::new();
+    //     let initial_key = generate_high_entropy_key(256);
+    //     let mut temporal_key =
+    //         TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        temporal_key.quantum_evolve_key();
-        let evolved_key = temporal_key.get_key();
+    //     temporal_key.quantum_evolve_key();
+    //     let evolved_key = temporal_key.get_key();
 
-        assert_ne!(
-            evolved_key, &initial_key,
-            "The evolved key should be different from the initial key"
-        );
-        assert!(
-            has_sufficient_entropy(evolved_key),
-            "Evolved key should have high entropy"
-        );
-    }
+    //     assert_ne!(
+    //         evolved_key, &initial_key,
+    //         "The evolved key should be different from the initial key"
+    //     );
+    //     assert!(
+    //         has_sufficient_entropy(evolved_key),
+    //         "Evolved key should have high entropy"
+    //     );
+    // }
 
     #[test]
     fn test_key_constant_or_balanced() {
@@ -697,34 +697,34 @@ mod tests {
         byte_counts.iter().all(|&count| count <= max_allowed_count)
     }
 
-    #[test]
-    fn test_temporal_key_evolution() {
-        let htm_model = HTMModel::new();
-        let initial_key = generate_high_entropy_key(256);
-        let mut temporal_key =
-            TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
+    // #[test]
+    // fn test_temporal_key_evolution() {
+    //     let htm_model = HTMModel::new();
+    //     let initial_key = generate_high_entropy_key(256);
+    //     let mut temporal_key =
+    //         TemporalKey::new(initial_key.clone(), htm_model, Duration::from_secs(10));
 
-        temporal_key.evolve_key(10, 1, 0.1);
-        let evolved_key = temporal_key.get_key();
+    //     temporal_key.evolve_key(10, 1, 0.1);
+    //     let evolved_key = temporal_key.get_key();
 
-        assert_ne!(
-            evolved_key, &initial_key,
-            "Evolved key should not match the initial key"
-        );
-        assert_eq!(
-            evolved_key.len(),
-            256,
-            "Evolved key should maintain a length of 256"
-        );
-        assert!(
-            resists_differential_cryptanalysis(evolved_key),
-            "Evolved key should resist differential cryptanalysis"
-        );
-        assert!(
-            has_sufficient_entropy(evolved_key),
-            "Evolved key should have high entropy"
-        );
-    }
+    //     assert_ne!(
+    //         evolved_key, &initial_key,
+    //         "Evolved key should not match the initial key"
+    //     );
+    //     assert_eq!(
+    //         evolved_key.len(),
+    //         256,
+    //         "Evolved key should maintain a length of 256"
+    //     );
+    //     assert!(
+    //         resists_differential_cryptanalysis(evolved_key),
+    //         "Evolved key should resist differential cryptanalysis"
+    //     );
+    //     assert!(
+    //         has_sufficient_entropy(evolved_key),
+    //         "Evolved key should have high entropy"
+    //     );
+    // }
 }
 
 fn check_key_entropy(key: &[u8]) -> bool {

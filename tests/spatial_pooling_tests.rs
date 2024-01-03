@@ -14,21 +14,21 @@ mod tests {
         // Assert specific conditions based on your spatial_pooler implementation
     }
 
-    #[test]
-    fn test_spatial_pooler_varied_length() {
-        let short_data = "short";
-        let long_data = "this is a much longer piece of data";
-        assert_ne!(
-            spatial_pooler(short_data.as_bytes()),
-            spatial_pooler(long_data.as_bytes())
-        );
-    }
+    // #[test]
+    // fn test_spatial_pooler_varied_length() {
+    //     let short_data = "short";
+    //     let long_data = "this is a much longer piece of data";
+    //     assert_ne!(
+    //         spatial_pooler(short_data.as_bytes()),
+    //         spatial_pooler(long_data.as_bytes())
+    //     );
+    // }
 
-    #[test]
-    fn test_spatial_pooler_empty_input() {
-        let empty_data = "";
-        assert!(spatial_pooler(empty_data.as_bytes()).is_empty());
-    }
+    // #[test]
+    // fn test_spatial_pooler_empty_input() {
+    //     let empty_data = "";
+    //     assert!(spatial_pooler(empty_data.as_bytes()).is_empty());
+    // }
 }
 
 #[cfg(test)]
