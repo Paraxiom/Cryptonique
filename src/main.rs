@@ -92,11 +92,73 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("Public Key: {:?}\nSecret Key: {:?}", public_key, secret_key);
         },
         Some("encrypt") => {
-            // Implement encryption logic
+            let algorithm = match args.get(2).map(String::as_str) {
+                Some("kyber") => AlgorithmType::Kyber,
+                Some("bike") => AlgorithmType::Bike,
+                Some("classicmceliece") => AlgorithmType::ClassicMcEliece,
+                Some("frodo") => AlgorithmType::Frodo,
+                Some("hqc") => AlgorithmType::Hqc,
+                Some("ntruprime") => AlgorithmType::NtruPrime,
+                Some("dilithium") => AlgorithmType::Dilithium,
+                Some("falcon") => AlgorithmType::Falcon,
+                Some("sphincs") => AlgorithmType::Sphincs,
+                _ => return Err("Unsupported algorithm".into()),
+            };
+        
+            let algorithm_instance = quantum_resistant_algorithm_factory(algorithm);
+        
+            
+            if let (Some(public_key_arg), Some(message_arg)) = (args.get(3), args.get(4)) {
+                let public_key = hex::decode(public_key_arg)?;
+                let message = message_arg.as_bytes();
+        
+                let ciphertext = algorithm_instance.encrypt(&public_key, message)?;
+                println!("Encrypted Message: {:?}", ciphertext);
+            } else {
+                return Err("Missing public key or message".into());
+            }
         },
         Some("decrypt") => {
-            // Implement decryption logic
+            let args: Vec<String> = env::args().collect();
+            let secret_key_arg = args.get(2).expect("No secret key provided");
+            let ciphertext_arg = args.get(3).expect("No ciphertext provided");
+        
+            // Assuming the secret key and ciphertext are provided as hexadecimal strings
+            let secret_key = hex::decode(secret_key_arg)?; // Replace with appropriate decoding if not hex
+            let ciphertext = hex::decode(ciphertext_arg)?; // Replace with appropriate decoding if not hex
+        
+            let algorithm = match args.get(2).map(String::as_str) {
+                Some("kyber") => AlgorithmType::Kyber,
+                Some("bike") => AlgorithmType::Bike,
+                Some("classicmceliece") => AlgorithmType::ClassicMcEliece,
+                Some("frodo") => AlgorithmType::Frodo,
+                Some("hqc") => AlgorithmType::Hqc,
+                Some("ntruprime") => AlgorithmType::NtruPrime,
+                Some("dilithium") => AlgorithmType::Dilithium,
+                Some("falcon") => AlgorithmType::Falcon,
+                Some("sphincs") => AlgorithmType::Sphincs,
+                _ => return Err("Unsupported algorithm".into()),
+            };
+        
+            // Create an instance of the algorithm
+            let algorithm_instance = quantum_resistant_algorithm_factory(algorithm);
+        
+            // Perform the decryption
+            match algorithm_instance.decrypt(&secret_key, &ciphertext) {
+                Ok(plaintext) => println!("Decrypted plaintext: {:?}", plaintext),
+                Err(e) => println!("Error during decryption: {:?}", e),
+            }
         },
+        Some("sign") => { /* Sign implementation */ },
+        Some("verify") => { /* Verify implementation */ },
+        Some("hash") => { /* Hash implementation */ },
+        Some("symmetric-encrypt") => { /* Symmetric-Encrypt implementation */ },
+        Some("symmetric-decrypt") => { /* Symmetric-Decrypt implementation */ },
+        Some("derive-key") => { /* Derive-Key implementation */ },
+        Some("encode") => { /* Encode implementation */ },
+        Some("decode") => { /* Decode implementation */ },
+        Some("key-exchange") => { /* Key-Exchange implementation */ },
+        Some("random-bytes") => { /* Random-Bytes implementation */ },
         // Add other command cases here (sign, verify, etc.)
         _ => {
             println!("Usage: cryptonique [command] [algorithm]");
