@@ -9,7 +9,7 @@ pub mod kems {
     pub mod ntruprime;
  
 }
-
+mod quantum_resistant_algos;
 pub mod sigs {
     pub mod dilithium;
     pub mod falcon;
