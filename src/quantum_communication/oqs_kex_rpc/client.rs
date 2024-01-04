@@ -1,53 +1,88 @@
-// client.rs
+use oqs::kem::{Kem, Algorithm, CiphertextRef};
+extern crate oqs; 
 
-use super::utils;  // Import the utils module if needed
+// client.rs
+pub mod quantumtimesandwich {
+    tonic::include_proto!("quantumtimesandwich");
+}
+
+use quantumtimesandwich::quantum_encryption_service_client::QuantumEncryptionServiceClient;
+use quantumtimesandwich::{KeyExchangeRequest, KeyExchangeResponse};
 use super::QuantumSafeKey;
-use tonic::Request;
+use tonic::transport::Channel;
 
 // This struct represents your quantum-safe key exchange client
 pub struct QuantumSafeKeyExchangeClient {
-    // You can add client-specific fields here
-    // For example, server address, client configuration, etc.
+    server_address: String,
+    kem: Kem,
 }
 
 impl QuantumSafeKeyExchangeClient {
     // Constructor for the client
-    pub fn new(/* parameters */) -> Self {
-        // Initialize client
+    pub fn new(server_address: String, kem_algorithm: &str) -> QuantumSafeKeyExchangeClient {
+        let algorithm = str_to_algorithm(kem_algorithm).expect("Invalid KEM algorithm");
+        let kem = Kem::new(algorithm).expect("Failed to initialize KEM");
+
         QuantumSafeKeyExchangeClient {
-            // Initialize fields
+            server_address,
+            kem,
         }
     }
 
-    // Function to initiate key exchange with the server
-    pub async fn initiate_key_exchange(&self) -> Result<QuantumSafeKey, Box<dyn std::error::Error>> {
-        // Here, you would initiate a connection to the server and start the key exchange process
+    pub async fn initiate_key_exchange(&mut self) -> Result<QuantumSafeKey, Box<dyn std::error::Error>> {
+        let (public_key, secret_key) = self.kem.keypair()?;
 
-        // Example: send a request to the server to start key exchange
-        // You'll need to replace this with actual logic for sending a request using the OQS library
-        let response = self.send_key_exchange_request().await?;
+        let public_key_bytes: &[u8] = public_key.as_ref(); // Convert PublicKey to &[u8]
+        let encapsulated_key = self.send_key_exchange_request(public_key_bytes).await?;
 
-        // Process the response and return the quantum-safe key
-        Ok(self.process_key_exchange_response(response))
+        // Use Kem's ciphertext_from_bytes to convert &[u8] to CiphertextRef
+        let ciphertext_ref = self.kem.ciphertext_from_bytes(&encapsulated_key)
+            .ok_or("Failed to convert to CiphertextRef")?;
+
+        // Use the CiphertextRef for decapsulation
+        let shared_secret = self.kem.decapsulate(&secret_key, ciphertext_ref)?;
+
+        Ok(QuantumSafeKey {
+            key: shared_secret.into_vec(),
+            algorithm: self.kem.algorithm().to_string(),
+        })
     }
 
-    // Function to send key exchange request (this is a placeholder)
-    async fn send_key_exchange_request(&self) -> Result<(), Box<dyn std::error::Error>> {
-        // Implement the logic to send a key exchange request to the server
-        // This should involve quantum-safe cryptographic operations using OQS
-
-        Ok(())
+    // Function to send key exchange request
+    async fn send_key_exchange_request(&self, public_key: &[u8]) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+        let mut client = QuantumEncryptionServiceClient::connect(self.server_address.clone()).await?;
+        let request = tonic::Request::new(KeyExchangeRequest {
+            public_key: public_key.to_vec(),
+        });
+        let response = client.key_exchange(request).await?;
+        let encapsulated_key = response.into_inner().encapsulated_key;
+        Ok(encapsulated_key)
     }
+    
+}
 
-    // Function to process the server's response (this is a placeholder)
-    fn process_key_exchange_response(&self, /* response data */) -> QuantumSafeKey {
-        // Implement the logic to process the response from the server
-        // This would typically involve completing the key exchange protocol
+// Helper function for Algorithm mapping
+fn str_to_algorithm(algo_str: &str) -> Result<Algorithm, &'static str> {
+    match algo_str {
+        "kyber512" => Ok(Algorithm::Kyber512),
+        // Add other algorithms as needed
+        _ => Err("Unsupported algorithm"),
+    }
+}
 
-        QuantumSafeKey {
-            // Populate the QuantumSafeKey with the appropriate data
-            key: vec![],
-            algorithm: String::from("example_algorithm"),
-        }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use oqs::kem::Algorithm;
+
+    #[tokio::test]
+    async fn test_key_generation() {
+        let mut client = QuantumSafeKeyExchangeClient::new("http://mockserver:50051".to_string(), "kyber512");
+        let result = client.initiate_key_exchange().await;
+        assert!(result.is_ok());
+
+        let key = result.unwrap();
+        assert!(!key.key.is_empty());
+        assert_eq!(key.algorithm, Algorithm::Kyber512.to_string());
     }
 }

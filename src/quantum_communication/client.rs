@@ -19,7 +19,10 @@ impl QuantumClient {
 
     // Implement methods for each gRPC call, for example:
     pub async fn generate_key(&mut self) -> Result<GenerateKeyResponse, Box<dyn std::error::Error>> {
-        let request = tonic::Request::new(GenerateKeyRequest {});
+        let request = tonic::Request::new(GenerateKeyRequest {
+            session_id: "your_session_id".to_string(),
+        });
+        
         let response = self.client.generate_key(request).await?;
         Ok(response.into_inner())
     }

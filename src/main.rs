@@ -3,13 +3,20 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 #![allow(unused_imports)]
+
+pub mod quantumtimesandwich {
+    tonic::include_proto!("quantumtimesandwich");
+}
 use crate::quantumtimesandwich::DecryptionRequest;
 use crate::quantumtimesandwich::EncryptionRequest;
+use quantumtimesandwich::quantum_encryption_service_client::QuantumEncryptionServiceClient;
+use quantumtimesandwich::{GenerateKeyRequest, MeasureStateRequest, PrepareStateRequest};
+use crate::quantumtimesandwich::GetKeyRequest;
+
 use log::error;
 use log::info;
 use log::warn;
-use quantumtimesandwich::quantum_encryption_service_client::QuantumEncryptionServiceClient;
-use quantumtimesandwich::{GenerateKeyRequest, MeasureStateRequest, PrepareStateRequest};
+
 use std::env;
 use tokio::runtime::Runtime;
 use tonic::transport::Channel;
@@ -17,12 +24,10 @@ pub mod encryption;
 pub mod htm;
 pub mod shared_state;
 pub mod utils;
-use crate::quantumtimesandwich::GetKeyRequest;
+
 use std::time::Duration;
 use uuid::Uuid;
-pub mod quantumtimesandwich {
-    tonic::include_proto!("quantumtimesandwich");
-}
+
 pub mod quantum_algorithms;
 use quantum_algorithms::*;
 use crate::quantum_algorithms::quantum_resistant_algos::{AlgorithmType, quantum_resistant_algorithm_factory};
