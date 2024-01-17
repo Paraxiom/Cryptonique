@@ -22,10 +22,13 @@ log = "0.4"
 env_logger = "0.10.1"
 # reqwest = { version = "0.11.18", features = ["blocking", "json"] }
 # gRPC dependencies
-tonic = "0.10.2"
+tonic = { version = "0.10.2", features = ["tls"] }
+native-tls = "0.2.11"
 prost = "0.12.3"
 tokio = { version = "1.0", features = ["full"] }
 uuid = { version = "1.6.1", features = ["v4"] }
+clap = "4.4.16"
+
 [dev-dependencies]
 
 
